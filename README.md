@@ -1,1 +1,1 @@
-# tugas-sb-sanbercode-go-nect-2024
+# tugas-sb-sanbercode-go-next-2024
