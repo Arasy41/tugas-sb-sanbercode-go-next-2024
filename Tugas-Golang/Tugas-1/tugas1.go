@@ -31,7 +31,7 @@ func main() {
 	var kataKetiga = "belajar"
 	var kataKeempat = "golang"
 
-	kataKedua = strings.Title(kataKedua) // Bisa juga pakai Replace kataKedua = strings.Replace(kataKedua, "s", "S", -1)
+	kataKedua = strings.Title(kataKedua) // Bisa juga pakai Replace = kataKedua = strings.Replace(kataKedua, "s", "S", -1)
 	kataKetiga = strings.Replace(kataKetiga, "r", "R", -1)
 	kataKeempat = strings.ToUpper(kataKeempat)
 
@@ -53,9 +53,9 @@ func main() {
 	var kelilingPersegiPanjang int = (pPersegiPanjang + lPersegiPanjang) * 2
 	var luasSegitiga int = aSegitiga * tSegitiga / 2
 
-	fmt.Println("Jadi, Luas Persegi Panjang adalah : ", luasPersegiPanjang)
-	fmt.Println("Jadi, Keliling Persegi Panjang adalah : ", kelilingPersegiPanjang)
-	fmt.Println("Jadi, Luas Segitiga Panjang adalah : ", luasSegitiga)
+	fmt.Println("Jadi, Luas Persegi Panjang adalah :", luasPersegiPanjang)
+	fmt.Println("Jadi, Keliling Persegi Panjang adalah :", kelilingPersegiPanjang)
+	fmt.Println("Jadi, Luas Segitiga Panjang adalah :", luasSegitiga)
 
 	// Jawaban Soal 5
 	kalimat := "halo halo bandung"
@@ -68,7 +68,7 @@ func main() {
 	// Jawaban Soal 6
 	var sentence = "Saya Sangat Senang Sekali Belajar Programming dan Saya Juga Senang Belajar Javascript"
 	lengthSentence := len(sentence)
-	fmt.Println("Panjang kalimat adalah ", lengthSentence)
+	fmt.Println("Panjang kalimat adalah", lengthSentence)
 	if lengthSentence < 10 {
 		fmt.Println("Kalimat dikategorikan pendek")
 	} else if lengthSentence >= 10 && lengthSentence <= 30 {
@@ -145,15 +145,15 @@ func main() {
 	}
 
 	// Jawaban Soal 9
-	// Menggunakan tahun kelahiran saya diatas
-	if tahun >= 1944 && tahun <= 1964 {
-		fmt.Println("Tahun lahir anda adalah tahun : ", tahun, "\nAnda termasuk Generasi Baby Boomer")
-	} else if tahun >= 1965 && tahun <= 1979 {
-		fmt.Println("Tahun lahir anda adalah tahun : ", tahun, "\nAnda termasuk Generasi X")
-	} else if tahun >= 1980 && tahun <= 1994 {
-		fmt.Println("Tahun lahir anda adalah tahun : ", tahun, "\nAnda termasuk Generasi Y")
-	} else if tahun >= 1995 && tahun <= 2015 {
-		fmt.Println("Tahun lahir anda adalah tahun : ", tahun, "\nAnda termasuk Generasi Z")
+	var tahunKelahiran = 2006
+	if tahunKelahiran >= 1944 && tahunKelahiran <= 1964 {
+		fmt.Println("Tahun lahir anda adalah tahun :", tahunKelahiran, "\nAnda termasuk Generasi Baby Boomer")
+	} else if tahunKelahiran >= 1965 && tahunKelahiran <= 1979 {
+		fmt.Println("Tahun lahir anda adalah tahun :", tahunKelahiran, "\nAnda termasuk Generasi X")
+	} else if tahunKelahiran >= 1980 && tahunKelahiran <= 1994 {
+		fmt.Println("Tahun lahir anda adalah tahun :", tahunKelahiran, "\nAnda termasuk Generasi Y")
+	} else if tahunKelahiran >= 1995 && tahunKelahiran <= 2015 {
+		fmt.Println("Tahun lahir anda adalah tahun :", tahunKelahiran, "\nAnda termasuk Generasi Z")
 	}
 
 	// Jawaban Soal 10
