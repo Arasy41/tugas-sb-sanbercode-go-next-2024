@@ -126,8 +126,9 @@ func main() {
 	fmt.Println("Jawaban Soal 5 :")
 	var luasLingkaran float64
 	var kelilingLingkaran float64
+	var jariJari float64 = 14
 
-	hitungLingkaran(14, &luasLingkaran, &kelilingLingkaran)
+	hitungLingkaran(jariJari, &luasLingkaran, &kelilingLingkaran)
 	fmt.Println("Luas lingkaran adalah :", luasLingkaran)
 	fmt.Println("Keliling lingkaran adalah :", kelilingLingkaran)
 
