@@ -28,24 +28,25 @@ func getMovies(moviesChannel chan string, movies ...string) {
 }
 
 // Function Soal 3
-func luasLingkaran(jariJari float64, chanRes chan string) {
+func luasLingkaran(jariJari float64, resCh chan string) {
 	luas := math.Pi * jariJari * jariJari
-	chanRes <- fmt.Sprintf("Jadi luas lingkaran dengan jari-jari %f adalah %f", jariJari, math.Round(luas))
+	resCh <- fmt.Sprintf("Jadi luas lingkaran dengan jari-jari %f adalah %f", jariJari, math.Round(luas))
 }
 
-func kelilingLingkaran(jariJari float64, chanRes chan string) {
+func kelilingLingkaran(jariJari float64, resCh chan string) {
 	keliling := 2 * math.Pi * jariJari
-	chanRes <- fmt.Sprintf("Jadi keliling lingkaran dengan jari-jari %f adalah %f", jariJari, math.Round(keliling))
+	resCh <- fmt.Sprintf("Jadi keliling lingkaran dengan jari-jari %f adalah %f", jariJari, math.Round(keliling))
 }
 
-func volumeTabung(jariJari, tinggi float64, chanRes chan string) {
+func volumeTabung(jariJari, tinggi float64, resCh chan string) {
 	volume := math.Pi * jariJari * jariJari * tinggi
-	chanRes <- fmt.Sprintf("Jadi luas lingkaran dengan jari-jari %f adalah %f", jariJari, math.Round(volume))
+	resCh <- fmt.Sprintf("Jadi luas lingkaran dengan jari-jari %f adalah %f", jariJari, math.Round(volume))
 }
 
-func luasPersegiPanjang(panjang, lebar int, reschan chan int) {
+// Function Soal 4
+func luasPersegiPanjang(panjang, lebar int, resCh chan int) {
 	luas := panjang * lebar
-	reschan <- luas
+	resCh <- luas
 }
 
 func kelilingPersegiPanjang(panjang, lebar int, resChan chan int) {
@@ -53,9 +54,9 @@ func kelilingPersegiPanjang(panjang, lebar int, resChan chan int) {
 	resChan <- keliling
 }
 
-func volumeBalok(panjang, lebar, tinggi int, reschan chan int) {
+func volumeBalok(panjang, lebar, tinggi int, resCh chan int) {
 	volume := panjang * lebar * tinggi
-	reschan <- volume
+	resCh <- volume
 }
 
 func main() {
@@ -83,50 +84,48 @@ func main() {
 	// Jawaban Soal 3
 	fmt.Println("\nJawaban Soal 3")
 	jariJari := []float64{8, 14, 20}
-	tinggi := 10.0
+	tinggiTabung := 10.0
 
-	luasChan := make(chan string)
-	kelilingChan := make(chan string)
-	volumeChan := make(chan string)
+	luasCh := make(chan string)
+	kelilingCh := make(chan string)
+	volumeCh := make(chan string)
 
 	for _, r := range jariJari {
-		go luasLingkaran(r, luasChan)
-		go kelilingLingkaran(r, kelilingChan)
-		go volumeTabung(r, tinggi, volumeChan)
+		go luasLingkaran(r, luasCh)
+		go kelilingLingkaran(r, kelilingCh)
+		go volumeTabung(r, tinggiTabung, volumeCh)
 	}
 
 	for i := 0; i < len(jariJari); i++ {
-		fmt.Println(<-luasChan)
-		fmt.Println(<-kelilingChan)
-		fmt.Println(<-volumeChan)
+		fmt.Println(<-luasCh)
+		fmt.Println(<-kelilingCh)
+		fmt.Println(<-volumeCh)
 	}
 
-	{
-		// Jawaban Soal 4
-		fmt.Println("\nJawaban Soal 4")
+	// Jawaban Soal 4
+	fmt.Println("\nJawaban Soal 4")
 
-		panjang := 10
-		lebar := 7
-		tinggi := 5
+	panjang := 10
+	lebar := 7
+	tinggiBalok := 5
 
-		luasChan := make(chan int)
-		go luasPersegiPanjang(panjang, lebar, luasChan)
+	ch1 := make(chan int)
+	go luasPersegiPanjang(panjang, lebar, ch1)
 
-		kelilingChan := make(chan int)
-		go kelilingPersegiPanjang(panjang, lebar, kelilingChan)
+	ch2 := make(chan int)
+	go kelilingPersegiPanjang(panjang, lebar, ch2)
 
-		volumeChan := make(chan int)
-		go volumeBalok(panjang, lebar, tinggi, volumeChan)
+	ch3 := make(chan int)
+	go volumeBalok(panjang, lebar, tinggiBalok, ch3)
 
-		for i := 0; i < 3; i++ {
-			select {
-			case luas := <-luasChan:
-				fmt.Println("Luas Persegi Panjang:", luas)
-			case keliling := <-kelilingChan:
-				fmt.Println("Keliling Persegi Panjang:", keliling)
-			case volume := <-volumeChan:
-				fmt.Println("Volume Balok:", volume)
-			}
+	for i := 0; i < 3; i++ {
+		select {
+		case luas := <-ch1:
+			fmt.Println("Luas Persegi Panjang:", luas)
+		case keliling := <-ch2:
+			fmt.Println("Keliling Persegi Panjang:", keliling)
+		case volume := <-ch3:
+			fmt.Println("Volume Balok:", volume)
 		}
 	}
 
