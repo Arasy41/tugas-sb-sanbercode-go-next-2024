@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	_ "errors"
 	"flag"
 	"fmt"
 	"math"
@@ -21,8 +20,7 @@ func kelilingSegitigaSamaSisi(sisi int, isTrue bool) (string, error) {
 			return "", errors.New("Maaf anda belum menginput sisi dari segitiga sama sisi")
 		} else {
 			defer func() {
-				err := recover()
-				if err != nil {
+				if err := recover(); err != nil {
 					fmt.Print("Error: ", err)
 				}
 			}()
@@ -104,12 +102,12 @@ func main() {
 
 	// Jawaban Soal 5
 	fmt.Println("\nJawaban Soal 5")
-	fmt.Println(luasLingkaran(7))
-	fmt.Println(luasLingkaran(10))
-	fmt.Println(luasLingkaran(15))
-	fmt.Println(kelilingLingkaran(7))
-	fmt.Println(kelilingLingkaran(10))
-	fmt.Println(kelilingLingkaran(15))
+	fmt.Println("Luas Lingkaran Pertama :", luasLingkaran(7))
+	fmt.Println("Luas Lingkaran Kedua :", luasLingkaran(10))
+	fmt.Println("Luas Lingkaran Ketiga :", luasLingkaran(15))
+	fmt.Println("Keliling Lingkaran Pertama :", kelilingLingkaran(7))
+	fmt.Println("Keliling Lingkaran Kedua :", kelilingLingkaran(10))
+	fmt.Println("Keliling Lingkaran Ketiga :", kelilingLingkaran(15))
 
 	// Jawaban Soal 6
 	fmt.Println("\nJawaban Soal 6")
