@@ -40,7 +40,7 @@ func kelilingLingkaran(jariJari float64, resCh chan string) {
 
 func volumeTabung(jariJari, tinggi float64, resCh chan string) {
 	volume := math.Pi * jariJari * jariJari * tinggi
-	resCh <- fmt.Sprintf("Jadi luas lingkaran dengan jari-jari %f adalah %f", jariJari, math.Round(volume))
+	resCh <- fmt.Sprintf("Jadi volume Tabung dengan jari-jari %f dan tinggi %f adalah %f", jariJari, tinggi, math.Round(volume))
 }
 
 // Function Soal 4
