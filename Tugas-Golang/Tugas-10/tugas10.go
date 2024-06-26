@@ -32,17 +32,20 @@ func basicAuth(next http.HandlerFunc) http.HandlerFunc {
 
 // GET Nilai Mahasiswa
 func getNilaiMahasiswa(w http.ResponseWriter, r *http.Request) {
+	// Validasi Method GET
 	if r.Method != http.MethodGet {
 		http.Error(w, "ERROR....", http.StatusNotFound)
 		return
 	}
 
+	// Menampilkan Semua Data Nilai Mahasiswa
 	dataNilaiMahasiswa, err := json.Marshal(nilaiNilaiMahasiswa)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
+	// Menampilkan Hasil Data atau Response
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(dataNilaiMahasiswa)
@@ -61,15 +64,16 @@ func postNilaiMahasiswa(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			// parse dari form
-			name := r.PostFormValue("title")
-			matkul := r.PostFormValue("mata-kuliah")
+			name := r.PostFormValue("nama")
+			matkul := r.PostFormValue("mata_kuliah")
 			getNilai := r.PostFormValue("nilai")
 			nilai, err := strconv.Atoi(getNilai)
+			// Validasi input Nilai
 			if err != nil {
 				http.Error(w, "Nilai must be a number", http.StatusBadRequest)
 				return
 			}
-			indeks := r.PostFormValue("indeks-nilai")
+			indeks := r.PostFormValue("indeks_nilai")
 
 			nm = NilaiMahasiswa{
 				ID:          idCounter,
@@ -80,14 +84,23 @@ func postNilaiMahasiswa(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		nm.ID = idCounter
-		idCounter++
+		// Validate name and matkul
+		if nm.Nama == "" || nm.MataKuliah == "" {
+			http.Error(w, "Nama and Mata Kuliah cannot be empty", http.StatusBadRequest)
+			return
+		}
 
+		// Validasi input Nilai
 		if nm.Nilai > 100 {
 			http.Error(w, "Nilai cannot be more than 100", http.StatusBadRequest)
 			return
 		}
 
+		// Tambahkan ID
+		nm.ID = idCounter
+		idCounter++
+
+		// Switch Case Untuk Indeks Nilai
 		switch {
 		case nm.Nilai >= 80:
 			nm.IndeksNilai = "A"
@@ -101,8 +114,10 @@ func postNilaiMahasiswa(w http.ResponseWriter, r *http.Request) {
 			nm.IndeksNilai = "E"
 		}
 
+		// Menambahkan ke dalam Data
 		nilaiNilaiMahasiswa = append(nilaiNilaiMahasiswa, nm)
 
+		// Response setelah data ditambahkan
 		dataNilai, err := json.Marshal(nm)
 		if err != nil {
 			http.Error(w, "Failed to encode JSON", http.StatusInternalServerError)
