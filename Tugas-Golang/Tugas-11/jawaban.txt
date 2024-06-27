@@ -1,0 +1,64 @@
+    JAWABAN TUGAS 11
+
+1. Syntax untuk create Database
+CREATE DATABASE myshop
+
+2. Membuat Table di Dalam Database
+# Create Table Users
+CREATE TABLE users (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255),
+  email VARCHAR(255),
+  password VARCHAR(255)
+);
+# Create Table Items
+CREATE TABLE items (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255),
+  description VARCHAR(255),
+  price INT,
+  stock INT
+);
+
+# Create Table Categories
+CREATE TABLE categories (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255)
+);
+
+3. Memasukkan Data pada Table
+# Input Data Users
+INSERT INTO users(name, email, password) VALUES
+  ("John Doe", "johndoe@doe.com", "john123"),
+  ("Jane Doe", "janedoe@doe.com", "jenita123")
+;
+
+# Input Data Categories
+INSERT INTO categories (name) VALUES
+  ('gadget'),
+  ('cloth'),
+  ('men'),
+  ('women'),
+  ('branded');
+
+# Input Data Items
+INSERT INTO items (name, description, price, stock) VALUES
+  ('Sumsang b50', 'hape keren dari merek sumsang', 4000000, 100),
+  ('Uniklooh', 'baju keren dari brand ternama', 500000, 50),
+  ('IMHO Watch', 'jam tangan anak yang jujur banget', 2000000, 10);
+
+4. Mengambil Data dari Database
+- Mengambil data users
+# Query untuk mendapatkan data users kecuali password
+SELECT id, name, email FROM users;
+
+- Mengambil data items
+# Query untuk menampilkan data items yang price nya diatas 1 juta
+SELECT * FROM items WHERE price > 1000000;
+
+# Query untuk mengambil data item pada table items yang memiliki name serupa atau mirip (like) dengan kata kunci
+SELECT * FROM items WHERE name LIKE '%uniklo%';
+
+5. Mengubah data dari Database
+# Query untuk update price items
+UPDATE items SET price = 2500000 WHERE name = 'Sumsang b50';
