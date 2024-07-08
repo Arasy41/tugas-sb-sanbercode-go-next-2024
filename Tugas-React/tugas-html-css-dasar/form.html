@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Akun Baru!</title>
+    <style>
+        body {
+            display: flex;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 10px;
+        }
+        .form-group .gender {
+            display: flex;
+        }
+        .form-group .gender label {
+            margin-top: 10px;
+        }
+        .form-group .gender input[type="radio"] {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            color: white;
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Register Akun Baru!</h1>
+        <p>Isilah form dibawah ini</p>
+        <form action="process.html" method="post">
+            <div class="form-group">
+                <label for="name">First Name:</label>
+                <input type="text" name="name" id="name">
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" id="last_name">
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <div class="gender">
+                    <input type="radio" id="male" name="gender" value="male">
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">Female</label>
+                    <input type="radio" id="other" name="gender" value="other">
+                    <label for="other">Other</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nationality">Nationality:</label>
+                <select name="nationality" id="nationality">
+                    <option value="indonesian">Indonesian</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="focus">Sedang Fokus Belajar:</label>
+                <select name="focus" id="focus">
+                    <option value="reactjs">Reactjs</option>
+                    <option value="golang">Golang</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="language">Language Spoken:</label>
+                <div class="gender">
+                    <input type="checkbox" id="lang_male" name="language" value="male">
+                    <label for="lang_male">Male</label>
+                    <input type="checkbox" id="lang_female" name="language" value="female">
+                    <label for="lang_female">Female</label>
+                    <input type="checkbox" id="lang_other" name="language" value="other">
+                    <label for="lang_other">Other</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Deskripsi Diri Saya:</label>
+                <textarea name="description" id="description" rows="4"></textarea>
+            </div>
+
+            <input type="submit" value="register">
+        </form>
+    </div>
+</body>
+</html>

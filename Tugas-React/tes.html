@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Image Example</title>
+</head>
+
+<style>
+    body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.background {
+    background-image: url("tugas-html-css-dasar/public/img/pattern.jpg");
+    background-size: cover; /* atau contain, sesuai kebutuhan */
+    background-position: center;
+    height: 100vh; /* membuat elemen memenuhi viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.background .container {
+    padding: 40vh;
+    background-color: white;
+    color: black;
+}
+</style>
+
+<body>
+    <div class="background">
+        <div class="container">
+            <h2>Halo saya Afif!</h2>
+        </div>
+    </div>
+</body>
+</html>

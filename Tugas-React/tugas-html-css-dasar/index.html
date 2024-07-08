@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanbercode Example</title>
+</head>
+
+<style>
+    body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    }
+
+    header {
+        background-color: white;
+        padding: 10px 0;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    .logo {
+        height: 50px;
+    }
+
+    .navbar ul {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar li {
+        margin-left: 50px;
+    }
+
+    .navbar a {
+        text-decoration: none;
+        color: purple;
+        font-weight: bold;
+    }
+
+    main {
+        background-image: url("public/img/pattern.jpg");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        padding: 20px 0 155px;
+        box-sizing: border-box;
+        height:max-content;
+    }
+
+    .content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        width: 75%;
+        text-align: left;
+    }
+
+    .content-logo {
+        height: 50px;
+        margin: 0 auto 20px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    p {
+        font-size: small;
+    }
+
+    footer {
+        background-color: black;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+
+    footer p {
+        margin: 0;
+    }
+</style>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <img src="public/img/logo.png" alt="Sanbercode Logo" class="logo">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="form.html">Register</a></li>
+                <li><a href="article.html">Article</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="content">
+            <img src="public/img/logo.png" alt="Sanbercode Logo" class="content-logo">
+            <h1>Beasiswa Superbootcamp 2024 | Golang NextJS</h1>
+            <p>Halo! Saya <strong>Afif Al Arasyi</strong>, Dari Beasiswa Superbootcamp 2024</p>
+            <h2>Data Peserta Beasiswa Superbootcamp 2024</h2>
+            <ul>
+                <li>Nama : Afif Al Arasyi</li>
+                <li>Email : afifarsyi@gmail.com</li>
+                <li>Sistem Operasi : Windows</li>
+                <li>Akun gitlab : https://github.com/Arasy41</li>
+                <li>Akun telegram : Afif Al Arasyi</li>
+            </ul>
+            <h2>Cara Belajar Di Beasiswa Superbootcamp 2024</h2>
+            <ol>
+                <li>Mengunjungi Website ini</li>
+                <li>Mendaftar di, <a href="form.html">form registrasi</a></li>
+                <li>Selesai !</li>
+            </ol>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 by Sanbercode</p>
+    </footer>
+</body>
+</html>
