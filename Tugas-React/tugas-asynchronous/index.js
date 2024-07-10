@@ -1,0 +1,26 @@
+var readBooks = require("./callback.js");
+
+var books = [
+  { name: "LOTR", timeSpent: 3000 },
+  { name: "Fidas", timeSpent: 2000 },
+  { name: "Kalkulus", timeSpent: 4000 },
+  { name: "komik", timeSpent: 1000 },
+];
+function readAllBooks(time, bookIndex) {
+  if (bookIndex < books.length) {
+    const book = books[bookIndex];
+    readBooks(time, book, (remainingTime) => {
+      if (remainingTime > 0 && bookIndex + 1 < books.length) {
+        readAllBooks(remainingTime, bookIndex + 1);
+      } else if (remainingTime <= 0) {
+        console.log("");
+      } else {
+        console.log("Semua buku telah dibaca");
+      }
+    });
+  } else {
+    console.log("Semua buku telah dibaca");
+  }
+}
+
+readAllBooks(10000, 0);
