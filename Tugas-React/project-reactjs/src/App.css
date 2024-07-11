@@ -52,7 +52,26 @@ body {
 .container {
   width: 400px;
   text-align: center;
-  margin-top: 80px;
+  margin-top: 40px;
+}
+
+.container-hooks {
+  width: 400px;
+  text-align: left;
+  margin-top: 55px;
+}
+
+.container-hooks h1 {
+  text-align: left;
+  font-size: 36px;
+  color: black;
+  font-weight: bolder;
+}
+
+.container-hooks p {
+  text-align: left;
+  font-size: 18px;
+  font-weight: bolder;
 }
 
 .logo {
