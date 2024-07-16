@@ -305,8 +305,6 @@ var SwaggerInfo = &swag.Spec{
 	Description:      "This is a sample server for managing books.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
-	LeftDelim:        "{{",
-	RightDelim:       "}}",
 }
 
 func init() {
