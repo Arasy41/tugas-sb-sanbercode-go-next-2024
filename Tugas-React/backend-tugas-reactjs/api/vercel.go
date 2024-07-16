@@ -22,14 +22,14 @@ var (
 // @description This is a sample server for managing books.
 // @host localhost:8080
 // @BasePath /
-func main() {
+func Init() {
 	app = gin.New()
 
 	environment := utils.Getenv("ENVIRONMENT", "development")
+	log.Printf("Running in %s environment", environment)
 
 	if environment == "development" {
-		err := godotenv.Load()
-		if err != nil {
+		if err := godotenv.Load(); err != nil {
 			log.Fatal("Error loading .env file")
 		}
 	}
@@ -43,6 +43,7 @@ func main() {
 	} else {
 		docs.SwaggerInfo.Schemes = []string{"https"}
 	}
+
 	db := config.InitDB()
 	defer db.Close()
 

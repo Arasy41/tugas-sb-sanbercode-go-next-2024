@@ -10,7 +10,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-var  DB *gorm.DB
+var DB *gorm.DB
 
 func InitDB() *gorm.DB {
 	username := os.Getenv("DB_USER")
@@ -29,11 +29,7 @@ func InitDB() *gorm.DB {
 	db.LogMode(true)
 
 	// Auto Migrate models
-	err = db.AutoMigrate(
-		&models.Book{},
-	).Error
-
-	if err != nil {
+	if err := db.AutoMigrate(&models.Book{}).Error; err != nil {
 		log.Fatalf("Failed to migrate database: %v", err)
 	}
 
