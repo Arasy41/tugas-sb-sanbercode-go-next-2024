@@ -301,7 +301,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "https://go-vercel-app-seven.vercel.app",
+	Host:             "https://go-vercel-app-arasys-projects.vercel.app/",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "Books API",

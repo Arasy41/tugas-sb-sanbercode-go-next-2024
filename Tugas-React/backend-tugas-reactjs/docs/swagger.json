@@ -6,7 +6,7 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "https://go-vercel-app-seven.vercel.app",
+    "host": "https://go-vercel-app-arasys-projects.vercel.app/",
     "basePath": "/",
     "paths": {
         "/books": {
