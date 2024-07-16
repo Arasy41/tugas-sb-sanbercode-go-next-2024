@@ -21,27 +21,23 @@ func init() {
 	App = gin.New()
 
 	environment := utils.Getenv("ENVIRONMENT", "development")
+	log.Printf("ENVIRONMENT: %s", environment)
 
 	if environment == "development" {
 		err := godotenv.Load()
 		if err != nil {
-			log.Fatal("Error loading .env file")
+			log.Println("No .env file found, relying on system environment variables")
+		} else {
+			log.Println(".env file loaded successfully")
 		}
-	}
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("No .env file found, relying on system environment variables")
-	} else {
-		log.Println(".env file loaded successfully")
 	}
 
 	// Log environment variables for debugging
 	ginMode := os.Getenv("GIN_MODE")
-	log.Printf("GIN_MODE: %s", ginMode)
 	if ginMode == "" {
 		ginMode = "debug"
 	}
+	log.Printf("GIN_MODE: %s", ginMode)
 	gin.SetMode(ginMode)
 
 	docs.SwaggerInfo.Title = "Movie REST API"
