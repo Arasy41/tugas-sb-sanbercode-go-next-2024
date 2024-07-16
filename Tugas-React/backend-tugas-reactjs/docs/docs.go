@@ -57,7 +57,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.BookRequest"
+                            "$ref": "#/definitions/models.Book"
                         }
                     }
                 ],
@@ -120,49 +120,7 @@ const docTemplate = `{
                     }
                 }
             },
-            "delete": {
-                "description": "Delete a book by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "books"
-                ],
-                "summary": "Delete a book",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Book ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            },
-            "patch": {
+            "put": {
                 "description": "Update a book by ID with the input payload",
                 "consumes": [
                     "application/json"
@@ -221,6 +179,48 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "description": "Delete a book by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "books"
+                ],
+                "summary": "Delete a book",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
             }
         }
     },
@@ -229,7 +229,7 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "description",
-                "prize",
+                "price",
                 "release_year",
                 "title"
             ],
@@ -246,7 +246,7 @@ const docTemplate = `{
                 "image_url": {
                     "type": "string"
                 },
-                "prize": {
+                "price": {
                     "type": "string"
                 },
                 "release_year": {
@@ -268,6 +268,12 @@ const docTemplate = `{
         },
         "models.BookRequest": {
             "type": "object",
+            "required": [
+                "description",
+                "price",
+                "release_year",
+                "title"
+            ],
             "properties": {
                 "description": {
                     "type": "string"
@@ -275,14 +281,11 @@ const docTemplate = `{
                 "image_url": {
                     "type": "string"
                 },
-                "prize": {
+                "price": {
                     "type": "string"
                 },
                 "release_year": {
                     "type": "integer"
-                },
-                "thickness": {
-                    "type": "string"
                 },
                 "title": {
                     "type": "string"

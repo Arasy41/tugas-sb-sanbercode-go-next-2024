@@ -19,7 +19,7 @@ func ValidateStruct(s interface{}) error {
 	return validate.Struct(s)
 }
 
-func ValidateBookRequest(book *models.BookRequest) error {
+func ValidateBookRequest(book *models.Book) error {
 	var errMessage []string
 
 	if _, err := url.ParseRequestURI(book.ImageURL); err != nil {

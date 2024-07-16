@@ -10,7 +10,7 @@ definitions:
         type: integer
       image_url:
         type: string
-      prize:
+      price:
         type: string
       release_year:
         type: integer
@@ -24,7 +24,7 @@ definitions:
         type: string
     required:
     - description
-    - prize
+    - price
     - release_year
     - title
     type: object
@@ -34,16 +34,19 @@ definitions:
         type: string
       image_url:
         type: string
-      prize:
+      price:
         type: string
       release_year:
         type: integer
-      thickness:
-        type: string
       title:
         type: string
       total_page:
         type: integer
+    required:
+    - description
+    - price
+    - release_year
+    - title
     type: object
 host: localhost:8080
 info:
@@ -77,7 +80,7 @@ paths:
         name: book
         required: true
         schema:
-          $ref: '#/definitions/models.BookRequest'
+          $ref: '#/definitions/models.Book'
       produces:
       - application/json
       responses:
@@ -151,7 +154,7 @@ paths:
       summary: Get book by ID
       tags:
       - books
-    patch:
+    put:
       consumes:
       - application/json
       description: Update a book by ID with the input payload

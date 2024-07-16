@@ -54,13 +54,13 @@ func GetBookByID(ctx *gin.Context) {
 // @Tags books
 // @Accept json
 // @Produce json
-// @Param book body models.BookRequest true "Book Request"
+// @Param book body models.Book true "Book Request"
 // @Success 201 {object} models.Book
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
 // @Router /books [post]
 func CreateBook(ctx *gin.Context) {
-	var book models.BookRequest
+	var book models.Book
 	if err := ctx.ShouldBindJSON(&book); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -93,29 +93,42 @@ func CreateBook(ctx *gin.Context) {
 // @Failure 400 {object} map[string]interface{}
 // @Failure 404 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /books/{id} [patch]
+// @Router /books/{id} [put]
 func UpdateBook(ctx *gin.Context) {
-	var book models.BookRequest
+	var bookRequest models.BookRequest
+	var book models.Book
 	idStr := ctx.Param("id")
 
 	id, _ := strconv.Atoi(idStr)
 
-	if err := ctx.ShouldBindJSON(&book); err != nil {
+	// Bind JSON input to bookRequest
+	if err := ctx.ShouldBindJSON(&bookRequest); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
+	// Find the existing book in the database
 	if err := config.DB.First(&book, id).Error; err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": "Book not found"})
 		return
 	}
 
+	// Validate the input
 	if err := utils.ValidateBookRequest(&book); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	book.Thickness = utils.CalculateThickness(book.TotalPage)
+	// Update the book with data from bookRequest
+	book.Title = bookRequest.Title
+	book.Description = bookRequest.Description
+	book.ImageURL = bookRequest.ImageURL
+	book.ReleaseYear = bookRequest.ReleaseYear
+	book.Price = bookRequest.Price
+	book.TotalPage = bookRequest.TotalPage
+	book.Thickness = utils.CalculateThickness(bookRequest.TotalPage)
+
+	// Save the updated book to the database
 	if err := config.DB.Save(&book).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
