@@ -20,7 +20,7 @@ var (
 // @title Books API
 // @version 1.0
 // @description This is a sample server for managing books.
-// @host https://go-vercel-app-arasys-projects.vercel.app/
+// @host go-vercel-app-arasys-projects.vercel.app/
 // @BasePath /
 func init() {
 	App = gin.New()
@@ -48,7 +48,7 @@ func init() {
 	docs.SwaggerInfo.Title = "Movie REST API"
 	docs.SwaggerInfo.Description = "This is REST API Movie."
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = utils.Getenv("HOST", "https://go-vercel-app-seven.vercel.app/")
+	docs.SwaggerInfo.Host = utils.Getenv("HOST", "go-vercel-app-seven.vercel.app/")
 	if environment == "development" {
 		docs.SwaggerInfo.Schemes = []string{"http", "https"}
 	} else {
