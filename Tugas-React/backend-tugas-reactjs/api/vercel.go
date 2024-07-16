@@ -10,7 +10,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/vercel/go-bridge/go/bridge"
 )
 
 var (
@@ -22,7 +21,7 @@ var (
 // @description This is a sample server for managing books.
 // @host localhost:8080
 // @BasePath /
-func Init() {
+func init() {
 	app = gin.New()
 
 	environment := utils.Getenv("ENVIRONMENT", "development")
@@ -54,11 +53,12 @@ func Init() {
 	if err := app.Run(":" + port); err != nil {
 		log.Fatalf("Failed to run server: %v", err)
 	}
-
-	bridge.Start(app)
 }
 
 // Entrypoint
 func Handler(w http.ResponseWriter, r *http.Request) {
+	if app == nil {
+		log.Fatal("App is not initialized")
+	}
 	app.ServeHTTP(w, r)
 }
