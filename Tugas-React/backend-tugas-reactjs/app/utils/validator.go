@@ -26,8 +26,8 @@ func ValidateBookRequest(book *models.Book) error {
 		errMessage = append(errMessage, "Invalid Image URL")
 	}
 
-	if book.ReleaseYear <= 1980 && book.ReleaseYear >= 2021 {
-		errMessage = append(errMessage, "The range of release year is only between 1980 - 2021")
+	if book.ReleaseYear < 1980 || book.ReleaseYear > 2021 {
+		errMessage = append(errMessage, "The range of release year should be between 1980 and 2021")
 	}
 
 	if len(errMessage) > 0 {
