@@ -10,6 +10,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/vercel/go-bridge/go/bridge"
 )
 
 var (
@@ -52,6 +53,8 @@ func main() {
 	if err := app.Run(":" + port); err != nil {
 		log.Fatalf("Failed to run server: %v", err)
 	}
+
+	bridge.Start(app)
 }
 
 // Entrypoint
