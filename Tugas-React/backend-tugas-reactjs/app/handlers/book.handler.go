@@ -15,7 +15,7 @@ import (
 // @Description Get a list of all books
 // @Tags books
 // @Produce json
-// @Success 200 {object} []models.Book
+// @Success 200 {array} models.Book
 // @Router /books [get]
 func GetAllBooks(ctx *gin.Context) {
 	var books []models.Book
@@ -34,7 +34,7 @@ func GetAllBooks(ctx *gin.Context) {
 // @Produce json
 // @Param id path int true "Book ID"
 // @Success 200 {object} models.Book
-// @Failure 404 {object} gin.H{"error": "Book not found"}
+// @Failure 404 {object} map[string]interface{}
 // @Router /books/{id} [get]
 func GetBookByID(ctx *gin.Context) {
 	var book models.Book
@@ -56,7 +56,8 @@ func GetBookByID(ctx *gin.Context) {
 // @Produce json
 // @Param book body models.BookRequest true "Book Request"
 // @Success 201 {object} models.Book
-// @Failure 400 {object} gin.H{"error": "Invalid input"}
+// @Failure 400 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
 // @Router /books [post]
 func CreateBook(ctx *gin.Context) {
 	var book models.BookRequest
@@ -81,7 +82,7 @@ func CreateBook(ctx *gin.Context) {
 }
 
 // UpdateBook godoc
-// @Summary Update a book
+// @Summary Update an existing book
 // @Description Update a book by ID with the input payload
 // @Tags books
 // @Accept json
@@ -89,8 +90,9 @@ func CreateBook(ctx *gin.Context) {
 // @Param id path int true "Book ID"
 // @Param book body models.BookRequest true "Book Request"
 // @Success 200 {object} models.Book
-// @Failure 400 {object} gin.H{"error": "Invalid input"}
-// @Failure 404 {object} gin.H{"error": "Book not found"}
+// @Failure 400 {object} map[string]interface{}
+// @Failure 404 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
 // @Router /books/{id} [patch]
 func UpdateBook(ctx *gin.Context) {
 	var book models.BookRequest
@@ -128,8 +130,9 @@ func UpdateBook(ctx *gin.Context) {
 // @Tags books
 // @Produce json
 // @Param id path int true "Book ID"
-// @Success 200 {string} string "Book deleted"
-// @Failure 404 {object} gin.H{"error": "Book not found"}
+// @Success 200 {object} map[string]interface{}
+// @Failure 404 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
 // @Router /books/{id} [delete]
 func DeleteBook(ctx *gin.Context) {
 	idStr := ctx.Param("id")
