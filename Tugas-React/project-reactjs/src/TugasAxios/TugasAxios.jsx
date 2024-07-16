@@ -39,6 +39,16 @@ const TugasAxios = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { title, description, image_url, release_year, price, total_page } = formData;
+    if (!isValidUrl(image_url)) {
+      alert("Image URL harus berupa URL yang valid");
+      return;
+    }
+  
+    if (release_year < 1980 || release_year > 2021) {
+      alert("Release Year harus di antara tahun 1980 dan 2021");
+      return;
+    }
+
     if (!title || !description || !image_url || !release_year || !price || !total_page) {
       alert("Semua inputan wajib diisi");
       return;
@@ -69,6 +79,15 @@ const TugasAxios = () => {
       setEditIndex(null);
     } catch (error) {
       console.error('Error submitting form:', error);
+    }
+  };
+
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+      return true;
+    } catch (error) {
+      return false;
     }
   };
 
