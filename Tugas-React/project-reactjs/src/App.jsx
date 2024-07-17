@@ -1,8 +1,17 @@
-import React from'react';
+import React, { useContext } from'react';
 // import IntroReactJS from './Tugas-Intro-ReactJS/TugasIntroReact';
 // import TugasHooks from './Tugas-Hooks/TugasHooks';
 // import TugasCRUDHooks from "./TugasCRUDHooks/TugasCRUDHooks";
-import TugasAxios from './TugasAxios/TugasAxios';
+import { BookContext, BookProvider } from './TugasContext/Component/BookContext';
+import TablePage from './TugasContext/TablePage';
+import FormPage from './TugasContext/FormPage';
+import './App.css';
+
+const MainContent = () => {
+  const { currentPage } = useContext(BookContext);
+
+  return currentPage === 'table' ? <TablePage /> : <FormPage />;
+};
 
 function App() {
   return (
@@ -10,7 +19,9 @@ function App() {
       {/* <TugasHooks/>
       <IntroReactJS/> 
       <TugasCRUDHooks/> */}
-      <TugasAxios/>
+      <BookProvider>
+        <MainContent />
+      </BookProvider>
     </>
   );
 }
