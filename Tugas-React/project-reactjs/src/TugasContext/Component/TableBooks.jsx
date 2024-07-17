@@ -3,12 +3,13 @@ import axios from 'axios';
 import { BookContext } from './BookContext';
 
 const TableBooks = () => {
-  const { books, setFormData, setEditIndex, fetchBooks } = useContext(BookContext);
+  const { books, setFormData, setEditIndex, fetchBooks, setCurrentPage } = useContext(BookContext);
   const API_URL = import.meta.env.VITE_BASE_API_URL;
 
   const handleEdit = (index) => {
     setFormData(books[index]);
     setEditIndex(index);
+    setCurrentPage('form');
   };
 
   const handleDelete = async (index) => {

@@ -6,11 +6,7 @@ const FormPage = () => {
   const { setCurrentPage } = useContext(BookContext);
 
   return (
-    <div className="container-form">
-      <h2>Form Buku</h2>
-      <button onClick={() => setCurrentPage('table')}>Kembali ke Daftar Buku</button>
-      <FormBook />
-    </div>
+    <><FormBook /></>
   );
 };
 

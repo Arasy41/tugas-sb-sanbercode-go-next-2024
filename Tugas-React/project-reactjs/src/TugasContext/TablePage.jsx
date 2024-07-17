@@ -8,8 +8,8 @@ const TablePage = () => {
   return (
     <div className="container-crud">
       <h1>Daftar Buku</h1>
-      <button onClick={() => setCurrentPage('form')}>Tambah Buku</button>
       <TableBooks/>
+      <button className='btn-add' onClick={() => setCurrentPage('form')}>Tambah Buku +</button>
     </div>
   );
 };

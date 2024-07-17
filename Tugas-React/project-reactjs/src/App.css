@@ -124,51 +124,60 @@
   cursor: pointer;
   font-size: 16px;
   } */
+
   body {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     justify-content: center;
+    align-items: center;
     height: 100vh;
     margin: 0;
+    background-color: #f4f4f4;
   }
   
   .container-crud {
     text-align: center;
-    margin: 50px;
+    margin: 20px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
   }
   
   .container-crud h1 {
-    text-align: center;
-    font-size: 28px;
-    color: black;
+    font-size: 32px;
+    color: #333;
     font-weight: bolder;
+    margin-bottom: 20px;
   }
   
   .container-form {
     width: 100%;
     text-align: center;
-    margin-top: 55px;
-    display: block;
-    border: 1px solid #000;
-    padding-bottom: 20px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    background: white;
   }
   
   th, td {
-    border: 1px solid #000000;
-    padding: 8px;
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
   }
   
   th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: center;
-    background-color: #91DDCF;
+    background-color: #088395;
+    color: white;
   }
   
   form {
@@ -181,49 +190,54 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px 10px;
-    margin-bottom: 10px;
+    margin: 10px 0;
   }
   
   label {
     text-align: left;
     font-weight: bold;
     flex: 1;
+    margin-right: 10px;
   }
   
   input {
-    text-align: left;
-    padding: 5px 10px 5px 10px;
-    margin: 5px 0px;
-    flex: 2;
+    padding-left: 10px;
+    width: 450px;
+    height: 35px;
+    border: 1px solid #363434;
+    border-radius: 5px;
   }
   
   button {
-    padding: 7px;
+    padding: 10px;
     background-color: #4caf50;
-    margin-right: 5px;
     border-radius: 5px;
     border: none;
     color: #fff;
     cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
   }
   
   .btn-delete {
     background-color: #973131;
   }
-  
-  .btn-submit {
-    color: #000;
-    background-color: #91DDCF;
-    width: 100px;
-    align-self: flex-end;
-    margin: 20px;
+
+  .btn-submit, .btn-back {
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
   }
   
-  .btn-submit:hover {
-    background-color: #fff;
-    border-color: black;
-    border-style:inset;
+  .btn-submit {
+    background-color: #4caf50;
+    color: white;
+  }
+
+  .btn-back {
+    background-color: #f44336;
+    color: white;
   }
   
   button:hover {
@@ -231,6 +245,24 @@
   }
   
   .btn-delete:hover {
+    background-color: darkred;
+  }
+  
+  .btn-submit:hover {
+    background-color: #388e3c;
+  }
+  
+  .btn-add {
+    font-size: 15px;
+    padding: 15px 30px;
+    background-color: #37B7C3;
+  }
+  
+  .btn-add:hover {
+    background-color: #088395;
+  }
+  
+  .btn-back:hover {
     background-color: darkred;
   }
   
