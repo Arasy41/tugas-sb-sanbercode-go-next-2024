@@ -13,6 +13,7 @@ const TugasAxios = () => {
     total_page: "",
   });
   const [editIndex, setEditIndex] = useState(null);
+  const API_URL = import.meta.env.VITE_BASE_API_URL
 
   useEffect(() => {
     fetchBooks();
@@ -20,7 +21,7 @@ const TugasAxios = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('https://go-vercel-app-arasys-projects.vercel.app/books');
+      const response = await axios.get(`${API_URL}/books`);
       console.log('API Response:', response.data);
       setBooks(Array.isArray(response.data.data) ? response.data.data : []);
     } catch (error) {
@@ -56,7 +57,7 @@ const TugasAxios = () => {
 
     try {
       if (editIndex === null) {
-        await axios.post('https://go-vercel-app-arasys-projects.vercel.app/books', {
+        await axios.post(`${API_URL}/books`, {
           title,
           description,
           image_url,
@@ -65,7 +66,7 @@ const TugasAxios = () => {
           total_page,
         });
       } else {
-        await axios.put(`https://go-vercel-app-arasys-projects.vercel.app/books/${books[editIndex].id}`, {
+        await axios.put(`${API_URL}/books/${books[editIndex].id}`, {
           title,
           description,
           image_url,
@@ -98,7 +99,7 @@ const TugasAxios = () => {
 
   const handleDelete = async (index) => {
     try {
-      await axios.delete(`https://go-vercel-app-arasys-projects.vercel.app/books/${books[index].id}`);
+      await axios.delete(`${API_URL}/books/${books[index].id}`);
       fetchBooks();
     } catch (error) {
       console.error('Error deleting book:', error);
