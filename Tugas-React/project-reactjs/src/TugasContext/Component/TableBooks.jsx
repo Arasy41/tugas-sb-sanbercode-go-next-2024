@@ -22,7 +22,7 @@ const TableBooks = () => {
   };
 
   return (
-    <table>
+    <table className='table-ctx'>
       <thead>
         <tr>
           <th>No</th>
@@ -48,8 +48,8 @@ const TableBooks = () => {
             <td>{book.total_page}</td>
             <td>{book.thickness}</td>
             <td>
-              <button onClick={() => handleEdit(index)}>Edit</button>
-              <button className="btn-delete" onClick={() => handleDelete(index)}>Delete</button>
+              <button className="btn-edit-ctx" onClick={() => handleEdit(index)}>Edit</button>
+              <button className="btn-delete-ctx" onClick={() => handleDelete(index)}>Delete</button>
             </td>
           </tr>
         ))}

@@ -7,7 +7,7 @@ const TablePage = () => {
   const { setCurrentPage } = useContext(BookContext);
 
   return (
-    <div className="container-crud">
+    <div className="container-crud-ctx">
       <h1>Daftar Buku</h1>
       <TableBooks/>
       <button className='btn-add' onClick={() => setCurrentPage('form')}>Tambah Buku +</button>

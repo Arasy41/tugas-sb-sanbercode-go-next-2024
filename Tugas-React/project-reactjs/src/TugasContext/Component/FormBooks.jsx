@@ -53,36 +53,36 @@ const FormBook = () => {
   };
 
   return (
-    <div className="container-form">
+    <div className="container-form-ctx">
       <h2>Form Buku</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
+      <form className="form-ctx" onSubmit={handleSubmit}>
+        <div className="form-group-ctx">
           <label>Title:</label>
           <input type="text" name="title" value={formData.title} onChange={handleInputChange} />
         </div>
-        <div className="form-group">
+        <div className="form-group-ctx">
           <label>Description:</label>
           <input type="text" name="description" value={formData.description} onChange={handleInputChange} />
         </div>
-        <div className="form-group">
+        <div className="form-group-ctx">
           <label>Image URL:</label>
           <input type="text" name="image_url" value={formData.image_url} onChange={handleInputChange} />
         </div>
-        <div className="form-group">
+        <div className="form-group-ctx">
           <label>Release Year:</label>
           <input type="number" name="release_year" value={formData.release_year} onChange={handleInputChange} />
         </div>
-        <div className="form-group">
+        <div className="form-group-ctx">
           <label>Price:</label>
           <input type="text" name="price" value={formData.price} onChange={handleInputChange} />
         </div>
-        <div className="form-group">
+        <div className="form-group-ctx">
           <label>Total Page:</label>
           <input type="number" name="total_page" value={formData.total_page} onChange={handleInputChange} />
         </div>
         <div className="form-actions">
-          <button type="submit" className="btn-submit">Submit</button>
-          <button type="button" className="btn-back" onClick={() => setCurrentPage('table')}>Back</button>
+          <button type="submit" className="btn-submit-ctx">Submit</button>
+          <button type="button" className="btn-back-ctx" onClick={() => setCurrentPage('table')}>Back</button>
         </div>
       </form>
     </div>

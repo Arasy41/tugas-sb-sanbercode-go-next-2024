@@ -57,7 +57,7 @@ const TugasCRUDHooks = () => {
   return (
     <div className="container-crud">
       <h1>Daftar Harga Buah</h1>
-      <table>
+      <table className="table-crud">
         <thead>
           <tr>
             <th>No</th>
@@ -77,7 +77,7 @@ const TugasCRUDHooks = () => {
               <td>{buah.beratTotal / 1000} kg</td>
               <td>{buah.hargaTotal / (buah.beratTotal / 1000)}</td>
               <td>
-                <button onClick={() => handleEdit(index)}>Edit</button>
+                <button className="btn-edit" onClick={() => handleEdit(index)}>Edit</button>
                 <button className="btn-delete" onClick={() => handleDelete(index)}>Delete</button>
               </td>
             </tr>

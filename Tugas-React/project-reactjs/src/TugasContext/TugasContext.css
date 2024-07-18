@@ -8,7 +8,7 @@ body {
     background-color: #f4f4f4;
   }
   
-  .container-crud {
+  .container-crud-ctx {
     text-align: center;
     margin: 20px;
     padding: 20px;
@@ -17,17 +17,18 @@ body {
     border-radius: 10px;
   }
   
-  .container-crud h1 {
+  .container-crud-ctx h1 {
     font-size: 32px;
     color: #333;
     font-weight: bolder;
     margin-bottom: 20px;
   }
   
-  .container-form {
+  .container-form-ctx {
     width: 100%;
     text-align: center;
-    margin: 20px auto;
+    margin: 20px;
+    margin-top: 75px;
     padding: 20px;
     background: white;
     border: 1px solid #ddd;
@@ -35,45 +36,45 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  table {
+  .table-ctx {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
     background: white;
   }
   
-  th, td {
+  .table-ctx th, td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: center;
   }
   
-  th {
+  .table-ctx th {
     background-color: #088395;
     color: white;
   }
   
-  form {
+  .form-ctx {
     display: flex;
     flex-direction: column;
     margin: auto;
   }
   
-  .form-group {
+  .form-group-ctx {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 10px 0;
   }
   
-  label {
+  .form-group-ctx label {
     text-align: left;
     font-weight: bold;
     flex: 1;
     margin-right: 10px;
   }
   
-  input {
+  .form-group-ctx input {
     padding-left: 10px;
     width: 450px;
     height: 35px;
@@ -81,7 +82,7 @@ body {
     border-radius: 5px;
   }
   
-  button {
+  .btn-edit-ctx {
     padding: 10px;
     background-color: #4caf50;
     border-radius: 5px;
@@ -92,36 +93,45 @@ body {
     transition: background-color 0.3s;
   }
   
-  .btn-delete {
+  .btn-delete-ctx {
+    padding: 10px;
     background-color: #973131;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
   }
 
-  .btn-submit, .btn-back {
+  .btn-submit-ctx, .btn-back-ctx {
     width: 100%;
     padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
     border: none;
     cursor: pointer;
   }
   
-  .btn-submit {
+  .btn-submit-ctx {
     background-color: #4caf50;
     color: white;
   }
 
-  .btn-back {
+  .btn-back-ctx {
     background-color: #f44336;
     color: white;
   }
   
-  button:hover {
+  .btn-edit-ctx:hover {
     background-color: #45a049;
   }
   
-  .btn-delete:hover {
+  .btn-delete-ctx:hover {
     background-color: darkred;
   }
   
-  .btn-submit:hover {
+  .btn-submit-ctx:hover {
     background-color: #388e3c;
   }
   
@@ -129,12 +139,18 @@ body {
     font-size: 15px;
     padding: 15px 30px;
     background-color: #37B7C3;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
   }
   
   .btn-add:hover {
     background-color: #088395;
   }
   
-  .btn-back:hover {
+  .btn-back-ctx:hover {
     background-color: darkred;
   }

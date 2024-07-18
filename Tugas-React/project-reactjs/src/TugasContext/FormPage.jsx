@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
-import { BookContext } from './Component/BookContext';
+import React from 'react';
 import FormBook from  './Component/FormBooks'
 import './TugasContext.css'
 
 const FormPage = () => {
-  const { setCurrentPage } = useContext(BookContext);
-
   return (
-    <><FormBook /></>
+    <>
+      <FormBook />
+    </>
   );
 };
 

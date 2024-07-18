@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../App.css';
+import './TugasAxios.css';
 
 const TugasAxios = () => {
   const [books, setBooks] = useState([]);
@@ -107,7 +107,7 @@ const TugasAxios = () => {
   };
 
   return (
-    <div className="container-crud">
+    <div className="container-crud-axios">
       <h1>Daftar Buku</h1>
       <table>
         <thead>
@@ -135,41 +135,41 @@ const TugasAxios = () => {
               <td>{book.total_page}</td>
               <td>{book.thickness}</td>
               <td>
-                <button onClick={() => handleEdit(index)}>Edit</button>
-                <button className="btn-delete" onClick={() => handleDelete(index)}>Delete</button>
+                <button className="btn-edit-axios" onClick={() => handleEdit(index)}>Edit</button>
+                <button className="btn-delete-axios" onClick={() => handleDelete(index)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div className="container-form">
+      <div className="container-form-axios">
         <h2>Form Buku</h2>
-        <form onSubmit={handleSubmit} className="form-crud">
-          <div className="form-group">
+        <form onSubmit={handleSubmit} className="form-crud-axios">
+          <div className="form-group-axios">
             <label>Title:</label>
             <input type="text" name="title" value={formData.title} onChange={handleInputChange} />
           </div>
-          <div className="form-group">
+          <div className="form-group-axios">
             <label>Description:</label>
             <input type="text" name="description" value={formData.description} onChange={handleInputChange} />
           </div>
-          <div className="form-group">
+          <div className="form-group-axios">
             <label>Image URL:</label>
             <input type="text" name="image_url" value={formData.image_url} onChange={handleInputChange} />
           </div>
-          <div className="form-group">
+          <div className="form-group-axios">
             <label>Release Year:</label>
             <input type="number" name="release_year" value={formData.release_year} onChange={handleInputChange} />
           </div>
-          <div className="form-group">
+          <div className="form-group-axios">
             <label>Price:</label>
             <input type="text" name="price" value={formData.price} onChange={handleInputChange} />
           </div>
-          <div className="form-group">
+          <div className="form-group-axios">
             <label>Total Page:</label>
             <input type="number" name="total_page" value={formData.total_page} onChange={handleInputChange} />
           </div>
-          <button type="submit" className="btn-submit">Submit</button>
+          <button type="submit" className="btn-submit-axios">Submit</button>
         </form>
       </div>
     </div>
