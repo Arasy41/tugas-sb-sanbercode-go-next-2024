@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../App.css';
+import './TugasCRUDHooks.css';
 
 const daftarBuah = [
   { nama: "Nanas", hargaTotal: 100000, beratTotal: 4000 },

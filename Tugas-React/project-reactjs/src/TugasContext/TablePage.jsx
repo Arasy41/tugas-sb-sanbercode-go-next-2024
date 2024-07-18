@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
-import { BookContext } from './Component/BookContext';
-import TableBooks from './Component/TableBooks';
+import React, { useContext } from "react";
+import { BookContext } from "./Component/BookContext";
+import TableBooks from "./Component/TableBooks";
+import './TugasContext.css'
 
 const TablePage = () => {
   const { setCurrentPage } = useContext(BookContext);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import sanberLogo from "../assets/logo.png";
-import "../App.css";
+import "./TugasIntro.css";
+import TugasHooks from "../Tugas-Hooks/TugasHooks";
 
 const CheckboxList = ({ items }) => {
   return (
@@ -43,6 +44,7 @@ function IntroReactJS() {
   return (
     <>
       <div className="container">
+        <TugasHooks />
         <div>
           <a href="https://sanbercode.com/" target="_blank">
             <img src={sanberLogo} className="logo" alt="Sanbercode logo" />
