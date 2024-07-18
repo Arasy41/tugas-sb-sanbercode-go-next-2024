@@ -1,0 +1,144 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-color: #f4f4f4;
+  }
+  
+  .container-crud-axios {
+    text-align: center;
+    margin: 20px;
+    margin-top: 500px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .container-crud-axios h1 {
+    font-size: 32px;
+    color: #333;
+    font-weight: bolder;
+    margin-bottom: 20px;
+  }
+  
+  .container-form-axios {
+    text-align: center;
+    margin: 20px;
+    margin-top: 75px;
+    padding: 20px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table-axios {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background: white;
+  }
+  
+  .table-axios th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+  
+  .table-axios th {
+    background-color: #088395;
+    color: white;
+  }
+  
+  .form-axios {
+    flex-direction: column;
+    margin: auto;
+  }
+  
+  .form-group-axios {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .form-group-axios label {
+    text-align: left;
+    font-weight: bold;
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .form-group-axios input {
+    padding-left: 10px;
+    width: 450px;
+    height: 35px;
+    border: 1px solid #363434;
+    border-radius: 5px;
+  }
+  
+  .btn-edit-axios {
+    padding: 10px;
+    background-color: #4caf50;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-delete-axios {
+    padding: 10px;
+    background-color: #973131;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
+  }
+
+  .btn-submit-axios {
+    width: 100%;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-submit-axios {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .btn-edit-axios:hover {
+    background-color: #45a049;
+  }
+  
+  .btn-delete-axios:hover {
+    background-color: darkred;
+  }
+  
+  .btn-submit-axios:hover {
+    background-color: #388e3c;
+  }
+  
+  .btn-add-axios {
+    font-size: 15px;
+    padding: 15px 30px;
+    background-color: #37B7C3;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-add-axios:hover {
+    background-color: #088395;
+  }
