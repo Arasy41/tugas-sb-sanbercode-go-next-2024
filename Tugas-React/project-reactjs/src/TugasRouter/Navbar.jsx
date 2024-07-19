@@ -16,7 +16,7 @@ const Navbar = () => {
         <Link to="/tugas-router" className="navbar-link">Router</Link>
       </div>
       <button onClick={toggleTheme} className="theme-toggle-btn">
-        {theme === 'light-theme' ? '🌙' : '☀️'}
+        Klik untuk ganti tema : {theme === 'light-theme' ? '🌙' : '☀️'}
       </button>
     </nav>
   );

@@ -1,4 +1,4 @@
-  /* body {
+body {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     justify-content: center;
@@ -8,26 +8,27 @@
     background-color: #f4f4f4;
   }
   
-  .container-crud {
+  .container-crud-route {
     text-align: center;
     margin: 20px;
     padding: 20px;
-    background: white;
+    background: #96C9F4;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
   }
   
-  .container-crud h1 {
+  .container-crud-route h1 {
     font-size: 32px;
     color: #333;
     font-weight: bolder;
     margin-bottom: 20px;
   }
   
-  .container-form {
+  .container-form-route {
     width: 100%;
     text-align: center;
-    margin: 20px auto;
+    margin: 20px;
+    margin-top: 75px;
     padding: 20px;
     background: white;
     border: 1px solid #ddd;
@@ -35,45 +36,45 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  table {
+  .table-route {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
     background: white;
   }
   
-  th, td {
+  .table-route th, td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: center;
   }
   
-  th {
+  .table-route th {
     background-color: #088395;
     color: white;
   }
   
-  form {
+  .form-route {
     display: flex;
     flex-direction: column;
     margin: auto;
   }
   
-  .form-group {
+  .form-group-route {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 10px 0;
   }
   
-  label {
+  .form-group-route label {
     text-align: left;
     font-weight: bold;
     flex: 1;
     margin-right: 10px;
   }
   
-  input {
+  .form-group-route input {
     padding-left: 10px;
     width: 450px;
     height: 35px;
@@ -81,7 +82,9 @@
     border-radius: 5px;
   }
   
-  button {
+  .btn-edit-route {
+    text-decoration: none;
+    font-size: 14px;
     padding: 10px;
     background-color: #4caf50;
     border-radius: 5px;
@@ -92,50 +95,66 @@
     transition: background-color 0.3s;
   }
   
-  .btn-delete {
+  .btn-delete-route {
+    padding: 10px;
     background-color: #973131;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
   }
 
-  .btn-submit, .btn-back {
+  .btn-submit-route, .btn-back-route {
     width: 100%;
     padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
     border: none;
     cursor: pointer;
   }
   
-  .btn-submit {
+  .btn-submit-route {
     background-color: #4caf50;
     color: white;
   }
 
-  .btn-back {
+  .btn-back-route {
     background-color: #f44336;
     color: white;
   }
   
-  button:hover {
+  .btn-edit-route:hover {
     background-color: #45a049;
   }
   
-  .btn-delete:hover {
+  .btn-delete-route:hover {
     background-color: darkred;
   }
   
-  .btn-submit:hover {
+  .btn-submit-route:hover {
     background-color: #388e3c;
   }
   
-  .btn-add {
+  .btn-add-route {
+    text-decoration: none;
+    display: inline-block;
     font-size: 15px;
     padding: 15px 30px;
     background-color: #37B7C3;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.3s;
   }
   
-  .btn-add:hover {
+  .btn-add-route:hover {
     background-color: #088395;
   }
   
-  .btn-back:hover {
+  .btn-back-route:hover {
     background-color: darkred;
   }
-   */

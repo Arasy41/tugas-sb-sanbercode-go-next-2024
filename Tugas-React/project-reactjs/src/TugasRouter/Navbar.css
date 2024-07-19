@@ -21,7 +21,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #fff;
+  background-color: var(--navbar-bg);
   color: var(--navbar-text);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
@@ -38,18 +38,21 @@
   text-decoration: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.5s;
 }
 
 .navbar-link:hover {
+  text-decoration: underline;
   background-color: var(--navbar-link-hover-bg);
   color: var(--navbar-link-hover-text);
 }
 
 .theme-toggle-btn {
-  background: none;
   border: none;
+  font-size: 0.9rem;
   color: var(--navbar-text);
-  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  border-radius: 4px;
   cursor: pointer;
 }
