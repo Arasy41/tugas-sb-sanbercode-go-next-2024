@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const api = axios.create({
+const Api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
     headers: {
         "Content-Type": "application/json"
     },
 });
 
-api.interceptors.request.use(async (config) => {
+Api.interceptors.request.use(async (config) => {
     const token = localStorage.getItem("token");
 
     try {
@@ -20,4 +20,4 @@ api.interceptors.request.use(async (config) => {
     return config;
 });
 
-export default api
+export default Api;
