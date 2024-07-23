@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 const Login = () => {
 
@@ -31,7 +32,13 @@ const Login = () => {
                     <label>Password</label>
                     <input type="password" name="password" value={credentials.password} onChange={handleChange} />
                 </div>
+                <div>
+                    
+                </div>
                 <button type="submit">Login</button>
+                <br/>
+                <h4>Anda belum mempunyai akun?</h4>
+                <Link to="/register">Register</Link>
             </form>            
         </div>
     )
