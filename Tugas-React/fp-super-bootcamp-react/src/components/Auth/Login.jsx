@@ -16,6 +16,7 @@ const Login = () => {
         try {
             await login(credentials)
             setCredentials({ username: "", password: "" })
+            window.location.reload()
         } catch (error) {
             console.log('Login Error', error);
         }
