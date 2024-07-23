@@ -1,28 +1,26 @@
-import { useState } from 'react'
-import './App.css'
-import ReviewProvider from './contexts/ReviewContext'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Login from './components/Auth/Login'
-import Register from './components/Auth/Register'
-import NavBar from './components/Layout/Navbar'
+import React from "react";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "./components/Auth/Login";
+import Register from "./components/Auth/Register";
+import Navbar from "./components/Layout/Navbar";
+import Home from "./components/Pages/Home";
+import { AuthProvider } from "./contexts/AuthContext";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
+    <ThemeProvider>
       <AuthProvider>
-        <ReviewProvider>
-          <BrowserRouter>
-            <NavBar />
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path='/register' element={<Register/>}/>
-            </Routes>
-          </BrowserRouter>
-        </ReviewProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </BrowserRouter>
       </AuthProvider>
-    </>
+    </ThemeProvider>
   )
 }
 

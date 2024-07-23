@@ -1,36 +1,39 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
-import { useAuth } from '../context/AuthContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
+import { AuthContext } from '../../contexts/AuthContext';
 
-const NavBar = () => {
-  const { theme, toggleTheme } = useTheme();
-  const { user, logout } = useAuth();
+const Navbar = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
+  const {user, logout} = useContext(AuthContext)
 
   return (
-    <nav className="p-4 bg-gray-800 text-white flex justify-between">
-      <div>
-        <Link to="/recipes" className="mr-4">Recipes</Link>
-        <Link to="/reviews" className="mr-4">Reviews</Link>
-      </div>
-      <div>
-        {user ? (
+    <nav className="bg-gray-800 p-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="text-xl text-white">
+          <Link to="/">Culinary Review</Link>
+        </div>
+        <div>
+          <Link to="/" className="mx-2 text-white">Home</Link>
+          {user ? (
           <>
             <Link to="/profile" className="mr-4">Profile</Link>
             <button onClick={logout} className="mr-4">Logout</button>
           </>
-        ) : (
-          <>
-            <Link to="/login" className="mr-4">Login</Link>
-            <Link to="/register" className="mr-4">Register</Link>
-          </>
-        )}
-        <button onClick={toggleTheme}>
-          {theme === 'light' ? 'Dark' : 'Light'} Mode
+          ) : (
+            <>
+              <Link to="/login" className="mr-4">Login</Link>
+              <Link to="/register" className="mr-4">Register</Link>
+            </>
+          )}
+        </div>
+        <button onClick={toggleTheme} className="text-white">
+          {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
         </button>
       </div>
     </nav>
   );
 };
 
-export default NavBar;
+export default Navbar;

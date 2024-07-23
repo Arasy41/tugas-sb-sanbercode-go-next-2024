@@ -1,18 +1,15 @@
 import React, { createContext, useState, useEffect } from 'react';
 import Api from '../service/api';
-import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      Api.get('/profile/me')
+      Api.get('/api/profile/me')
         .then((response) => setUser(response.data))
         .catch(() => setUser(null));
     }
@@ -26,7 +23,6 @@ const AuthProvider = ({ children }) => {
 
   const register = async (data) => {
     const response = await Api.post('/api/register', data);
-    navigate.name('/login');
     setUser(response.data.user);
   };
 
