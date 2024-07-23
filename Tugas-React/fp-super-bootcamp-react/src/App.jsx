@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 import ReviewProvider from './contexts/ReviewContext'
-import Header from './components/Layout/Header'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './components/Auth/Login'
 import Register from './components/Auth/Register'
+import NavBar from './components/Layout/Navbar'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,7 +14,7 @@ function App() {
       <AuthProvider>
         <ReviewProvider>
           <BrowserRouter>
-            <Header />
+            <NavBar />
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path='/register' element={<Register/>}/>
