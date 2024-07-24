@@ -1,22 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { AuthContext } from '../../contexts/AuthContext';
-import { FaSun, FaMoon } from 'react-icons/fa'; // Import ikon dari react-icons
+import { FaSun, FaMoon, FaUserCircle } from 'react-icons/fa'; // Import ikon dari react-icons
 
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const { user, logout } = useContext(AuthContext);
+  const { user, profile, logout } = useContext(AuthContext);
 
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+  
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex items-center">
-        {/* Logo di Pojok Kiri */}
         <div className="flex-shrink-0">
           <Link to="/" className="text-white text-2xl font-bold">CulinaryReview</Link>
         </div>
         
-        {/* Navigasi di Tengah */}
         <div className="flex-grow flex justify-center">
           <div className="flex items-center">
             <Link to="/" className="mr-4 text-white hover:bg-gray-700 p-2 rounded">Home</Link>
@@ -26,13 +30,25 @@ const Navbar = () => {
           </div>
         </div>
         
-        {/* Tombol Login di Pojok Kanan */}
-        <div className="flex-shrink-0 ml-auto flex items-center">
-          {user ? (
-            <>
-              <Link to="/profile" className="mr-4 text-white hover:bg-gray-700 p-2 rounded">Profile</Link>
-              <button onClick={logout} className="mr-4 text-white hover:bg-gray-700 p-2 rounded">Logout</button>
-            </>
+        <div className="flex-shrink-0 ml-auto mr-4 flex items-center">
+        {user ? (
+            <div className="relative">
+              <button onClick={toggleDropdown} className="flex items-center text-white hover:text-gray-500 mr-4 rounded-full">
+                {profile && profile.avatar ? (
+                  <img src={profile.avatar} alt="User Avatar" className="w-8 h-8 rounded-full mr-2" />
+                ) : (
+                  <FaUserCircle className="w-8 h-8 rounded-full mr-2" />
+                )}
+                <span>{user.username}</span>
+              </button>             
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+                  <Link to="/profile" className="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">Profile</Link>
+                  <Link to="/change-password" className="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">Change Password</Link>
+                  <button onClick={logout} className="w-full text-left block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-b-lg">Logout</button>
+                </div>
+              )}
+            </div>
           ) : (
             <Link to="/login" className="text-white hover:bg-gray-700 p-2 rounded mr-5">Login</Link>
           )}

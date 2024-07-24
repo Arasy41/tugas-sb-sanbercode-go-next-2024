@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Api from "../../service/api";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Register = () => {
+    const { register } = useContext(AuthContext);
     const [credentials, setCredentials] = useState({ email: "", username: "", password: "" });
 
     const handleChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await Api.post('/api/register', credentials);
+            await register(credentials);
             setCredentials({ email: "", username: "", password: "" });
+            navigate("/login");
         } catch (error) {
             console.log('Register Error', error);
         }
@@ -56,7 +62,7 @@ const Register = () => {
                             required
                         />
                     </div>
-                    <button
+                    <button                        
                         type="submit"
                         className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >

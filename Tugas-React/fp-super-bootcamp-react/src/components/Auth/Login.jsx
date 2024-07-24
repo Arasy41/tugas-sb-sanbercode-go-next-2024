@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const { login } = useContext(AuthContext);
@@ -10,11 +10,14 @@ const Login = () => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await login(credentials);
             setCredentials({ username: "", password: "" });
+            navigate("/");
             window.location.reload();
         } catch (error) {
             console.log('Login Error', error);
@@ -45,15 +48,12 @@ const Login = () => {
                             onChange={handleChange}
                             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
                         />
-                    </div>
-                        <div className="mb-4 text-right text-sm ">
-                            <Link to="/forgot-password" className="text-blue-500 hover:underline">Forgot Password?</Link>
-                        </div>
+                    </div>                        
                     <button
                         type="submit"
                         className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
-                        <Link to={"/"}>Login</Link>
+                        Login
                     </button>
                     <div className="mt-4 text-center">
                         <h4 className="text-gray-700 dark:text-gray-300 mb-2 mt-4">Anda belum mempunyai akun?</h4>

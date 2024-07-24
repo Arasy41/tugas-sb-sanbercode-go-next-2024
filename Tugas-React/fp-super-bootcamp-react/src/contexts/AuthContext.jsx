@@ -23,7 +23,12 @@ const AuthProvider = ({ children }) => {
 
   const register = async (data) => {
     const response = await Api.post('/api/register', data);
-    setUser(response.data.user);
+    setUser(response.data.user.username);
+  };
+
+  const changePassword = async (data) => {
+    const response = await Api.post('/api/change-password', data);
+    setUser(response.data);
   };
 
   const logout = () => {
@@ -32,7 +37,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, login, register, changePassword, logout }}>
       {children}
     </AuthContext.Provider>
   );
