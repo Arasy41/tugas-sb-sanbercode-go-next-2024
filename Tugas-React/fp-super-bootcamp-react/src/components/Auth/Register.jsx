@@ -2,8 +2,10 @@ import React, { useContext, useState } from "react";
 import Api from "../../service/api";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const Register = () => {
+    const { theme } = useContext(ThemeContext);
     const { register } = useContext(AuthContext);
     const [credentials, setCredentials] = useState({ email: "", username: "", password: "" });
 
@@ -25,46 +27,46 @@ const Register = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-sm">
-                <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Register</h2>
+        <div className={`flex justify-center items-center min-h-screen ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}>
+            <div className={`p-6 rounded-lg shadow-md w-full max-w-sm ${theme === "dark" ? "bg-gray-800" : "bg-white border-2 border-gray-300"} `}>
+                <h2 className={`text-2xl font-bold mb-4 ${theme === "dark" ? "text-white" : "text-black"}`}>Register</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-gray-700 dark:text-gray-300">Email</label>
+                        <label className={`block ${theme === "dark" ? "text-white" : "text-black"}`}>Email</label>
                         <input
                             type="email"
                             name="email"
                             value={credentials.email}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
                             required
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 dark:text-gray-300">Username</label>
+                        <label className={`block ${theme === "dark" ? "text-white" : "text-black"}`}>Username</label>
                         <input
                             type="text"
                             name="username"
                             value={credentials.username}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
                             required
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 dark:text-gray-300">Password</label>
+                        <label className={`block ${theme === "dark" ? "text-white" : "text-black"}`}>Password</label>
                         <input
                             type="password"
                             name="password"
                             value={credentials.password}
                             onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
                             required
                         />
                     </div>
                     <button                        
                         type="submit"
-                        className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full bg-blue-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                         Register
                     </button>

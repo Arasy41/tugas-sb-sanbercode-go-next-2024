@@ -19,6 +19,7 @@ const AuthProvider = ({ children }) => {
     const response = await Api.post('/api/login', credentials);
     localStorage.setItem('token', response.data.token);
     setUser(response.data.user);
+    window.location.replace('/');
   };
 
   const register = async (data) => {
@@ -34,6 +35,7 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
+    window.location.replace('/');
   };
 
   return (

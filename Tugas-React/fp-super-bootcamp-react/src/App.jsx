@@ -7,6 +7,7 @@ import Navbar from "./components/Layout/Navbar";
 import Home from "./components/Pages/Home";
 import { AuthProvider } from "./contexts/AuthContext";
 import ChangePassword from "./components/Auth/ChangePassword";
+import Profile from "./components/Pages/Profile";
 
 const App = () => {
   return (
@@ -19,11 +20,12 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;
