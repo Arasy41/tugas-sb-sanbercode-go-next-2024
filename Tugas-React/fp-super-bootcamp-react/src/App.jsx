@@ -9,6 +9,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ChangePassword from "./components/Auth/ChangePassword";
 import Profile from "./components/Pages/Profile";
 import EditProfile from "./components/Pages/Profile_Edit";
+import Recipes from "./components/Pages/Recipe";
+import RecipeDetail from "./components/Pages/RecipeDetail";
+import Faq from "./components/Pages/Faq";
 
 const App = () => {
   return (
@@ -23,6 +26,9 @@ const App = () => {
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/recipes" element={<Recipes />} />
+            <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
+            <Route path="/faq" element={<Faq />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
