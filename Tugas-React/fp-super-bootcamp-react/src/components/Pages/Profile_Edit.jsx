@@ -120,6 +120,7 @@ const EditProfile = () => {
           )}
           <input
             type="file"
+            accept="image/*"          
             id="avatar"
             name="avatar"
             onChange={handleFileChange}

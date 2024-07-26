@@ -31,18 +31,16 @@ const Register = () => {
             <div className={`p-6 rounded-lg shadow-md w-full max-w-sm ${theme === "dark" ? "bg-gray-800" : "bg-white border-2 border-gray-300"} `}>
                 <h2 className={`text-2xl font-bold mb-4 ${theme === "dark" ? "text-white" : "text-black"}`}>Register</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label className={`block ${theme === "dark" ? "text-white" : "text-black"}`}>Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={credentials.email}
-                            onChange={handleChange}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-                            required
-                        />
+                    <div className="mb-1">
+                        <label className={`block ${theme === "dark" ? "text-white" : "text-black"}`}>
+                            <span class="block text-sm font-medium">Email</span>
+                            <input type="email" class="peer w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"/>
+                            <p class="mt-1 invisible peer-invalid:visible text-pink-600 text-sm">
+                            Please provide a valid email address.
+                            </p>
+                        </label>
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-6">
                         <label className={`block ${theme === "dark" ? "text-white" : "text-black"}`}>Username</label>
                         <input
                             type="text"
