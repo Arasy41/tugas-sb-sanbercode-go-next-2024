@@ -8,6 +8,7 @@ import Home from "./components/Pages/Home";
 import { AuthProvider } from "./contexts/AuthContext";
 import ChangePassword from "./components/Auth/ChangePassword";
 import Profile from "./components/Pages/Profile";
+import EditProfile from "./components/Pages/Profile_Edit";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

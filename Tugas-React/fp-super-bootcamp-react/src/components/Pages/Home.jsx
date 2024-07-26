@@ -26,7 +26,7 @@ const Home = () => {
         {recipes.map((recipe) => {
           const image = recipe.images.length > 0 ? recipe.images[0].url : 'default-image-url';
           return (
-            <Link to={`/recipes/${recipe.id}`} key={recipe.id} className="border-2 p-4 rounded-lg hover:shadow-lg bg-white transition-all duration-200">
+            <Link to={`/recipes/${recipe.ID}`} key={recipe.ID} className="border-2 p-4 rounded-lg hover:shadow-lg bg-white transition-all duration-200">
               <img 
                 src={image} 
                 alt={recipe.title}

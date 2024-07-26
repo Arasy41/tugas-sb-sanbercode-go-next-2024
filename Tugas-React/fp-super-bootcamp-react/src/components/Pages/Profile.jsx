@@ -54,11 +54,11 @@ const Profile = () => {
         <img
           src={profile.avatar_url}
           alt={profile.full_name}
-          className="rounded-full w-48 h-48 object-cover border border-gray-200"
+          className="rounded-full w-48 h-48 object-cover border border-black"
         />
-        <p className="text-xl font-medium text-gray-700">{profile.full_name}</p>
-        <p className="text-lg font-medium text-gray-700">Bio :</p>
-        <p className="text-base text-gray-500">{profile.bio}</p>
+        <p className="text-xl font-medium">{profile.full_name}</p>
+        <p className="text-lg font-medium">Bio :</p>
+        <p className="text-base">{profile.bio}</p>
         <div className="mt-6 flex gap-4">
           <Link
             to="/edit-profile"
