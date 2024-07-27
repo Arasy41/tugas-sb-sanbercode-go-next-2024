@@ -12,6 +12,7 @@ import EditProfile from "./components/Pages/Profile_Edit";
 import Recipes from "./components/Pages/Recipe";
 import RecipeDetail from "./components/Pages/RecipeDetail";
 import Faq from "./components/Pages/Faq";
+import Reviews from "./components/Pages/Review";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/recipes" element={<Recipes />} />
             <Route path="/recipes/:id" element={<RecipeDetail />} />
+            <Route path="/reviews" element={<Reviews />} />
             <Route path="/faq" element={<Faq />} />
           </Routes>
         </BrowserRouter>
