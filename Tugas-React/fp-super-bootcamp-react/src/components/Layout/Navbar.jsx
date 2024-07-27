@@ -1,16 +1,30 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { AuthContext } from '../../contexts/AuthContext';
 import { FaSun, FaMoon, FaUserCircle, FaBars, FaTimes } from 'react-icons/fa';
+import Api from '../../service/api';
 
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const { user, profile, logout } = useContext(AuthContext);
-
+  const { user, logout } = useContext(AuthContext);
+  const [profile, setProfile] = useState({});
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const getProfile = async () => {
+    try {
+      const response = await Api.get('/api/profile/me');
+      setProfile(response.data.data);
+    } catch (error) {
+      console.error("Error can't get profile", error);
+    }
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+  
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -37,16 +51,16 @@ const Navbar = () => {
           {user ? (
             <div className="relative">
               <button onClick={toggleDropdown} className="flex items-center text-white hover:text-gray-500 mr-4 rounded-full">
-                {profile && profile.avatar ? (
-                  <img src={profile.avatar} alt="User Avatar" className="w-8 h-8 rounded-full mr-2" />
+                {profile && profile.avatar_url ? (
+                  <img src={profile.avatar_url} alt="User Avatar" className="w-10 h-10 rounded-full mr-2" />
                 ) : (
-                  <FaUserCircle className="w-8 h-8 rounded-full mr-2" />
+                  <FaUserCircle className="w-10 h-10 rounded-full mr-2" />
                 )}
                 <span>{user.username}</span>
               </button>
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
-                  <Link to="/profile" className="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={toggleDropdown}>Profile</Link>
+                  <Link to="/profile" className="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg" onClick={toggleDropdown}>Profile</Link>
                   <Link to="/change-password" className="block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={toggleDropdown}>Change Password</Link>
                   <button onClick={() => {logout(); toggleDropdown();}} className="w-full text-left block px-4 py-2 text-gray-800 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-b-lg">Logout</button>
                 </div>
