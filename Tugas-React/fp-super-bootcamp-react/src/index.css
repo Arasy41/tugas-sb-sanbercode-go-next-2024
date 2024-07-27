@@ -12,12 +12,14 @@
   --bg-color: #ffffff;
   --text-color: #000000;
   --primary-color: #32012F;
+  --border-color: #000000;
 }
 
 [data-theme='dark'] {
   --bg-color: #191919;
   --text-color: #ffffff;
   --primary-color: #F97300;
+  --border-color: #ffffff;
 }
 
 body {
@@ -26,4 +28,42 @@ body {
   font-family: 'Poppins', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-slides {
+  display: flex;
+  transition: transform 1s ease-in-out;
+}
+
+.carousel-slides img {
+  width: 100%;
+  height: auto;
+  object-fit: fill;
+  flex-shrink: 0;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-button.prev {
+  left: 10px;
+}
+
+.carousel-button.next {
+  right: 10px;
 }

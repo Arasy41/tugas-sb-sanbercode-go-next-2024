@@ -7,8 +7,6 @@ import Api from '../../service/api';
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const token = localStorage.getItem('token');
 
@@ -19,7 +17,6 @@ const Home = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
         setRecipes(response.data);
-        setFilteredRecipes(response.data);
         console.log('Recipes:', response.data);
       } catch (error) {
         console.error('Error fetching recipes:', error);
@@ -67,15 +64,7 @@ const Home = () => {
     fetchFavorites();
   }, [token]);
 
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    const filtered = recipes.filter((recipe) =>
-      recipe.title.toLowerCase().includes(event.target.value.toLowerCase())
-    );
-    setFilteredRecipes(filtered);
-  };
-
-  const handleFavorite = async (id) => {
+  const handleFavorite = async (recipeId) => {
     if (!token) {
       Swal.fire({
         icon: 'warning',
@@ -85,17 +74,17 @@ const Home = () => {
       return;
     }
 
-    const favorite = favoriteRecipes.find(fav => fav.recipe_id === id);
+    const favorite = favoriteRecipes.find(fav => fav.recipe_id === recipeId);
 
     try {
       if (favorite) {
-        await Api.delete(`/api/favorites/${favorite.id}`, {
+        await Api.delete(`/api/favorites/${favorite.ID}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log('Favorite removed');
-        setFavoriteRecipes(favoriteRecipes.filter(fav => fav.recipe_id !== id));
+        setFavoriteRecipes(favoriteRecipes.filter(fav => fav.recipe_id !== recipeId));
       } else {
-        const response = await Api.post(`/api/favorites`, { recipe_id: id }, {
+        const response = await Api.post(`/api/favorites`, { recipe_id: recipeId }, {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log('Favorite added');
@@ -108,16 +97,9 @@ const Home = () => {
 
   return (
     <div className="container mx-auto mt-16 px-4 py-8 text-center md:text-left md:px-8 md:py-16 dark:bg-gray-900 dark:text-white dark:border-gray-700">
-      <h1 className="text-4xl font-bold text-left mb-8">Find Your Culinary Inspiration</h1>
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleSearch}
-        className="border-2 p-4 rounded-lg hover:shadow-lg bg-white transition-all duration-200 w-1/2"
-      />
+      <h1 className="text-4xl font-bold text-left mb-8">New Culinary Inspiration</h1>      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 mt-8">
-        {filteredRecipes.map((recipe) => {
+        {recipes.map((recipe) => {
           const image = recipe.images.length > 0 ? recipe.images[0].url : 'default-image-url';
           const isFavorite = favoriteRecipes.some(fav => fav.recipe_id === recipe.ID);
           return (

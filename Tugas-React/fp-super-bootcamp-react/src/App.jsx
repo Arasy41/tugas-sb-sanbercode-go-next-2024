@@ -27,7 +27,7 @@ const App = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/recipes" element={<Recipes />} />
-            <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
+            <Route path="/recipes/:id" element={<RecipeDetail />} />
             <Route path="/faq" element={<Faq />} />
           </Routes>
         </BrowserRouter>
