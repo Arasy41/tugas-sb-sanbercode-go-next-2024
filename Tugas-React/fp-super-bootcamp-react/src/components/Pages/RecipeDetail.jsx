@@ -4,7 +4,8 @@ import Api from "../../service/api";
 import { AiFillHeart } from "react-icons/ai";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { formatDistanceToNow } from 'date-fns';
+import { format, formatDistanceToNow, parseISO } from 'date-fns';
+import { id as idLocale } from "date-fns/locale";
 import { AuthContext } from "../../contexts/AuthContext";
 
 const RecipeDetail = () => {
@@ -17,6 +18,7 @@ const RecipeDetail = () => {
   const token = localStorage.getItem('token');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [reviewContent, setReviewContent] = useState("");
+  const [editContent, setEditContent] = useState('');
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -30,8 +32,9 @@ const RecipeDetail = () => {
           ...response.data,
           reviews: reviewsWithEditingState,
         });
-        const userReview = reviewsWithEditingState.find(review => review.user_id === user?.user_id);
+        const userReview = reviewsWithEditingState.find(review => review.user_id === user?.ID);
         setUserReview(userReview || null);
+        console.log("User review:", userReview);
       } catch (error) {
         console.error("Error fetching recipe:", error);
       }
@@ -61,7 +64,7 @@ const RecipeDetail = () => {
     fetchRecipe();
     fetchOtherRecipes();
     fetchFavoriteRecipes();
-  }, [id, token, user?.user_id]);
+  }, [id, token, user?.ID]);
 
   const handleFavorite = async (recipeId) => {
     if (!token) {
@@ -205,31 +208,57 @@ const RecipeDetail = () => {
           await Api.delete(`/api/reviews/${reviewId}`, {
             headers: { Authorization: `Bearer ${token}` }
           });
-          setRecipe((prevRecipe) => ({
+
+          setRecipe((prevRecipe) => ({            
             ...prevRecipe,
-            reviews: prevRecipe.reviews.filter(review => review.ID !== reviewId && review.user_id !== user.user_id)
+            reviews: prevRecipe.reviews.filter(
+              (review) => (review.user_id !== user?.ID && review.ID !== reviewId) || review.user_id === user?.ID
+            )
           }));
-          setReviewContent("");
-          setUserReview(null);
-          Swal.fire("Deleted!", "Your review has been deleted.", "success");
+          // Clear the user review if it matches the deleted review
+          if (userReview && userReview.ID === reviewId) {
+            setUserReview(null);
+          }
+  
+          Swal.fire({
+            icon: "success",
+            title: "Deleted!",
+            text: "Your review has been deleted.",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#3FA2F6",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload();
+            }
+          })
           console.log("Review deleted successfully");
-          window.location.reload();
+        } else if (result.isDenied) {
+          console.log("Review deletion cancelled");          
         } else {
           console.log("Review deletion cancelled");
         }
       });
     } catch (error) {
-        console.error("Error deleting review:", error);
-    }  
+      console.error("Error deleting review:", error);
+    }
+  };  
+
+  const handleReviewEditToggle = (reviewID) => {
+    const review = recipe.reviews.find((rev) => rev.ID === reviewID);
+    setEditContent(review.content);
+    setUserReview({ ...review, isEditing: !review.isEditing });
   };
 
-  const handleReviewEditToggle = (reviewId) => {
-    setRecipe({
-      ...recipe,
-      reviews: recipe.reviews.map(review =>
-        review.ID === reviewId ? { ...review, isEditing: !review.isEditing } : review
-      )
-    });
+  const formatDate = (date) => {
+    if (!date) return "Invalid date";
+    try {
+      const parsedDate = parseISO(date);
+      return format(parsedDate, "EEEE, dd MMMM yyyy", {locale: idLocale});
+    } catch (error) {
+      return "Invalid date";
+    }
   };
 
   const getTimeAgo = (date) => {
@@ -247,9 +276,9 @@ const RecipeDetail = () => {
   }
 
   return (
-    <div className="container mx-auto mt-12 px-4 py-8 md:px-8 md:py-16 text-center md:text-left dark:bg-gray-900 dark:text-white dark:border-gray-700">
+    <div className="container mx-auto mt-12 px-4 py-8 md:px-8 md:py-16 text-center md:text-left dark:bg-gray-950 dark:text-white dark:border-zinc-50">
       <h1 className="text-4xl font-bold mb-8">{recipe.title}</h1>
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col md:flex-row justify-center items-center md:items-start">
         <div className="relative md:w-1/2">
           {recipe.images.length > 0 && (
             <div className="relative overflow-hidden">
@@ -270,13 +299,16 @@ const RecipeDetail = () => {
                 <button className="carousel-button next" onClick={() => handleSlideChange('next')}>
                   <FaChevronRight size={30} />
                 </button>
+                <p className="text-sm justify-center text-center mb-2 mt-2 left-0">{currentSlide + 1}/{recipe.images.length}</p>
               </div>
+              <p className="text-base justify-center text-center text-gray-500 mb-2 mt-2 left-0">Dibuat Oleh : {recipe.user.profile.full_name}, pada : {formatDate(recipe.created_at)}</p>
             </div>
           )}
         </div>
-        <div className="md:w-1/2">
-          <h2 className="text-2xl font-bold mb-4">Description</h2>
-          <p className="mb-8">{recipe.description}</p>
+
+        <div className="w-full md:w-1/2 md:pl-8">
+          <h2 className="text-3xl font-semibold mb-4">Description</h2>
+          <p className="text-base leading-relaxed mb-6">{recipe.description}</p>
           <h2 className="text-2xl font-bold mb-4">Ingredients</h2>
           <ul className="text-lg mb-4 list-decimal list-inside whitespace-pre-wrap break-words">{recipe.ingredients}</ul>
           <h2 className="text-2xl font-bold mb-4">Instructions</h2>
@@ -284,23 +316,27 @@ const RecipeDetail = () => {
           <h2 className="text-2xl font-bold mb-4">Tags</h2>
           <div className="flex-wrap gap-2 mb-4">
             {recipe.tags.map((tag) => (
-              <span key={tag.ID} className="bg-gray-200 mr-2 px-2 py-1 rounded">
+              <span key={tag.ID} className="mr-2 px-2 py-1 border-2 rounded">
                 {tag.name}
               </span>
             ))}
           </div>
-          <button
-            className={`flex items-center text-lg font-semibold mt-8 py-2 px-4 rounded-lg ${favoriteRecipes.some(fav => fav.recipe_id === recipe.ID) ? 'bg-red-500 text-white' : 'bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-600'}`}
-            onClick={() => handleFavorite(recipe.ID)}
-          >
-            <AiFillHeart size={20} className="mr-2" />
-            {favoriteRecipes.some(fav => fav.recipe_id === recipe.ID) ? 'Unfavorite' : 'Favorite'}
-          </button>
+          <div className="mt-8">
+            <button
+              onClick={() => handleFavorite(recipe.ID)}
+              className={`px-4 py-2 rounded-lg text-white ${favoriteRecipes.some(fav => fav.recipe_id === recipe.ID) ? 'bg-red-500' : 'bg-blue-500'} hover:bg-opacity-75 transition duration-200`}
+            >
+              <AiFillHeart 
+                size={18}
+                className="inline mr-2"
+              />
+              {favoriteRecipes.some(fav => fav.recipe_id === recipe.ID) ? 'Remove from Favorites' : 'Add to Favorites'}
+            </button>
+          </div>
         </div>
-      </div>      
+      </div>
 
-
-      <hr className="my-8 border-2 border-gray-950" />
+      <hr className="my-8 border-2 border-gray-950 dark:border-white" />
 
       <div className="flex flex-col md:flex-row gap-8 mt-16">
         <div className="md:w-1/2">
@@ -310,12 +346,12 @@ const RecipeDetail = () => {
               {userReview.isEditing && (
                 <div className="mt-4">
                   <textarea
-                    className="w-full p-2 border rounded-md"
+                    className="w-full p-2 border rounded-md text-black"
                     value={userReview.content}
                     onChange={(e) => setUserReview({ ...userReview, content: e.target.value })}
                   />
                   <button
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md mt-2"
+                    className="px-4 py-2 bg-blue-500 text-black rounded-md mt-2"
                     onClick={() => handleReviewEdit(userReview.ID, userReview.content)}
                   >
                     Save
@@ -326,11 +362,11 @@ const RecipeDetail = () => {
           ) : (
             <div className="mb-4">
               <textarea
-                className="w-full p-2 border rounded-md"
+                className="w-full p-2 border rounded-md text-black"
                 placeholder="Write your review..."
-                rows="4"        
+                rows="4"
                 value={reviewContent}
-                required                
+                required
                 onChange={(e) => setReviewContent(e.target.value)}
               />
               <button
@@ -345,17 +381,20 @@ const RecipeDetail = () => {
             <p className="text-gray-500">No reviews yet. Be the first to review this recipe!</p>
           ) : (
             <ul className="space-y-4">
-              {recipe.reviews.map((review) => (
+              {[
+                ...recipe.reviews.filter((review) => review.user_id === user?.ID),
+                ...recipe.reviews.filter((review) => review.user_id !== user?.ID),
+              ].map((review) => (
                 <li key={review.ID} className="border-b border-gray-300 pb-4 mb-4 dark:border-gray-700">
                   {review.isEditing ? (
                     <>
                       <textarea
-                        className="w-full p-2 border rounded-md"
+                        className="w-full p-2 border rounded-md text-black"
                         value={review.content}
                         onChange={(e) => handleReviewEdit(review.ID, e.target.value)}
                       />
                       <button
-                        className="px-4 py-2 bg-blue-500 text-white rounded-md mt-2"
+                        className="px-4 py-2 bg-blue-500 rounded-md mt-2"
                         onClick={() => handleReviewEdit(review.ID, review.content)}
                       >
                         Save
@@ -368,7 +407,7 @@ const RecipeDetail = () => {
                       <p className="mt-2">{review.content}</p>
                     </>
                   )}
-                  {review.user_id === user?.user_id && !review.isEditing && (
+                  {review.user_id === user?.ID && !review.isEditing && (
                     <div className="flex space-x-2 mt-2">
                       <button
                         className="text-sm text-blue-500"
@@ -397,7 +436,7 @@ const RecipeDetail = () => {
               <Link
                 key={otherRecipe.ID}
                 to={`/recipes/${otherRecipe.ID}`}
-                className="p-4 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                className="p-4 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-slate-400 transition"
               >
                 <img
                   src={otherRecipe.images.length > 0 ? otherRecipe.images[0].url : 'default-image-url'}

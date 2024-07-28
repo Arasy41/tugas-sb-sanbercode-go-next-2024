@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
 import Swal from 'sweetalert2';
 import AuthContext from '../../contexts/AuthContext';
+import Api from '../../service/api';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const { register } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,23 +20,41 @@ const Register = () => {
       return;
     }
     try {
-      await register({ email, username, password });
+      const response = await Api.post('/api/register', {
+        email,
+        username,
+        password,
+      })
+      console.log(response.data.message);
       Swal.fire({
         icon: 'success',
         title: 'Registration Successful',
         text: 'You can now log in.',
+        confirmButtonText: 'OK',
+        allowEscapeKey: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '/login';
+        }
       });
     } catch (error) {
       Swal.fire({
         icon: 'error',
         title: 'Registration Failed',
-        text: 'An error occurred during registration.',
+        text: error,
       });
+      if (error.response && error.response.status === 409) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Registration Failed',
+          text: "Email already registered. Please try logging in.",
+        });
+      }
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-950">
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-4 text-gray-900">Register</h2>
         <form onSubmit={handleSubmit}>

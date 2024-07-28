@@ -12,10 +12,10 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await Api.get('/api/profile/me', {
+          const response = await Api.get('/api/detail-user', {
             headers: { Authorization: `Bearer ${token}` }
           });
-          setUser(response.data.data);
+          setUser(response.data.user);
         } catch (error) {
           console.error("Error fetching user data:", error);
           localStorage.removeItem('token');
@@ -39,16 +39,12 @@ export const AuthProvider = ({ children }) => {
       console.error("Login error:", error);
       throw error;
     }
-  };
-
-  const register = async (data) => {
-    await Api.post('/api/register', data);
-  };
+  };  
 
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
-    window.location.href = '/login';
+    window.location.href = '/';
   };
 
   const updateProfile = async (profileData) => {
@@ -65,8 +61,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const changePassword = async (passwordData) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const response = await Api.put('/api/change-password', passwordData, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setUser(response.data);
+      }
+    } catch (error) {
+      console.error("Error changing password:", error);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, updateProfile }}>
+    <AuthContext.Provider value={{ user, login, logout, changePassword, updateProfile }}>
       {children}
     </AuthContext.Provider>
   );

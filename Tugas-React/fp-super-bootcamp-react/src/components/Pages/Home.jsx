@@ -4,6 +4,7 @@ import { AiFillHeart } from "react-icons/ai";
 import Swal from 'sweetalert2';
 import Api from '../../service/api';
 import { formatDistanceToNow } from 'date-fns';
+import Reviews from './Review';
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
@@ -96,7 +97,7 @@ const Home = () => {
 
   if (!reviews.length && !recipes.length) {
     return (
-      <div className="container mx-auto mt-16 px-4 py-8 text-center md:text-left md:px-8 md:py-16 dark:bg-gray-900 dark:text-white dark:border-gray-700">
+      <div className="min-h-screen mx-auto mt-16 px-4 py-8 justify-center md:text-left md:px-8 md:py-16 dark:bg-gray-950 dark:text-white dark:border-gray-700">
         <h1 className="text-4xl font-bold text-center mb-8">Loading...</h1>
         <p className="text-lg text-gray-500 text-center">There are currently no recipes & reviews to display.</p>
       </div>
@@ -104,8 +105,8 @@ const Home = () => {
   }
 
   return (
-    <div className="container mx-auto mt-16 px-4 py-8 text-center md:text-left md:px-8 md:py-16 dark:bg-gray-900 dark:text-white dark:border-gray-700">
-      <h1 className="text-4xl font-bold text-left mb-8 ml-4">New Culinary Inspiration</h1>      
+    <div className="min-h-screen mx-auto mt-16 px-4 py-8 text-center md:text-left md:px-8 md:py-16 dark:bg-gray-950 dark:text-white dark:border-gray-700">
+      <h1 className="text-4xl font-bold mb-8 ml-4">New Culinary Inspiration</h1>      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 mt-8 ml-4">
         {recipes.map((recipe) => {
           const image = recipe.images.length > 0 ? recipe.images[0].url : 'default-image-url';
@@ -137,15 +138,11 @@ const Home = () => {
         <div className="overflow-y-auto max-h-screen">
           <div className="flex flex-col gap-6">
             {reviews.map((review) => (
-              <Link
-                to={`/reviews/${review.ID}`}
-                key={review.ID}
-                className="border-2 p-4 rounded-lg hover:shadow-lg bg-white transition-all duration-200"
-              >
-                <h2 className="text-2xl mt-4 text-gray-900">{review.user.username}</h2>
-                <p className="mt-2 mb-2 text-gray-700">{review.content}</p>
-                <p className="text-sm text-gray-500 text-right mr-5">{getTimeAgo(review.created_at)} at Recipe {review.recipe.title}</p>
-              </Link>
+              <div key={review.ID} className="border-2 p-4 rounded-lg hover:shadow-lg bg-white transition-all duration-200">
+                <h2 className="text-xl text-gray-950 font-bold">{review.user.profile.full_name === null ? 'Anonymous' : review.user.profile.full_name}</h2>
+                <p className="text-gray-700">{review.content}</p>
+                <p className="text-gray-500">{getTimeAgo(review.created_at)} At {review.recipe.title}</p>
+              </div>
             ))}
           </div>
         </div>

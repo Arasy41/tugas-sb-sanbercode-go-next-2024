@@ -74,41 +74,43 @@ const Profile = () => {
   }
 
   return (
-    <div className="container mx-auto mt-8 px-4 py-8">
-      <Link to="/" className="flex items-center gap-2 ml-4 mb-8 mt-8 text-blue-500 hover:text-blue-700">
-        <AiOutlineArrowLeft size={20} />
-        Back to Home
-      </Link>
-      <h1 className="text-3xl font-bold text-center mb-8">Your Profile</h1>
-      <div className="flex flex-col items-center justify-center gap-4">
-        {profile && (
-          <>
-            {profile.avatar_url ? (
-              <img
-                src={profile.avatar_url}
-                alt={profile.full_name}
-                className="rounded-full w-48 h-48 object-cover border border-black"
-              />
-            ) : (
-              <img
-                src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-                alt={profile.full_name}
-                className="rounded-full w-48 h-48 object-cover border border-black"
-              />
-            )}            
-            <p className="text-xl font-medium">{profile.full_name}</p>
-            <p className="text-lg font-medium">Bio :</p>
-            <p className="text-base">{profile.bio}</p>
-            <div className="mt-6 flex gap-4">
-              <Link
-                to="/edit-profile"
-                className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
-              >
-                Edit Profile
-              </Link>
-            </div>
-          </>
-        )}
+    <div className="min-h-screen dark:bg-gray-950 dark:text-white">
+      <div className="container mx-auto pt-20 px-4 py-8">
+        <Link to="/" className="flex items-center gap-2 ml-4 mb-8 mt-8 text-blue-500 hover:text-blue-700">
+          <AiOutlineArrowLeft size={20} />
+          Back to Home
+        </Link>
+        <h1 className="text-3xl font-bold text-center mb-8">Your Profile</h1>
+        <div className="flex flex-col items-center justify-center gap-4">
+          {profile && (
+            <>
+              {profile.avatar_url ? (
+                <img
+                  src={profile.avatar_url}
+                  alt={profile.full_name}
+                  className="rounded-full w-48 h-48 object-cover border border-black"
+                />
+              ) : (
+                <img
+                  src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+                  alt={profile.full_name}
+                  className="rounded-full w-48 h-48 object-cover border border-black"
+                />
+              )}            
+              <p className="text-xl font-medium">{profile.full_name}</p>
+              <p className="text-lg font-medium">Bio :</p>
+              <p className="text-base">{profile.bio}</p>
+              <div className="mt-6 flex gap-4">
+                <Link
+                  to="/edit-profile"
+                  className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600"
+                >
+                  Edit Profile
+                </Link>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
