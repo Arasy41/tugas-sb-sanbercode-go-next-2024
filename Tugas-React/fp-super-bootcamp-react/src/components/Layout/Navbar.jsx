@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { AuthContext } from '../../contexts/AuthContext';
-import { FaSun, FaMoon, FaUserCircle, FaBars, FaTimes } from 'react-icons/fa';
+import { FaSun, FaMoon, FaBars, FaTimes } from 'react-icons/fa';
 import Api from '../../service/api';
 
 const Navbar = () => {
@@ -13,17 +13,40 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const getProfile = async () => {
-    try {
-      const response = await Api.get('/api/profile/me');
-      setProfile(response.data.data);
-    } catch (error) {
-      console.error("Error can't get profile", error);
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const response = await Api.get('/api/profile/me', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setProfile(response.data.data);
+      } catch (error) {
+        if (error.response?.status === 401) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Unauthorized',
+            text: 'Please log in to view your profile.',
+            confirmButtonText: 'Login',
+            confirmButtonColor: '#3FA2F6',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '/login';
+            }
+          })
+        } else {
+          console.error("Error can't get profile:", error);
+        }
+      }
     }
   };
 
   useEffect(() => {
-    getProfile();
-  }, []);
+    if (user) {
+      getProfile();
+    }
+  }, [user]);
   
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -54,7 +77,7 @@ const Navbar = () => {
                 {profile && profile.avatar_url ? (
                   <img src={profile.avatar_url} alt="User Avatar" className="w-10 h-10 rounded-full mr-2" />
                 ) : (
-                  <FaUserCircle className="w-10 h-10 rounded-full mr-2" />
+                  <img src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" alt="User Avatar" className="w-10 h-10 rounded-full mr-2" />
                 )}
                 <span>{user.username}</span>
               </button>
