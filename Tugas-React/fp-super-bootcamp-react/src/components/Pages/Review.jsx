@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Api from "../../service/api";
+import { formatDistanceToNow } from "date-fns";
+import { FaUser } from "react-icons/fa";
 
 const Reviews = () => {
     const [reviews, setReviews] = useState([]);
@@ -7,13 +10,8 @@ const Reviews = () => {
         const fetchReviews = async () => {
             try {
                 const response = await Api.get('/api/reviews');
-                if (Array.isArray(response.data)) {
-                    setReviews(response.data);
-                    console.log('Reviews:', response.data);
-                } else {
-                    console.error('Error: Reviews data is not an array');
-                    setReviews([]);
-                }
+                console.log('Reviews:', response.data.data);
+                setReviews(response.data.data);
             } catch (error) {
                 console.error('Error fetching reviews:', error);
             }
@@ -23,16 +21,43 @@ const Reviews = () => {
     }, [])
 
     return (
-        <div>
-            <h1>Reviews</h1>
-            {reviews.map((review) => (
-                <div key={review.ID}>
-                    <h2>{review.title}</h2>
-                    <p>{review.content}</p>
+        <div className="container mx-auto mt-24 px-4 py-8">
+            <h1 className="text-4xl font-bold text-center mb-12">Customer Reviews</h1>
+            {reviews.length === 0 ? (
+                <div className="text-center text-gray-500">
+                    <h2 className="text-2xl font-semibold">No reviews available</h2>
+                    <p className="mt-2">Be the first to review!</p>
                 </div>
-            ))}
+            ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {reviews.map((review) => (
+                        <div
+                            key={review.ID}
+                            className="bg-white shadow-lg rounded-lg p-6 flex flex-col gap-4 border border-gray-200"
+                        >
+                            <div className="flex items-center gap-4">
+                                <img
+                                    src={review.user.profile.avatar_url || <FaUser/>}
+                                    alt={review.user.username}
+                                    className="w-12 h-12 rounded-full object-cover"
+                                />
+                                <div>
+                                    <h2 className="text-xl font-semibold text-gray-900">{review.user.profile.full_name}</h2>
+                                    <p className="text-sm text-gray-600">At Recipe : {review.recipe.title}</p>
+                                </div>
+                            </div>
+                            <p className="text-gray-700">{review.content}</p>
+                            <p className="text-sm text-gray-500 text-right relative">{getTimeAgo(review.created_at)}</p>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
+
+const getTimeAgo = (timestamp) => {
+    return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
+};
 
 export default Reviews;
