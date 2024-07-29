@@ -1,20 +1,29 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import Api from '../service/api';
 import Swal from 'sweetalert2';
 import { formatDistanceToNow } from 'date-fns';
+import AuthContext from './AuthContext';
 
 export const CulinaryReviewContext = createContext();
 
 export const CulinaryReviewProvider = ({ children }) => {
   const [recipes, setRecipes] = useState([]);
-  const [user, setUser] = useState(null);
-  const [profile, setProfile] = useState({})
+  const { user } = useContext(AuthContext);
+  const [profile, setProfile] = useState({
+    fullName: '',
+    bio: '',
+    avatar: '',
+  });
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState('');
   const [reviews, setReviews] = useState([]);
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
-  const [token, setToken] = useState(localStorage.getItem('token'));
-
+  const [loadingProfile, setLoadingProfile] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openFaq, setOpenFaq] = useState(null);
+
+  const token = localStorage.getItem('token');
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -71,38 +80,32 @@ export const CulinaryReviewProvider = ({ children }) => {
   }, [token]);
 
   const getProfile = async () => {
-    const token = localStorage.getItem('token');
     if (token) {
       try {
         const response = await Api.get('/api/profile/me', {
           headers: { Authorization: `Bearer ${token}` }
         });
-        setProfile(response.data.data);
+        setProfile({
+          fullName: response.data.data.full_name,
+          bio: response.data.data.bio,
+          avatar: response.data.data.avatar_url,
+        });
+        setPreviewUrl(response.data.data.avatar_url);
       } catch (error) {
-        if (error.response?.status === 401) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Unauthorized',
-            text: 'Please log in to view your profile.',
-            confirmButtonText: 'Login',
-            confirmButtonColor: '#3FA2F6',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = '/login';
-            }
-          });
-        } else {
-          console.error("Error can't get profile:", error);
-        }
+        console.error("Error fetching profile:", error);        
       }
+      setLoadingProfile(false);
+    } else {
+      console.warn("No token found");
+      setLoadingProfile(false);
     }
   };
 
   useEffect(() => {
     if (user) {
       getProfile();
+    } else {
+      setLoadingProfile(false);
     }
   }, [user]);
 
@@ -141,22 +144,72 @@ export const CulinaryReviewProvider = ({ children }) => {
     return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
   };
 
+  const handleFileChange = (file) => {
+    setAvatarFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+  };
+
+  const handleChange = (e) => {
+    setProfile({
+      ...profile,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('fullName', profile.fullName);
+    formData.append('bio', profile.bio);
+    if (avatarFile) {
+      formData.append('avatar', avatarFile);
+    }
+
+    try {
+      await Api.put('/api/profile', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      Swal.fire({
+        icon: 'success',
+        title: 'Profile updated successfully',
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      window.location.href = '/profile';
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error updating profile',
+        text: error.response?.data?.message || error.message,
+      });
+    }
+  };
+
   return (
     <CulinaryReviewContext.Provider
       value={{
         user,
+        token,
         profile,
         recipes,
         reviews,
         favoriteRecipes,
         dropdownOpen,
         menuOpen,
-        setUser,
+        loadingProfile,
+        openFaq,
+        setOpenFaq,
         toggleDropdown,
         toggleMenu,
         handleFavorite,
         getTimeAgo,
-        setToken,
+        handleFileChange,
+        handleChange,
+        handleSubmit,
       }}
     >
       {children}

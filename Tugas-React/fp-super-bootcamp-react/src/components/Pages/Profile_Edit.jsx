@@ -1,90 +1,24 @@
-import React, { useEffect, useState } from "react";
-import Api from "../../service/api";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Swal from "sweetalert2";
+import CulinaryReviewContext from "../../contexts/CulinaryReviewContext";
 
 const EditProfile = () => {
+  const { 
+    profile, 
+    previewUrl, 
+    handleFileChange, 
+    handleChange, 
+    handleSubmit, 
+    loadingProfile 
+  } = useContext(CulinaryReviewContext);
+  
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
-  const [profile, setProfile] = useState({
-    fullName: '',
-    bio: '',
-    avatar: '',
-  });
-  const [avatarFile, setAvatarFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState('');
-
-  const getProfile = async () => {
-    try {
-      const response = await Api.get('/api/profile/me');
-      setProfile({
-        fullName: response.data.data.full_name,
-        bio: response.data.data.bio,
-        avatar: response.data.data.avatar_url,
-      });
-      setPreviewUrl(response.data.data.avatar_url);
-    } catch (error) {
-      console.error("Error can't get profile", error);
-    }
-  };
 
   useEffect(() => {
-    getProfile();
-  }, []);
-
-  const handleChange = (e) => {
-    setProfile({
-      ...profile,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setAvatarFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append('fullName', profile.fullName);
-    formData.append('bio', profile.bio);
-    if (avatarFile) {
-      formData.append('avatar', avatarFile);
-    }
-
-    try {
-      await Api.put('/api/profile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-      Swal.fire({
-        icon: 'success',
-        title: 'Profile updated successfully',
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      navigate('/profile');
-    } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error updating profile',
-        text: error.response?.data?.message || error.message,
-      });
-    }
-  };
-
-  if (!profile) {
-    return Swal.showLoading();
-  }
-
-  if (!token) {
-    return (
+    if (!token) {
       Swal.fire({
         icon: "error",
         title: "You're not authorized",
@@ -97,8 +31,12 @@ const EditProfile = () => {
         if (result.isConfirmed) {
           window.location.href = "/login";
         }
-      })
-    );
+      });
+    }
+  }, [token]);
+
+  if (loadingProfile) {
+    return Swal.showLoading();
   }
 
   return (
@@ -120,10 +58,10 @@ const EditProfile = () => {
           )}
           <input
             type="file"
-            accept="image/*"          
+            accept="image/*"
             id="avatar"
             name="avatar"
-            onChange={handleFileChange}
+            onChange={(e) => handleFileChange(e.target.files[0])}
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
           />
         </div>

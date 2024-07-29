@@ -1,55 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Api from "../../service/api";
 import { Link } from "react-router-dom";
 import { AiFillHeart } from "react-icons/ai";
 import Swal from "sweetalert2";
+import CulinaryReviewContext from "../../contexts/CulinaryReviewContext";
 
 const Recipes = () => {
-    const [recipes, setRecipes] = useState([]);
+    const { recipes, favoriteRecipes } = useContext(CulinaryReviewContext)
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredRecipes, setFilteredRecipes] = useState([]);
-    const [favoriteRecipes, setFavoriteRecipes] = useState([]);
-    const token = localStorage.getItem('token');
-
-    useEffect(() => {
-        const fetchRecipes = async () => {
-            try {
-                const response = await Api.get('/api/recipes');
-                if (Array.isArray(response.data)) {
-                    setRecipes(response.data);
-                    setFilteredRecipes(response.data);
-                } else {
-                    console.error('Error: Recipes data is not an array');
-                    setRecipes([]);
-                }
-                setRecipes(response.data);
-                setFilteredRecipes(response.data);
-                console.log('Recipes:', response.data);
-            } catch (error) {
-                console.error('Error fetching recipes:', error);
-            }
-        };
-
-        fetchRecipes();
-    }, []);
-
-    useEffect(() => {
-        const fetchFavorites = async () => {
-          if (token) {
-            try {
-              const response = await Api.get('/api/favorites', {
-                headers: { Authorization: `Bearer ${token}` }
-              });
-              setFavoriteRecipes(response.data);
-              console.log('Favorite recipes:', response.data);
-            } catch (error) {
-              console.error('Error fetching favorite recipes:', error);
-            }
-          }
-        };
-    
-        fetchFavorites();
-      }, [token]);
+    const token = localStorage.getItem('token');    
 
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);

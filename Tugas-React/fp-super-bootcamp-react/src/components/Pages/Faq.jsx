@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai';
+import CulinaryReviewContext from '../../contexts/CulinaryReviewContext';
 
 const Faq = () => {
-  const [openFaq, setOpenFaq] = useState(null);
+
+  const { openFaq, setOpenFaq } = useContext(CulinaryReviewContext)
 
   const faqs = [
     {

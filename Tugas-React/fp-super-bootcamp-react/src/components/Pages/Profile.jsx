@@ -3,50 +3,28 @@ import Api from "../../service/api";
 import { Link } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Swal from "sweetalert2";
-import { AuthContext } from "../../contexts/AuthContext";
+import CulinaryReviewContext from "../../contexts/CulinaryReviewContext";
+import AuthContext from "../../contexts/AuthContext";
 
 const Profile = () => {
-  const { user, logout } = useContext(AuthContext);
-  const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const getProfile = async () => {
-    if (!user) {
-      setLoading(false);
-      return;
-    }
-
-    try {
-      const response = await Api.get('/api/profile/me', {
-        headers: { Authorization: `Bearer ${user.token}` }
-      });
-      setProfile(response.data.data);
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-      if (error.response && error.response.status === 401) {
-        logout();
-        Swal.fire({
-          icon: "error",
-          title: "Unauthorized",
-          text: "Your session has expired. Please log in again.",
-          confirmButtonText: "Login",
-          confirmButtonColor: "#3FA2F6",
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "/login";
-          }
-        });
+  const { user } = useContext(AuthContext)
+  const { profile, loading } = useContext(CulinaryReviewContext)
+  
+  if (!user) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Unauthorized',
+      text: 'Your session has expired. Please log in again.',
+      confirmButtonText: 'Login',
+      confirmButtonColor: '#3FA2F6',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = '/login';
       }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getProfile();
-  }, [user]);
+    });
+  }
 
   if (loading) {
     return (
@@ -55,24 +33,7 @@ const Profile = () => {
       </div>
     );
   }
-
-  if (!user) {
-    Swal.fire({
-      icon: "error",
-      title: "You're not authorized",
-      text: "Please login first",
-      confirmButtonText: "Login",
-      confirmButtonColor: "#3FA2F6",
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.href = "/login";
-      }
-    });
-    return null;
-  }
-
+  
   return (
     <div className="min-h-screen dark:bg-gray-950 dark:text-white">
       <div className="container mx-auto pt-20 px-4 py-8">

@@ -8,7 +8,7 @@ import CulinaryReviewContext from '../../contexts/CulinaryReviewContext';
 const Navbar = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const { user, logout } = useContext(AuthContext);
-  const { profile, toggleDropdown, toggleMenu, menuOpen, dropdownOpen } = useContext(CulinaryReviewContext)
+  const { toggleDropdown, toggleMenu, menuOpen, dropdownOpen } = useContext(CulinaryReviewContext)
 
   return (
     <nav className="bg-zinc-50 dark:bg-slate-950 p-4 fixed w-full top-0 left-0 right-0 z-50 border-b border-black dark:border-slate-50">
@@ -31,9 +31,9 @@ const Navbar = () => {
                 onClick={toggleDropdown} 
                 className="flex items-center hover:text-gray-500 mr-4 rounded-full" // Gunakan flex untuk penyelarasan
               >
-                {profile && profile.avatar_url ? (
+                {user.profile && user.profile.avatar_url ? (
                   <img 
-                    src={profile.avatar_url} 
+                    src={user.profile.avatar_url} 
                     alt="User Avatar" 
                     className="w-10 h-10 rounded-full mr-2" // Ukuran dan margin gambar
                   />
