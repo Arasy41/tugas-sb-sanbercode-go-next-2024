@@ -141,7 +141,7 @@ const Home = () => {
               <div key={review.ID} className="border-2 p-4 rounded-lg hover:shadow-lg bg-white transition-all duration-200">
                 <h2 className="text-xl text-gray-950 font-bold">{review.user.profile.full_name === null ? 'Anonymous' : review.user.profile.full_name}</h2>
                 <p className="text-gray-700">{review.content}</p>
-                <p className="text-gray-500">{getTimeAgo(review.created_at)} At {review.recipe.title}</p>
+                <p className="text-gray-500">{getTimeAgo(review.created_at)} at {review.recipe.title}</p>
               </div>
             ))}
           </div>
