@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import Api from '../service/api';
-import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export const AuthContext = createContext();
 
@@ -47,11 +47,18 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       const response = await Api.post('/api/login', { username, password });
       const { token } = response.data;
-      Api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const responseUser = await Api.get('/api/profile/me');
-      setUser(responseUser.data.data);
-      localStorage.setItem('token', token); 
+      Swal.fire({
+        icon: "success",
+        title: 'Login Successfully',
+        showConfirmButton: false,
+        timer: 1500
+      });
       window.location.href = '/';
+      localStorage.setItem('token', token); 
+      const responseUser = await Api.get('/api/detail-user', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setUser(responseUser.data.user);
     } catch (error) {
       console.error("Login error:", error);
       throw error;

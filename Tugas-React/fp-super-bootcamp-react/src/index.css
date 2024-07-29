@@ -41,19 +41,32 @@ body {
 
 .carousel {
   position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* Rasio aspek 16:9 */
   overflow: hidden;
 }
 
 .carousel-slides {
-  display: flex;
-  transition: transform 1s ease-in-out;
-}
-
-.carousel-slides img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: fill;
-  flex-shrink: 0;
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-slide.active {
+  display: flex;
 }
 
 .carousel-button {
@@ -63,15 +76,32 @@ body {
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
-  padding: 10px;
+  padding: 0.5rem;
   cursor: pointer;
   z-index: 10;
 }
 
 .carousel-button.prev {
-  left: 10px;
+  left: 0;
 }
 
 .carousel-button.next {
-  right: 10px;
+  right: 0;
+}
+
+.favorite-button {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.favorite-button.favorited {
+  color: #E53E3E;
+}
+
+.favorite-button:hover {
+  background-color: #F7FAFC;
 }

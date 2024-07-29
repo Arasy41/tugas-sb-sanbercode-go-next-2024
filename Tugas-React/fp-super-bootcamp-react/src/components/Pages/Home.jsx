@@ -46,7 +46,7 @@ const Home = () => {
         })}
       </div>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-left mt-12 mb-8">New Update Reviews</h1>
+        <h1 className="text-4xl font-bold mt-12 mb-8">New Update Reviews</h1>
         <div className="overflow-y-auto max-h-screen">
           <div className="flex flex-col gap-6">
             {reviews.map((review) => (

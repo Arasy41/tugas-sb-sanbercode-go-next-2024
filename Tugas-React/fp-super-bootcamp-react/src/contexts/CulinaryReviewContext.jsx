@@ -7,9 +7,22 @@ export const CulinaryReviewContext = createContext();
 
 export const CulinaryReviewProvider = ({ children }) => {
   const [recipes, setRecipes] = useState([]);
+  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState({})
   const [reviews, setReviews] = useState([]);
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [token, setToken] = useState(localStorage.getItem('token'));
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -57,6 +70,42 @@ export const CulinaryReviewProvider = ({ children }) => {
     fetchFavorites();
   }, [token]);
 
+  const getProfile = async () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const response = await Api.get('/api/profile/me', {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setProfile(response.data.data);
+      } catch (error) {
+        if (error.response?.status === 401) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Unauthorized',
+            text: 'Please log in to view your profile.',
+            confirmButtonText: 'Login',
+            confirmButtonColor: '#3FA2F6',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '/login';
+            }
+          });
+        } else {
+          console.error("Error can't get profile:", error);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      getProfile();
+    }
+  }, [user]);
+
   const handleFavorite = async (recipeId) => {
     if (!token) {
       Swal.fire({
@@ -95,9 +144,16 @@ export const CulinaryReviewProvider = ({ children }) => {
   return (
     <CulinaryReviewContext.Provider
       value={{
+        user,
+        profile,
         recipes,
         reviews,
         favoriteRecipes,
+        dropdownOpen,
+        menuOpen,
+        setUser,
+        toggleDropdown,
+        toggleMenu,
         handleFavorite,
         getTimeAgo,
         setToken,
