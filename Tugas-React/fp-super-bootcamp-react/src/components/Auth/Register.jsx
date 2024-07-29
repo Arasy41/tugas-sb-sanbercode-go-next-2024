@@ -1,16 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import Swal from 'sweetalert2';
-import AuthContext from '../../contexts/AuthContext';
-import Api from '../../service/api';
+import { AuthContext } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const { register, registerForm, setRegisterForm, loading } = useContext(AuthContext);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterForm({
+      ...registerForm,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { email, username, password, confirmPassword } = registerForm;
+
     if (password !== confirmPassword) {
       Swal.fire({
         icon: 'error',
@@ -19,13 +26,9 @@ const Register = () => {
       });
       return;
     }
+
     try {
-      const response = await Api.post('/api/register', {
-        email,
-        username,
-        password,
-      })
-      console.log(response.data.message);
+      await register(email, username, password, confirmPassword);
       Swal.fire({
         icon: 'success',
         title: 'Registration Successful',
@@ -41,69 +44,76 @@ const Register = () => {
       Swal.fire({
         icon: 'error',
         title: 'Registration Failed',
-        text: error,
+        text: error.message,
       });
-      if (error.response && error.response.status === 409) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Registration Failed',
-          text: "Email already registered. Please try logging in.",
-        });
-      }
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-950">
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-4 text-gray-900">Register</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white text-center">Register</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 dark:text-gray-300">Email</label>
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">Email</label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+              name="email"
+              value={registerForm.email}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 dark:text-gray-300">Username</label>
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">Username</label>
             <input
-              type="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+              type="text"
+              name="username"
+              value={registerForm.username}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 dark:text-gray-300">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 dark:text-gray-300">Confirm Password</label>
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">Password</label>
             <input
               type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+              name="password"
+              value={registerForm.password}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">Confirm Password</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={registerForm.confirmPassword}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${loading && 'opacity-50 cursor-not-allowed'}`}
+            disabled={loading}
           >
-            Register
+            {loading ? 'Registering...' : 'Register'}
           </button>
+          <p className="mt-4 text-gray-700 dark:text-gray-300 text-center">
+            Already have an account?{' '}
+            <Link
+              to="/login"
+              className="text-blue-500 hover:underline dark:text-blue-400"
+            >
+              Login
+            </Link>
+          </p>
         </form>
       </div>
     </div>

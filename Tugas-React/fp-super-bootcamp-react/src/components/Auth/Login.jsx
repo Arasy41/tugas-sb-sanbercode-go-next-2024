@@ -1,15 +1,32 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const { login } = useContext(AuthContext);
+  const { login, loginForm, setLoginForm, loading } = useContext(AuthContext);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLoginForm({
+      ...loginForm,
+      [name]: value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { username, password } = loginForm;
+
+    if (!username || !password) {
+      return Swal.fire({
+        icon: 'warning',
+        title: 'Username dan password kosong',
+        text: 'Tolong isi username dan password',
+        timer: 2000
+      });
+    }
+
     try {
       await login(username, password);
     } catch (error) {
@@ -30,8 +47,9 @@ const Login = () => {
             <label className="block text-gray-700 dark:text-gray-300 mb-2">Email or Username</label>
             <input
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              name="username"
+              value={loginForm.username}
+              onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               required
             />
@@ -40,17 +58,19 @@ const Login = () => {
             <label className="block text-gray-700 dark:text-gray-300 mb-2">Password</label>
             <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={loginForm.password}
+              onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={`w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 ${loading && 'opacity-50 cursor-not-allowed'}`}
+            disabled={loading}
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
           <p className="mt-4 text-gray-700 dark:text-gray-300 text-center">
             Don't have an account?{' '}
