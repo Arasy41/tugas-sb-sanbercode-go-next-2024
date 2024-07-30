@@ -16,6 +16,213 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/jadwals": {
+            "get": {
+                "description": "Get a list of all jadwals",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jadwals"
+                ],
+                "summary": "Get all jadwals",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.JadwalKuliah"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new jadwal with the input payload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jadwals"
+                ],
+                "summary": "Create a new jadwal",
+                "parameters": [
+                    {
+                        "description": "Jadwal Request",
+                        "name": "jadwal",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.JadwalKuliahRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.JadwalKuliah"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/jadwals/{id}": {
+            "get": {
+                "description": "Get a single jadwal by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jadwals"
+                ],
+                "summary": "Get jadwal by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Jadwal ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.JadwalKuliah"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a jadwal by ID with the input payload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jadwals"
+                ],
+                "summary": "Update an existing jadwal",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Jadwal ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Jadwal Request",
+                        "name": "jadwal",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.JadwalKuliahRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.JadwalKuliah"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a jadwal by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jadwals"
+                ],
+                "summary": "Delete a jadwal",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Jadwal ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/books": {
             "get": {
                 "description": "Get a list of all books",
@@ -222,6 +429,179 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/dosen": {
+            "get": {
+                "description": "Get a list of all dosen",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dosen"
+                ],
+                "summary": "Get all dosen",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Dosen"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new dosen with the input payload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dosen"
+                ],
+                "summary": "Create a new dosen",
+                "parameters": [
+                    {
+                        "description": "Dosen Request",
+                        "name": "dosen",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Dosen"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Dosen"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/dosen/{id}": {
+            "put": {
+                "description": "Update a dosen by ID with the input payload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dosen"
+                ],
+                "summary": "Update an existing dosen",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Dosen ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Dosen Request",
+                        "name": "dosen",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Dosen"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Dosen"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a dosen by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dosen"
+                ],
+                "summary": "Delete a dosen",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Dosen ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -292,6 +672,145 @@ const docTemplate = `{
                 },
                 "total_page": {
                     "type": "integer"
+                }
+            }
+        },
+        "models.Dosen": {
+            "type": "object",
+            "required": [
+                "nama"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "matakuliah": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.MataKuliah"
+                    }
+                },
+                "matakuliah_id": {
+                    "type": "integer"
+                },
+                "nama": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.JadwalKuliah": {
+            "type": "object",
+            "required": [
+                "nama"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "dosen": {
+                    "$ref": "#/definitions/models.Dosen"
+                },
+                "dosen_id": {
+                    "type": "integer"
+                },
+                "hari": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "jam_mulai": {
+                    "type": "string"
+                },
+                "jam_selesai": {
+                    "type": "string"
+                },
+                "mahasiswa": {
+                    "$ref": "#/definitions/models.Mahasiswa"
+                },
+                "mahasiswa_id": {
+                    "type": "integer"
+                },
+                "nama": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.JadwalKuliahRequest": {
+            "type": "object",
+            "required": [
+                "nama"
+            ],
+            "properties": {
+                "dosen_id": {
+                    "type": "integer"
+                },
+                "hari": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "jam_mulai": {
+                    "type": "string"
+                },
+                "jam_selesai": {
+                    "type": "string"
+                },
+                "mahasiswa_id": {
+                    "type": "integer"
+                },
+                "nama": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Mahasiswa": {
+            "type": "object",
+            "required": [
+                "nama"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "nama": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.MataKuliah": {
+            "type": "object",
+            "required": [
+                "nama"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "nama": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
                 }
             }
         }

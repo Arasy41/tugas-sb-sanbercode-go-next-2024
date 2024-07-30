@@ -48,13 +48,244 @@ definitions:
     - release_year
     - title
     type: object
-host: https://go-vercel-app-arasys-projects.vercel.app/
+  models.Dosen:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      matakuliah:
+        items:
+          $ref: '#/definitions/models.MataKuliah'
+        type: array
+      matakuliah_id:
+        type: integer
+      nama:
+        type: string
+      updated_at:
+        type: string
+    required:
+    - nama
+    type: object
+  models.JadwalKuliah:
+    properties:
+      created_at:
+        type: string
+      dosen:
+        $ref: '#/definitions/models.Dosen'
+      dosen_id:
+        type: integer
+      hari:
+        type: string
+      id:
+        type: integer
+      jam_mulai:
+        type: string
+      jam_selesai:
+        type: string
+      mahasiswa:
+        $ref: '#/definitions/models.Mahasiswa'
+      mahasiswa_id:
+        type: integer
+      nama:
+        type: string
+      updated_at:
+        type: string
+    required:
+    - nama
+    type: object
+  models.JadwalKuliahRequest:
+    properties:
+      dosen_id:
+        type: integer
+      hari:
+        type: string
+      id:
+        type: integer
+      jam_mulai:
+        type: string
+      jam_selesai:
+        type: string
+      mahasiswa_id:
+        type: integer
+      nama:
+        type: string
+    required:
+    - nama
+    type: object
+  models.Mahasiswa:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      nama:
+        type: string
+      updated_at:
+        type: string
+    required:
+    - nama
+    type: object
+  models.MataKuliah:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      nama:
+        type: string
+      updated_at:
+        type: string
+    required:
+    - nama
+    type: object
+host: go-vercel-app-arasys-projects.vercel.app/
 info:
   contact: {}
   description: This is a sample server for managing books.
   title: Books API
   version: "1.0"
 paths:
+  /api/jadwals:
+    get:
+      description: Get a list of all jadwals
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.JadwalKuliah'
+            type: array
+      summary: Get all jadwals
+      tags:
+      - jadwals
+    post:
+      consumes:
+      - application/json
+      description: Create a new jadwal with the input payload
+      parameters:
+      - description: Jadwal Request
+        in: body
+        name: jadwal
+        required: true
+        schema:
+          $ref: '#/definitions/models.JadwalKuliahRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.JadwalKuliah'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new jadwal
+      tags:
+      - jadwals
+  /api/jadwals/{id}:
+    delete:
+      description: Delete a jadwal by ID
+      parameters:
+      - description: Jadwal ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a jadwal
+      tags:
+      - jadwals
+    get:
+      description: Get a single jadwal by ID
+      parameters:
+      - description: Jadwal ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.JadwalKuliah'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get jadwal by ID
+      tags:
+      - jadwals
+    put:
+      consumes:
+      - application/json
+      description: Update a jadwal by ID with the input payload
+      parameters:
+      - description: Jadwal ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Jadwal Request
+        in: body
+        name: jadwal
+        required: true
+        schema:
+          $ref: '#/definitions/models.JadwalKuliahRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.JadwalKuliah'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update an existing jadwal
+      tags:
+      - jadwals
   /books:
     get:
       description: Get a list of all books
@@ -195,4 +426,121 @@ paths:
       summary: Update an existing book
       tags:
       - books
+  /dosen:
+    get:
+      description: Get a list of all dosen
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Dosen'
+            type: array
+      summary: Get all dosen
+      tags:
+      - dosen
+    post:
+      consumes:
+      - application/json
+      description: Create a new dosen with the input payload
+      parameters:
+      - description: Dosen Request
+        in: body
+        name: dosen
+        required: true
+        schema:
+          $ref: '#/definitions/models.Dosen'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Dosen'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new dosen
+      tags:
+      - dosen
+  /dosen/{id}:
+    delete:
+      description: Delete a dosen by ID
+      parameters:
+      - description: Dosen ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a dosen
+      tags:
+      - dosen
+    put:
+      consumes:
+      - application/json
+      description: Update a dosen by ID with the input payload
+      parameters:
+      - description: Dosen ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Dosen Request
+        in: body
+        name: dosen
+        required: true
+        schema:
+          $ref: '#/definitions/models.Dosen'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Dosen'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update an existing dosen
+      tags:
+      - dosen
 swagger: "2.0"

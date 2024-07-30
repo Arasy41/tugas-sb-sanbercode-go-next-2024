@@ -37,5 +37,18 @@ func InitRouter(db *gorm.DB, r *gin.Engine) {
 	bookRoute.PUT("/:id", handlers.UpdateBook)
 	bookRoute.DELETE("/:id", handlers.DeleteBook)
 
+	jadwalRoute := r.Group("/api/jadwals")
+	jadwalRoute.GET("/:id", handlers.GetJadwalByID)
+	jadwalRoute.GET("", handlers.GetAllJadwal)
+	jadwalRoute.POST("", handlers.CreateJadwal)
+	jadwalRoute.PUT("/:id", handlers.UpdateJadwal)
+	jadwalRoute.DELETE("/:id", handlers.DeleteJadwal)
+
+	dosenRoute := r.Group("/api/dosens")
+	dosenRoute.GET("", handlers.GetAllDosen)
+	dosenRoute.POST("", handlers.CreateDosen)
+	dosenRoute.PUT("/:id", handlers.UpdateDosen)
+	dosenRoute.DELETE("/:id", handlers.DeleteDosen)
+
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }
