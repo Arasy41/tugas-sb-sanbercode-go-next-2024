@@ -16,16 +16,34 @@ import (
 // @Description Get a list of all jadwals
 // @Tags jadwals
 // @Produce json
-// @Success 200 {array} models.JadwalKuliah
+// @Success 200 {array} JadwalKuliahResponse
 // @Router /api/jadwals [get]
 func GetAllJadwal(ctx *gin.Context) {
 	var jadwals []models.JadwalKuliah
 
-	if err := config.DB.Preload("Dosen.MataKuliah").Find(&jadwals).Error; err != nil {
+	if err := config.DB.Preload("Dosen.MataKuliah").Preload("Mahasiswa").Find(&jadwals).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": jadwals})
+
+	var response []models.JadwalKuliahResponse
+	for _, j := range jadwals {
+		response = append(response, models.JadwalKuliahResponse{
+			ID:          j.ID,
+			DosenID:     j.DosenID,
+			Dosen:       j.Dosen.Nama + " - " + j.Dosen.MataKuliah.Nama,
+			MahasiswaID: j.MahasiswaID,
+			Mahasiswa:   j.Mahasiswa.Nama,
+			Nama:        j.Nama,
+			Hari:        j.Hari,
+			JamMulai:    j.JamMulai.Format("15:04"),
+			JamSelesai:  j.JamSelesai.Format("15:04"),
+			CreatedAt:   j.CreatedAt.Format("2006-01-02 15:04:05"),
+			UpdatedAt:   j.UpdatedAt.Format("2006-01-02 15:04:05"),
+		})
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"data": response})
 }
 
 // GetJadwalByID godoc
@@ -121,7 +139,8 @@ func UpdateJadwal(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 	id, _ := strconv.Atoi(idStr)
 
-	if err := config.DB.First(&req, id).Error; err != nil {
+	var jadwal models.JadwalKuliah
+	if err := config.DB.First(&jadwal, id).Error; err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": "Jadwal not found"})
 		return
 	}
@@ -134,23 +153,20 @@ func UpdateJadwal(ctx *gin.Context) {
 	// Parsing JamMulai dan JamSelesai
 	timeStart, err := time.Parse("15:04", req.JamMulai)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JamMulai format"})
 		return
 	}
 	timeEnd, err := time.Parse("15:04", req.JamSelesai)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JamSelesai format"})
 		return
 	}
 
-	jadwal := models.JadwalKuliah{
-		MahasiswaID: req.MahasiswaID,
-		Nama:        req.Nama,
-		Hari:        req.Hari,
-		JamMulai:    timeStart,
-		JamSelesai:  timeEnd,
-		UpdatedAt:   time.Now(),
-	}
+	jadwal.MahasiswaID = req.MahasiswaID
+	jadwal.Nama = req.Nama
+	jadwal.Hari = req.Hari
+	jadwal.JamMulai = timeStart
+	jadwal.JamSelesai = timeEnd
 
 	// Validasi hari dan waktu
 	if err := utils.ValidateJadwal(&jadwal); err != nil {

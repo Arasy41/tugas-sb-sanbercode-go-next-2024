@@ -17,10 +17,24 @@ type JadwalKuliah struct {
 }
 
 type JadwalKuliahRequest struct {
-	DosenID     int       `json:"dosen_id"`
-	MahasiswaID int       `json:"mahasiswa_id"`
-	Nama        string    `json:"nama" validate:"required"`
-	Hari        string    `json:"hari"`
+	DosenID     int    `json:"dosen_id"`
+	MahasiswaID int    `json:"mahasiswa_id"`
+	Nama        string `json:"nama" validate:"required"`
+	Hari        string `json:"hari"`
 	JamMulai    string `json:"jam_mulai"`
 	JamSelesai  string `json:"jam_selesai"`
+}
+
+type JadwalKuliahResponse struct {
+	ID          int    `json:"id"`
+	DosenID     int    `json:"dosen_id"`
+	Dosen       string `json:"dosen"`
+	MahasiswaID int    `json:"mahasiswa_id"`
+	Mahasiswa   string `json:"mahasiswa"`
+	Nama        string `json:"nama"`
+	Hari        string `json:"hari"`
+	JamMulai    string `json:"jam_mulai"`
+	JamSelesai  string `json:"jam_selesai"`
+	CreatedAt   string `json:"created_at"`
+	UpdatedAt   string `json:"updated_at"`
 }
