@@ -54,7 +54,6 @@ const JadwalTable = ({ jadwals }) => {
           <TableHeadCell>No</TableHeadCell>
           <TableHeadCell>Dosen</TableHeadCell>
           <TableHeadCell>Mahasiswa</TableHeadCell>
-          <TableHeadCell>Nama Mata Kuliah</TableHeadCell>
           <TableHeadCell>Hari</TableHeadCell>
           <TableHeadCell>Jam Mulai</TableHeadCell>
           <TableHeadCell>Jam Selesai</TableHeadCell>
@@ -70,7 +69,6 @@ const JadwalTable = ({ jadwals }) => {
               </TableCell>
               <TableCell>{item.dosen}</TableCell>
               <TableCell>{item.mahasiswa}</TableCell>
-              <TableCell>{item.nama}</TableCell>
               <TableCell>{item.hari}</TableCell>
               <TableCell>{item.jam_mulai}</TableCell>
               <TableCell>{item.jam_selesai}</TableCell>

@@ -8,17 +8,18 @@ import { baseUrl } from "@/utils/constants"
 const JadwalForm = ({ id }) => {
   const router = useRouter()
   const [input, setInput] = useState({
-    dosen_id: "",
-    mahasiswa_id: "",
-    nama: "",
+    dosen_id: 0,
+    mahasiswa_id: 0,
     hari: "",
-    jam_mulai: "",
-    jam_selesai: "",
+    jam_mulai: "00:00",
+    jam_selesai: "00:00",
   })
   const [dosenList, setDosenList] = useState([])
   const [mahasiswaList, setMahasiswaList] = useState([])
-  const [matakuliahList, setMatakuliahList] = useState([])
   const [isSubmit, setIsSubmit] = useState(false)
+
+  const hours = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'))
+  const minutes = ['00', '15', '30', '45']
 
   useEffect(() => {
     const fetchDosen = async () => {
@@ -39,23 +40,19 @@ const JadwalForm = ({ id }) => {
       }
     }
 
-    const fetchMatakuliah = async () => {
-      try {
-        const res = await axios.get(`${baseUrl}/api/matakuliahs`)
-        setMatakuliahList(res.data.data)
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
     fetchDosen()
     fetchMahasiswa()
-    fetchMatakuliah()
 
     if (id) {
       axios.get(`${baseUrl}/api/jadwals/${id}`).then((res) => {
         const { dosen_id, mahasiswa_id, nama, hari, jam_mulai, jam_selesai } = res.data.data
-        setInput({ dosen_id, mahasiswa_id, nama, hari, jam_mulai, jam_selesai })
+        setInput({
+          dosen_id,
+          mahasiswa_id,
+          hari,
+          jam_mulai: jam_mulai.substring(0, 5),
+          jam_selesai: jam_selesai.substring(0, 5),
+        })
       }).catch((err) => {
         console.log(err)
       })
@@ -67,22 +64,39 @@ const JadwalForm = ({ id }) => {
     setInput({ ...input, [name]: value })
   }
 
+  const handleTimeChange = (event, timeType, part) => {
+    const { value } = event.target
+    const currentValue = input[timeType].split(':')
+    if (part === 'hour') {
+      currentValue[0] = value
+    } else {
+      currentValue[1] = value
+    }
+    setInput({ ...input, [timeType]: currentValue.join(':') })
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     setIsSubmit(true)
+
+    const inputToSubmit = {
+      ...input,
+      dosen_id: parseInt(input.dosen_id, 10),
+      mahasiswa_id: parseInt(input.mahasiswa_id, 10),      
+    }
+
     try {
       if (id) {
-        await axios.put(`${baseUrl}/api/jadwals/${id}`, input)
+        await axios.put(`${baseUrl}/api/jadwals/${id}`, inputToSubmit)
       } else {
-        await axios.post(`${baseUrl}/api/jadwals`, input)
+        await axios.post(`${baseUrl}/api/jadwals`, inputToSubmit)
       }
       setInput({
-        dosen_id: "",
-        mahasiswa_id: "",
-        nama: "",
+        dosen_id: 0,
+        mahasiswa_id: 0,
         hari: "",
-        jam_mulai: "",
-        jam_selesai: "",
+        jam_mulai: "00:00",
+        jam_selesai: "00:00",
       })
       setIsSubmit(false)
       router.push("/jadwalkuliah")
@@ -115,44 +129,30 @@ const JadwalForm = ({ id }) => {
           <select
             id="dosen"
             name="dosen_id"
-            value={input.dosen_id || ""}
+            value={input.dosen_id || 0}
             onChange={handleInput}
             disabled={isSubmit}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/2 p-2.5 mr-2"
           >
-            <option value="">Select Dosen</option>
+            <option value={0}>Select Dosen</option>
             {dosenList.map((dosen) => (
-              <option key={dosen.id} value={dosen.id}>{dosen.nama}</option>
+              <option key={dosen.id} value={dosen.id}>{dosen.nama} - {dosen.matakuliah.nama}</option>
             ))}
           </select>
           <label htmlFor="mahasiswa" className="block mt-2 mb-2 text-sm font-medium text-gray-900">Mahasiswa</label>
           <select
             id="mahasiswa"
             name="mahasiswa_id"
-            value={input.mahasiswa_id || ""}
+            value={input.mahasiswa_id || 0}
             onChange={handleInput}
             disabled={isSubmit}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/2 p-2.5 mr-2"
           >
-            <option value="">Select Mahasiswa</option>
+            <option value={0}>Select Mahasiswa</option>
             {mahasiswaList.map((mahasiswa) => (
               <option key={mahasiswa.id} value={mahasiswa.id}>{mahasiswa.nama}</option>
             ))}
-          </select>
-          <label htmlFor="nama" className="block mt-2 mb-2 text-sm font-medium text-gray-900">Mata Kuliah</label>
-          <select
-            id="matakuliah"
-            name="matakuliah_id"
-            value={input.matakuliah_id || ""}
-            onChange={handleInput}
-            disabled={isSubmit}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/2 p-2.5 mr-2"
-          >
-            <option value="">Select Mata Kuliah</option>
-            {matakuliahList.map((matkul) => (
-              <option key={matkul.id} value={matkul.id}>{matkul.nama}</option>
-            ))}
-          </select>
+          </select>          
           <label htmlFor="hari" className="block mt-2 mb-2 text-sm font-medium text-gray-900">Hari</label>
           <select
             id="hari"
@@ -170,29 +170,65 @@ const JadwalForm = ({ id }) => {
             <option value="Jumat">Jumat</option>
           </select>
           <label htmlFor="jam_mulai" className="block mt-2 mb-2 text-sm font-medium text-gray-900">Jam Mulai</label>
-          <input
-            type="time"
-            disabled={isSubmit}
-            id="jam_mulai"
-            onChange={handleInput}
-            value={input.jam_mulai}
-            name="jam_mulai"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/2 p-2.5 mr-2"
-          />
+          <div className="flex">
+            <select
+              id="jam_mulai_hour"
+              onChange={(e) => handleTimeChange(e, 'jam_mulai', 'hour')}
+              value={input.jam_mulai.split(':')[0]}
+              disabled={isSubmit}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/4 p-2.5 mr-2"
+            >
+              <option value="">HH</option>
+              {hours.map((hour) => (
+                <option key={hour} value={hour}>{hour}</option>
+              ))}
+            </select>
+            <select
+                id="jam_mulai_minute"
+                onChange={(e) => handleTimeChange(e, 'jam_mulai', 'minute')}
+                value={input.jam_mulai.split(':')[1]}
+                disabled={isSubmit}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/4 p-2.5"
+              >
+                <option value="">MM</option>
+                {minutes.map((minute) => (
+                  <option key={minute} value={minute}>{minute}</option>
+                ))}
+              </select>
+            </div>
           <label htmlFor="jam_selesai" className="block mt-2 mb-2 text-sm font-medium text-gray-900">Jam Selesai</label>
-          <input
-            type="time"
-            disabled={isSubmit}
-            id="jam_selesai"
-            onChange={handleInput}
-            value={input.jam_selesai}
-            name="jam_selesai"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/2 p-2.5 mr-2"
-          />
+          <div className="flex">
+            <select
+              id="jam_selesai_hour"
+              onChange={(e) => handleTimeChange(e, 'jam_selesai', 'hour')}
+              value={input.jam_selesai.split(':')[0]}
+              disabled={isSubmit}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/4 p-2.5 mr-2"
+            >
+              <option value="">HH</option>
+              {hours.map((hour) => (
+                <option key={hour} value={hour}>{hour}</option>
+              ))}
+            </select>
+            <select
+              id="jam_selesai_minute"
+              onChange={(e) => handleTimeChange(e, 'jam_selesai', 'minute')}
+              value={input.jam_selesai.split(':')[1]}
+              disabled={isSubmit}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/4 p-2.5"
+            >
+              <option value="">MM</option>
+              {minutes.map((minute) => (
+                <option key={minute} value={minute}>{minute}</option>
+              ))}
+            </select>
+          </div>
           <button
-            className="focus:outline-none block mt-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+            type="submit"
+            disabled={isSubmit}
+            className="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
-            {isSubmit ? "Please Wait...." : "Submit"}
+            {id ? 'Update' : 'Submit'}
           </button>
         </form>
       </div>
@@ -201,3 +237,4 @@ const JadwalForm = ({ id }) => {
 }
 
 export default JadwalForm
+
