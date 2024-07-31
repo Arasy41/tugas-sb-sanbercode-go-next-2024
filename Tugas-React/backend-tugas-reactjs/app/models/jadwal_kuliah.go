@@ -17,11 +17,10 @@ type JadwalKuliah struct {
 }
 
 type JadwalKuliahRequest struct {
-	ID          int       `gorm:"primaryKey" json:"id"`
 	DosenID     int       `json:"dosen_id"`
 	MahasiswaID int       `json:"mahasiswa_id"`
 	Nama        string    `json:"nama" validate:"required"`
 	Hari        string    `json:"hari"`
-	JamMulai    time.Time `json:"jam_mulai"`
-	JamSelesai  time.Time `json:"jam_selesai"`
+	JamMulai    string `json:"jam_mulai"`
+	JamSelesai  string `json:"jam_selesai"`
 }

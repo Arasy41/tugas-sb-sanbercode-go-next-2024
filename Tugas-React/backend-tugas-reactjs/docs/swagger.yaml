@@ -55,14 +55,21 @@ definitions:
       id:
         type: integer
       matakuliah:
-        items:
-          $ref: '#/definitions/models.MataKuliah'
-        type: array
+        $ref: '#/definitions/models.MataKuliah'
       matakuliah_id:
         type: integer
       nama:
         type: string
       updated_at:
+        type: string
+    required:
+    - nama
+    type: object
+  models.DosenRequest:
+    properties:
+      matakuliah_id:
+        type: integer
+      nama:
         type: string
     required:
     - nama
@@ -100,8 +107,6 @@ definitions:
         type: integer
       hari:
         type: string
-      id:
-        type: integer
       jam_mulai:
         type: string
       jam_selesai:
@@ -126,6 +131,13 @@ definitions:
     required:
     - nama
     type: object
+  models.MahasiswaRequest:
+    properties:
+      nama:
+        type: string
+    required:
+    - nama
+    type: object
   models.MataKuliah:
     properties:
       created_at:
@@ -135,6 +147,13 @@ definitions:
       nama:
         type: string
       updated_at:
+        type: string
+    required:
+    - nama
+    type: object
+  models.MataKuliahRequest:
+    properties:
+      nama:
         type: string
     required:
     - nama
@@ -311,14 +330,14 @@ paths:
         name: dosen
         required: true
         schema:
-          $ref: '#/definitions/models.Dosen'
+          $ref: '#/definitions/models.DosenRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.Dosen'
+            $ref: '#/definitions/models.DosenRequest'
         "400":
           description: Bad Request
           schema:
@@ -377,14 +396,14 @@ paths:
         name: dosen
         required: true
         schema:
-          $ref: '#/definitions/models.Dosen'
+          $ref: '#/definitions/models.DosenRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Dosen'
+            $ref: '#/definitions/models.DosenRequest'
         "400":
           description: Bad Request
           schema:
@@ -568,14 +587,14 @@ paths:
         name: mahasiswa
         required: true
         schema:
-          $ref: '#/definitions/models.Mahasiswa'
+          $ref: '#/definitions/models.MahasiswaRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.Mahasiswa'
+            $ref: '#/definitions/models.MahasiswaRequest'
         "400":
           description: Bad Request
           schema:
@@ -657,14 +676,14 @@ paths:
         name: mahasiswa
         required: true
         schema:
-          $ref: '#/definitions/models.Mahasiswa'
+          $ref: '#/definitions/models.MahasiswaRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Mahasiswa'
+            $ref: '#/definitions/models.MahasiswaRequest'
         "400":
           description: Bad Request
           schema:
@@ -708,14 +727,14 @@ paths:
         name: matakuliah
         required: true
         schema:
-          $ref: '#/definitions/models.MataKuliah'
+          $ref: '#/definitions/models.MataKuliahRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/models.MataKuliah'
+            $ref: '#/definitions/models.MataKuliahRequest'
         "400":
           description: Bad Request
           schema:

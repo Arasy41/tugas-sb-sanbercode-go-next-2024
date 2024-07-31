@@ -32,8 +32,8 @@ func GetAllDosen(ctx *gin.Context) {
 // @Tags dosen
 // @Accept json
 // @Produce json
-// @Param dosen body models.Dosen true "Dosen Request"
-// @Success 201 {object} models.Dosen
+// @Param dosen body models.DosenRequest true "Dosen Request"
+// @Success 201 {object} models.DosenRequest
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
 // @Router /api/dosens [post]
@@ -59,8 +59,8 @@ func CreateDosen(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "Dosen ID"
-// @Param dosen body models.Dosen true "Dosen Request"
-// @Success 200 {object} models.Dosen
+// @Param dosen body models.DosenRequest true "Dosen Request"
+// @Success 200 {object} models.DosenRequest
 // @Failure 400 {object} map[string]interface{}
 // @Failure 404 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}

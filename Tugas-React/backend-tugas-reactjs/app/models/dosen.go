@@ -10,3 +10,8 @@ type Dosen struct {
 	MataKuliahID int        `json:"matakuliah_id"`
 	MataKuliah   MataKuliah `gorm:"foreignKey:MataKuliahID; manyToMany:MataKuliah;" json:"matakuliah"`
 }
+
+type DosenRequest struct {
+	Nama         string `json:"nama" validate:"required"`
+	MataKuliahID int    `json:"matakuliah_id"`
+}

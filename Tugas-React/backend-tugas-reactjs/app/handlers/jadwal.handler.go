@@ -6,6 +6,7 @@ import (
 	"go-vercel-app/app/utils"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -60,10 +61,32 @@ func GetJadwalByID(ctx *gin.Context) {
 // @Failure 500 {object} map[string]interface{}
 // @Router /api/jadwals [post]
 func CreateJadwal(ctx *gin.Context) {
-	var jadwal models.JadwalKuliah
-	if err := ctx.ShouldBindJSON(&jadwal); err != nil {
+	var req models.JadwalKuliahRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
+	}
+
+	// Parsing JamMulai dan JamSelesai
+	timeStart, err := time.Parse("15:04", req.JamMulai)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	timeEnd, err := time.Parse("15:04", req.JamSelesai)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	jadwal := models.JadwalKuliah{
+		DosenID:     req.DosenID,
+		MahasiswaID: req.MahasiswaID,
+		Nama:        req.Nama,
+		Hari:        req.Hari,
+		JamMulai:    timeStart,
+		JamSelesai:  timeEnd,
+		CreatedAt:   time.Now(),
 	}
 
 	// Validasi hari dan waktu

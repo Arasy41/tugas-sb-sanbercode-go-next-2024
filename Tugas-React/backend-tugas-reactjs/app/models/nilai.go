@@ -9,9 +9,9 @@ type Nilai struct {
 	CreatedAt    time.Time  `json:"created_at"`
 	UpdatedAt    time.Time  `json:"updated_at"`
 	MahasiswaID  int        `json:"mahasiswa_id"`
-	Mahasiswa    Mahasiswa  `json:"mahasiswa" gorm:"foreignKey:MahasiswaID"`
+	Mahasiswa    Mahasiswa  `gorm:"foreignKey:MahasiswaID" json:"mahasiswa"`
 	MataKuliahID int        `json:"mata_kuliah_id"`
-	MataKuliah   MataKuliah `json:"mata_kuliah" gorm:"foreignKey:MataKuliahID"`
-	DosenID      int        `json:"dosen_id"`
-	Dosen        Dosen      `json:"dosen" gorm:"foreignKey:DosenID"`
+	MataKuliah   MataKuliah `gorm:"foreignKey:MataKuliahID" json:"mata_kuliah"`
+	UserID       int        `json:"user_id"`
+	User         User       `gorm:"foreignKey:UserID" json:"user"`
 }

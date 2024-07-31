@@ -53,8 +53,8 @@ func GetMataKuliahByID(ctx *gin.Context) {
 // @Tags matakuliahs
 // @Accept json
 // @Produce json
-// @Param matakuliah body models.MataKuliah true "MataKuliah Request"
-// @Success 201 {object} models.MataKuliah
+// @Param matakuliah body models.MataKuliahRequest true "MataKuliah Request"
+// @Success 201 {object} models.MataKuliahRequest
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
 // @Router /api/matakuliahs [post]

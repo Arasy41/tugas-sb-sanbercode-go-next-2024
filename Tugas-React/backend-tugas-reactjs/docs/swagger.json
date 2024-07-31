@@ -257,7 +257,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Dosen"
+                            "$ref": "#/definitions/models.DosenRequest"
                         }
                     }
                 ],
@@ -265,7 +265,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.Dosen"
+                            "$ref": "#/definitions/models.DosenRequest"
                         }
                     },
                     "400": {
@@ -312,7 +312,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Dosen"
+                            "$ref": "#/definitions/models.DosenRequest"
                         }
                     }
                 ],
@@ -320,7 +320,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Dosen"
+                            "$ref": "#/definitions/models.DosenRequest"
                         }
                     },
                     "400": {
@@ -637,7 +637,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Mahasiswa"
+                            "$ref": "#/definitions/models.MahasiswaRequest"
                         }
                     }
                 ],
@@ -645,7 +645,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.Mahasiswa"
+                            "$ref": "#/definitions/models.MahasiswaRequest"
                         }
                     },
                     "400": {
@@ -726,7 +726,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Mahasiswa"
+                            "$ref": "#/definitions/models.MahasiswaRequest"
                         }
                     }
                 ],
@@ -734,7 +734,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Mahasiswa"
+                            "$ref": "#/definitions/models.MahasiswaRequest"
                         }
                     },
                     "400": {
@@ -844,7 +844,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.MataKuliah"
+                            "$ref": "#/definitions/models.MataKuliahRequest"
                         }
                     }
                 ],
@@ -852,7 +852,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/models.MataKuliah"
+                            "$ref": "#/definitions/models.MataKuliahRequest"
                         }
                     },
                     "400": {
@@ -1095,10 +1095,7 @@
                     "type": "integer"
                 },
                 "matakuliah": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.MataKuliah"
-                    }
+                    "$ref": "#/definitions/models.MataKuliah"
                 },
                 "matakuliah_id": {
                     "type": "integer"
@@ -1107,6 +1104,20 @@
                     "type": "string"
                 },
                 "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.DosenRequest": {
+            "type": "object",
+            "required": [
+                "nama"
+            ],
+            "properties": {
+                "matakuliah_id": {
+                    "type": "integer"
+                },
+                "nama": {
                     "type": "string"
                 }
             }
@@ -1164,9 +1175,6 @@
                 "hari": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "integer"
-                },
                 "jam_mulai": {
                     "type": "string"
                 },
@@ -1201,6 +1209,17 @@
                 }
             }
         },
+        "models.MahasiswaRequest": {
+            "type": "object",
+            "required": [
+                "nama"
+            ],
+            "properties": {
+                "nama": {
+                    "type": "string"
+                }
+            }
+        },
         "models.MataKuliah": {
             "type": "object",
             "required": [
@@ -1217,6 +1236,17 @@
                     "type": "string"
                 },
                 "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.MataKuliahRequest": {
+            "type": "object",
+            "required": [
+                "nama"
+            ],
+            "properties": {
+                "nama": {
                     "type": "string"
                 }
             }

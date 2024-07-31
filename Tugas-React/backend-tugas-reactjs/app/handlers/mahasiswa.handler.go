@@ -53,8 +53,8 @@ func GetMahasiswaByID(ctx *gin.Context) {
 // @Tags mahasiswas
 // @Accept json
 // @Produce json
-// @Param mahasiswa body models.Mahasiswa true "Mahasiswa Request"
-// @Success 201 {object} models.Mahasiswa
+// @Param mahasiswa body models.MahasiswaRequest true "Mahasiswa Request"
+// @Success 201 {object} models.MahasiswaRequest
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
 // @Router /api/mahasiswas [post]
@@ -80,8 +80,8 @@ func CreateMahasiswa(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "Mahasiswa ID"
-// @Param mahasiswa body models.Mahasiswa true "Mahasiswa Request"
-// @Success 200 {object} models.Mahasiswa
+// @Param mahasiswa body models.MahasiswaRequest true "Mahasiswa Request"
+// @Success 200 {object} models.MahasiswaRequest
 // @Failure 400 {object} map[string]interface{}
 // @Failure 404 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
