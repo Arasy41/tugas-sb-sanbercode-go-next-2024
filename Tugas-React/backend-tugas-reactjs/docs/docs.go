@@ -602,6 +602,420 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/mahasiswas": {
+            "get": {
+                "description": "Get a list of all mahasiswas",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mahasiswas"
+                ],
+                "summary": "Get all mahasiswas",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Mahasiswa"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new mahasiswa with the input payload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mahasiswas"
+                ],
+                "summary": "Create a new mahasiswa",
+                "parameters": [
+                    {
+                        "description": "Mahasiswa Request",
+                        "name": "mahasiswa",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Mahasiswa"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Mahasiswa"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/mahasiswas/{id}": {
+            "get": {
+                "description": "Get a single mahasiswa by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mahasiswas"
+                ],
+                "summary": "Get mahasiswa by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Mahasiswa ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Mahasiswa"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a mahasiswa by ID with the input payload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mahasiswas"
+                ],
+                "summary": "Update an existing mahasiswa",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Mahasiswa ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Mahasiswa Request",
+                        "name": "mahasiswa",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Mahasiswa"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Mahasiswa"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a mahasiswa by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mahasiswas"
+                ],
+                "summary": "Delete a mahasiswa",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Mahasiswa ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/matakuliahs": {
+            "get": {
+                "description": "Get a list of all matakuliahs",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "matakuliahs"
+                ],
+                "summary": "Get all matakuliahs",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.MataKuliah"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new matakuliah with the input payload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "matakuliahs"
+                ],
+                "summary": "Create a new matakuliah",
+                "parameters": [
+                    {
+                        "description": "MataKuliah Request",
+                        "name": "matakuliah",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.MataKuliah"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.MataKuliah"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/matakuliahs/{id}": {
+            "get": {
+                "description": "Get a single matakuliah by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "matakuliahs"
+                ],
+                "summary": "Get matakuliah by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "MataKuliah ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.MataKuliah"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a matakuliah by ID with the input payload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "matakuliahs"
+                ],
+                "summary": "Update an existing matakuliah",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "MataKuliah ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "MataKuliah Request",
+                        "name": "matakuliah",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.MataKuliah"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.MataKuliah"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a matakuliah by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "matakuliahs"
+                ],
+                "summary": "Delete a matakuliah",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "MataKuliah ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -820,10 +1234,10 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "go-vercel-app-arasys-projects.vercel.app/",
+	Host:             "go-vercel-app-arasys-projects.vercel.app",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "Books API",
+	Title:            "Kuliahs API",
 	Description:      "This is a sample server for managing books.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

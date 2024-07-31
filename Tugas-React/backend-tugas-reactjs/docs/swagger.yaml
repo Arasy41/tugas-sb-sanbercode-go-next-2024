@@ -139,11 +139,11 @@ definitions:
     required:
     - nama
     type: object
-host: go-vercel-app-arasys-projects.vercel.app/
+host: go-vercel-app-arasys-projects.vercel.app
 info:
   contact: {}
   description: This is a sample server for managing books.
-  title: Books API
+  title: Kuliahs API
   version: "1.0"
 paths:
   /api/jadwals:
@@ -543,4 +543,284 @@ paths:
       summary: Update an existing dosen
       tags:
       - dosen
+  /mahasiswas:
+    get:
+      description: Get a list of all mahasiswas
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Mahasiswa'
+            type: array
+      summary: Get all mahasiswas
+      tags:
+      - mahasiswas
+    post:
+      consumes:
+      - application/json
+      description: Create a new mahasiswa with the input payload
+      parameters:
+      - description: Mahasiswa Request
+        in: body
+        name: mahasiswa
+        required: true
+        schema:
+          $ref: '#/definitions/models.Mahasiswa'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Mahasiswa'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new mahasiswa
+      tags:
+      - mahasiswas
+  /mahasiswas/{id}:
+    delete:
+      description: Delete a mahasiswa by ID
+      parameters:
+      - description: Mahasiswa ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a mahasiswa
+      tags:
+      - mahasiswas
+    get:
+      description: Get a single mahasiswa by ID
+      parameters:
+      - description: Mahasiswa ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Mahasiswa'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get mahasiswa by ID
+      tags:
+      - mahasiswas
+    put:
+      consumes:
+      - application/json
+      description: Update a mahasiswa by ID with the input payload
+      parameters:
+      - description: Mahasiswa ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Mahasiswa Request
+        in: body
+        name: mahasiswa
+        required: true
+        schema:
+          $ref: '#/definitions/models.Mahasiswa'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Mahasiswa'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update an existing mahasiswa
+      tags:
+      - mahasiswas
+  /matakuliahs:
+    get:
+      description: Get a list of all matakuliahs
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.MataKuliah'
+            type: array
+      summary: Get all matakuliahs
+      tags:
+      - matakuliahs
+    post:
+      consumes:
+      - application/json
+      description: Create a new matakuliah with the input payload
+      parameters:
+      - description: MataKuliah Request
+        in: body
+        name: matakuliah
+        required: true
+        schema:
+          $ref: '#/definitions/models.MataKuliah'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.MataKuliah'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new matakuliah
+      tags:
+      - matakuliahs
+  /matakuliahs/{id}:
+    delete:
+      description: Delete a matakuliah by ID
+      parameters:
+      - description: MataKuliah ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a matakuliah
+      tags:
+      - matakuliahs
+    get:
+      description: Get a single matakuliah by ID
+      parameters:
+      - description: MataKuliah ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.MataKuliah'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get matakuliah by ID
+      tags:
+      - matakuliahs
+    put:
+      consumes:
+      - application/json
+      description: Update a matakuliah by ID with the input payload
+      parameters:
+      - description: MataKuliah ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: MataKuliah Request
+        in: body
+        name: matakuliah
+        required: true
+        schema:
+          $ref: '#/definitions/models.MataKuliah'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.MataKuliah'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update an existing matakuliah
+      tags:
+      - matakuliahs
 swagger: "2.0"

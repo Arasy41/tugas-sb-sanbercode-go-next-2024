@@ -17,25 +17,26 @@ var (
 	App *gin.Engine
 )
 
-// @title Books API
+// @title Kuliahs API
 // @version 1.0
 // @description This is a sample server for managing books.
-// @host go-vercel-app-arasys-projects.vercel.app/
+// @host go-vercel-app-arasys-projects.vercel.app
 // @BasePath /
 func init() {
 	App = gin.New()
 
 	environment := utils.Getenv("ENVIRONMENT", "development")
-	log.Printf("ENVIRONMENT: %s", environment)
 
 	if environment == "development" {
 		err := godotenv.Load()
 		if err != nil {
-			log.Println("No .env file found, relying on system environment variables")
+			log.Fatal("Error loading .env file")
 		} else {
-			log.Println(".env file loaded successfully")
+			log.Println("Loaded .env file")
 		}
 	}
+
+	log.Printf("ENVIRONMENT: %s", environment)
 
 	// Log environment variables for debugging
 	ginMode := os.Getenv("GIN_MODE")
@@ -45,10 +46,10 @@ func init() {
 	log.Printf("GIN_MODE: %s", ginMode)
 	gin.SetMode(ginMode)
 
-	docs.SwaggerInfo.Title = "Movie REST API"
-	docs.SwaggerInfo.Description = "This is REST API Movie."
+	docs.SwaggerInfo.Title = "Kuliah REST API"
+	docs.SwaggerInfo.Description = "This is sample for REST API Kuliah."
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = utils.Getenv("HOST", "go-vercel-app-seven.vercel.app/")
+	docs.SwaggerInfo.Host = utils.Getenv("HOST", "go-vercel-app-seven.vercel.app")
 	if environment == "development" {
 		docs.SwaggerInfo.Schemes = []string{"http", "https"}
 	} else {

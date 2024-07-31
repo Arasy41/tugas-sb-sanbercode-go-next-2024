@@ -50,5 +50,19 @@ func InitRouter(db *gorm.DB, r *gin.Engine) {
 	dosenRoute.PUT("/:id", handlers.UpdateDosen)
 	dosenRoute.DELETE("/:id", handlers.DeleteDosen)
 
+	mahasiswaRoute := r.Group("/api/mahasiswas")
+	mahasiswaRoute.GET("", handlers.GetAllMahasiswa)
+	mahasiswaRoute.GET("/:id", handlers.GetMahasiswaByID)
+	mahasiswaRoute.POST("", handlers.CreateMahasiswa)
+	mahasiswaRoute.PUT("/:id", handlers.UpdateMahasiswa)
+	mahasiswaRoute.DELETE("/:id", handlers.DeleteMahasiswa)
+
+	mataKuliahRoute := r.Group("/api/matakuliahs")
+	mataKuliahRoute.GET("", handlers.GetAllMataKuliah)
+	mataKuliahRoute.GET("/:id", handlers.GetMataKuliahByID)
+	mataKuliahRoute.POST("", handlers.CreateMataKuliah)
+	mataKuliahRoute.PUT("/:id", handlers.UpdateMataKuliah)
+	mataKuliahRoute.DELETE("/:id", handlers.DeleteMataKuliah)
+
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

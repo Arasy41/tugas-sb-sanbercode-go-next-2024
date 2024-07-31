@@ -50,7 +50,6 @@ func CalculateThickness(totalPage int) string {
 }
 
 func ValidateJadwal(schedule *models.JadwalKuliah) error {
-	// Validasi hari
 	validDays := []string{"Senin", "Selasa", "Rabu", "Kamis", "Jumat"}
 	isValidDay := false
 	for _, day := range validDays {
@@ -77,7 +76,7 @@ func ValidateJadwal(schedule *models.JadwalKuliah) error {
 		Where("dosen_id = ? AND mahasiswa_id = ?", schedule.DosenID, schedule.MahasiswaID).
 		Count(&count)
 	if count > 0 {
-		return fmt.Errorf("Dosen dan mahasiswa sudah memiliki jadwal yang sama")
+		return fmt.Errorf("Dosen dan mahasiswa sudah memiliki jadwal yang sama, sudah ada data dosen id : %d dan mahasiswa id : %d", schedule.DosenID, schedule.MahasiswaID)
 	}
 
 	return nil
