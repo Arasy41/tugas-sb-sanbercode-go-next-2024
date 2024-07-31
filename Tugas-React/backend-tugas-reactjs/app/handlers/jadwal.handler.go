@@ -34,7 +34,6 @@ func GetAllJadwal(ctx *gin.Context) {
 			Dosen:       j.Dosen.Nama + " - " + j.Dosen.MataKuliah.Nama,
 			MahasiswaID: j.MahasiswaID,
 			Mahasiswa:   j.Mahasiswa.Nama,
-			Nama:        j.Nama,
 			Hari:        j.Hari,
 			JamMulai:    j.JamMulai.Format("15:04"),
 			JamSelesai:  j.JamSelesai.Format("15:04"),
@@ -88,7 +87,6 @@ func CreateJadwal(ctx *gin.Context) {
 	jadwal := models.JadwalKuliah{
 		DosenID:     req.DosenID,
 		MahasiswaID: req.MahasiswaID,
-		Nama:        req.Nama,
 		Hari:        req.Hari,
 		JamMulai:    req.JamMulai.Time,
 		JamSelesai:  req.JamSelesai.Time,
@@ -140,7 +138,6 @@ func UpdateJadwal(ctx *gin.Context) {
 
 	jadwal.DosenID = req.DosenID
 	jadwal.MahasiswaID = req.MahasiswaID
-	jadwal.Nama = req.Nama
 	jadwal.Hari = req.Hari
 	jadwal.JamMulai = req.JamMulai.Time
 	jadwal.JamSelesai = req.JamSelesai.Time

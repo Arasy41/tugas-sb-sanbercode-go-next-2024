@@ -11,7 +11,6 @@ type JadwalKuliah struct {
 	Dosen       Dosen     `json:"dosen" gorm:"foreignKey:DosenID"`
 	MahasiswaID int       `json:"mahasiswa_id"`
 	Mahasiswa   Mahasiswa `json:"mahasiswa" gorm:"foreignKey:MahasiswaID"`
-	Nama        string    `json:"nama" validate:"required"`
 	Hari        string    `json:"hari"`
 	JamMulai    time.Time `json:"jam_mulai"`
 	JamSelesai  time.Time `json:"jam_selesai"`
@@ -22,7 +21,6 @@ type JadwalKuliah struct {
 type JadwalKuliahRequest struct {
 	DosenID     int      `json:"dosen_id"`
 	MahasiswaID int      `json:"mahasiswa_id"`
-	Nama        string   `json:"nama" validate:"required"`
 	Hari        string   `json:"hari"`
 	JamMulai    TimeOnly `json:"jam_mulai"`
 	JamSelesai  TimeOnly `json:"jam_selesai"`
@@ -50,7 +48,6 @@ type JadwalKuliahResponse struct {
 	Dosen       string `json:"dosen"`
 	MahasiswaID int    `json:"mahasiswa_id"`
 	Mahasiswa   string `json:"mahasiswa"`
-	Nama        string `json:"nama"`
 	Hari        string `json:"hari"`
 	JamMulai    string `json:"jam_mulai"`
 	JamSelesai  string `json:"jam_selesai"`
