@@ -108,15 +108,40 @@ definitions:
       hari:
         type: string
       jam_mulai:
-        type: string
+        $ref: '#/definitions/models.TimeOnly'
       jam_selesai:
-        type: string
+        $ref: '#/definitions/models.TimeOnly'
       mahasiswa_id:
         type: integer
       nama:
         type: string
     required:
     - nama
+    type: object
+  models.JadwalKuliahResponse:
+    properties:
+      created_at:
+        type: string
+      dosen:
+        type: string
+      dosen_id:
+        type: integer
+      hari:
+        type: string
+      id:
+        type: integer
+      jam_mulai:
+        type: string
+      jam_selesai:
+        type: string
+      mahasiswa:
+        type: string
+      mahasiswa_id:
+        type: integer
+      nama:
+        type: string
+      updated_at:
+        type: string
     type: object
   models.Mahasiswa:
     properties:
@@ -157,6 +182,11 @@ definitions:
         type: string
     required:
     - nama
+    type: object
+  models.TimeOnly:
+    properties:
+      time.Time:
+        type: string
     type: object
 host: go-vercel-app-arasys-projects.vercel.app
 info:
@@ -432,7 +462,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.JadwalKuliah'
+              $ref: '#/definitions/models.JadwalKuliahResponse'
             type: array
       summary: Get all jadwals
       tags:

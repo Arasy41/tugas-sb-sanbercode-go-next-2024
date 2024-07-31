@@ -16,7 +16,7 @@ import (
 // @Description Get a list of all jadwals
 // @Tags jadwals
 // @Produce json
-// @Success 200 {array} JadwalKuliahResponse
+// @Success 200 {array} models.JadwalKuliahResponse
 // @Router /api/jadwals [get]
 func GetAllJadwal(ctx *gin.Context) {
 	var jadwals []models.JadwalKuliah

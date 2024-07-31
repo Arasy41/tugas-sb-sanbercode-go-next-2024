@@ -412,7 +412,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.JadwalKuliah"
+                                "$ref": "#/definitions/models.JadwalKuliahResponse"
                             }
                         }
                     }
@@ -1183,15 +1183,53 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "jam_mulai": {
+                    "$ref": "#/definitions/models.TimeOnly"
+                },
+                "jam_selesai": {
+                    "$ref": "#/definitions/models.TimeOnly"
+                },
+                "mahasiswa_id": {
+                    "type": "integer"
+                },
+                "nama": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.JadwalKuliahResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "dosen": {
+                    "type": "string"
+                },
+                "dosen_id": {
+                    "type": "integer"
+                },
+                "hari": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "jam_mulai": {
                     "type": "string"
                 },
                 "jam_selesai": {
+                    "type": "string"
+                },
+                "mahasiswa": {
                     "type": "string"
                 },
                 "mahasiswa_id": {
                     "type": "integer"
                 },
                 "nama": {
+                    "type": "string"
+                },
+                "updated_at": {
                     "type": "string"
                 }
             }
@@ -1254,6 +1292,14 @@ const docTemplate = `{
             ],
             "properties": {
                 "nama": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TimeOnly": {
+            "type": "object",
+            "properties": {
+                "time.Time": {
                     "type": "string"
                 }
             }
