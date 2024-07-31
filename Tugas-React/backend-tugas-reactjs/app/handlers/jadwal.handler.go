@@ -21,7 +21,7 @@ import (
 func GetAllJadwal(ctx *gin.Context) {
 	var jadwals []models.JadwalKuliah
 
-	if err := config.DB.Find(&jadwals).Error; err != nil {
+	if err := config.DB.Preload("Dosen.MataKuliah").Find(&jadwals).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -117,18 +117,39 @@ func CreateJadwal(ctx *gin.Context) {
 // @Failure 500 {object} map[string]interface{}
 // @Router /api/jadwals/{id} [put]
 func UpdateJadwal(ctx *gin.Context) {
-	var jadwal models.JadwalKuliah
+	var req models.JadwalKuliahRequest
 	idStr := ctx.Param("id")
 	id, _ := strconv.Atoi(idStr)
 
-	if err := config.DB.First(&jadwal, id).Error; err != nil {
+	if err := config.DB.First(&req, id).Error; err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{"error": "Jadwal not found"})
 		return
 	}
 
-	if err := ctx.ShouldBindJSON(&jadwal); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
+	}
+
+	// Parsing JamMulai dan JamSelesai
+	timeStart, err := time.Parse("15:04", req.JamMulai)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	timeEnd, err := time.Parse("15:04", req.JamSelesai)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	jadwal := models.JadwalKuliah{
+		MahasiswaID: req.MahasiswaID,
+		Nama:        req.Nama,
+		Hari:        req.Hari,
+		JamMulai:    timeStart,
+		JamSelesai:  timeEnd,
+		UpdatedAt:   time.Now(),
 	}
 
 	// Validasi hari dan waktu

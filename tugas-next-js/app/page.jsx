@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import shopingImage from "@/public/shoping_hero.svg";
-import Layout from "./components/Layout";
 
 export default function Home() {
   return (
-    <Layout>
+    <>
       <div className="flex flex-col gap-5 p-5 md:p-10 overflow-x-hidden">
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-rose-100 p-5 md:p-10 shadow-lg w-screen">
           <div className="flex flex-col md:flex-row-reverse mx-auto max-w-screen-xl">
@@ -144,6 +143,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }
