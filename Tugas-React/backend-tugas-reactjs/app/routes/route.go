@@ -5,6 +5,7 @@ import (
 	// "go-vercel-app/app/middlewares"
 
 	"go-vercel-app/app/handlers"
+	"go-vercel-app/app/middlewares"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -63,6 +64,17 @@ func InitRouter(db *gorm.DB, r *gin.Engine) {
 	mataKuliahRoute.POST("", handlers.CreateMataKuliah)
 	mataKuliahRoute.PUT("/:id", handlers.UpdateMataKuliah)
 	mataKuliahRoute.DELETE("/:id", handlers.DeleteMataKuliah)
+
+	userRoute := r.Group("/api")
+	userRoute.POST("/register", handlers.Register)
+	userRoute.POST("/login", handlers.Login)
+
+	nilaiRoute := r.Group("/api/nilai")
+	nilaiRoute.GET("/:id", handlers.GetNilaiByID)
+	nilaiRoute.GET("", handlers.GetAllNilai)
+	nilaiRoute.POST("", handlers.CreateNilai, middlewares.JWTAuthMiddleware())
+	nilaiRoute.PUT("/:id", handlers.UpdateNilai, middlewares.JWTAuthMiddleware())
+	nilaiRoute.DELETE("/:id", handlers.DeleteNilai, middlewares.JWTAuthMiddleware())
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

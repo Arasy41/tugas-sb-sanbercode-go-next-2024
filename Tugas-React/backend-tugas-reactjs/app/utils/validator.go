@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/jinzhu/gorm"
 )
 
 var validate *validator.Validate
@@ -49,6 +50,23 @@ func CalculateThickness(totalPage int) string {
 	}
 }
 
+func CheckUserEmail(email string) (*models.User, error) {
+	var user models.User
+	if err := config.DB.Where("email = ?", email).First(&user).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &user, nil
+}
+
+func GetUserByEmailOrUsername(emailOrUsername string) (*models.User, error) {
+	var user models.User
+	err := config.DB.Where("email = ? OR username = ?", emailOrUsername, emailOrUsername).First(&user).Error
+	return &user, err
+}
+
 func ValidateJadwal(schedule *models.JadwalKuliah) error {
 	validDays := []string{"Senin", "Selasa", "Rabu", "Kamis", "Jumat"}
 	isValidDay := false
@@ -84,4 +102,28 @@ func ValidateJadwalDosenMahasiswa(jadwal *models.JadwalKuliah) error {
 
 	// If no existing record found, validation passes
 	return nil
+}
+
+func SkorValidation(skor int) error {
+	if skor > 100 {
+		return fmt.Errorf("Skor tidak boleh lebih dari 100")
+	}
+	return nil
+}
+
+func IndeksValidation(skor int) (string, error) {
+	var indeks string
+	if skor >= 80 {
+		indeks = "A"
+	} else if skor >= 70 {
+		indeks = "B"
+	} else if skor >= 60 {
+		indeks = "C"
+	} else if skor >= 50 {
+		indeks = "D"
+	} else {
+		indeks = "E"
+	}
+
+	return indeks, nil
 }
