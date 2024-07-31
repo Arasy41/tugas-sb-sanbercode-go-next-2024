@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type JadwalKuliah struct {
 	ID          int       `gorm:"primaryKey" json:"id"`
@@ -17,12 +20,28 @@ type JadwalKuliah struct {
 }
 
 type JadwalKuliahRequest struct {
-	DosenID     int    `json:"dosen_id"`
-	MahasiswaID int    `json:"mahasiswa_id"`
-	Nama        string `json:"nama" validate:"required"`
-	Hari        string `json:"hari"`
-	JamMulai    string `json:"jam_mulai"`
-	JamSelesai  string `json:"jam_selesai"`
+	DosenID     int      `json:"dosen_id"`
+	MahasiswaID int      `json:"mahasiswa_id"`
+	Nama        string   `json:"nama" validate:"required"`
+	Hari        string   `json:"hari"`
+	JamMulai    TimeOnly `json:"jam_mulai"`
+	JamSelesai  TimeOnly `json:"jam_selesai"`
+}
+
+type TimeOnly struct {
+	time.Time
+}
+
+func (t *TimeOnly) UnmarshalJSON(b []byte) error {
+	timeStr := string(b)
+	timeStr = timeStr[1 : len(timeStr)-1]
+
+	parsedTime, err := time.Parse("15:04", timeStr)
+	if err != nil {
+		return fmt.Errorf("invalid time format, expected HH:MM")
+	}
+	t.Time = parsedTime
+	return nil
 }
 
 type JadwalKuliahResponse struct {

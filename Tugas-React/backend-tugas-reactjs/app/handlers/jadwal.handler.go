@@ -85,25 +85,13 @@ func CreateJadwal(ctx *gin.Context) {
 		return
 	}
 
-	// Parsing JamMulai dan JamSelesai
-	timeStart, err := time.Parse("15:04", req.JamMulai)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	timeEnd, err := time.Parse("15:04", req.JamSelesai)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
 	jadwal := models.JadwalKuliah{
 		DosenID:     req.DosenID,
 		MahasiswaID: req.MahasiswaID,
 		Nama:        req.Nama,
 		Hari:        req.Hari,
-		JamMulai:    timeStart,
-		JamSelesai:  timeEnd,
+		JamMulai:    req.JamMulai.Time,
+		JamSelesai:  req.JamSelesai.Time,
 		CreatedAt:   time.Now(),
 	}
 
@@ -150,23 +138,13 @@ func UpdateJadwal(ctx *gin.Context) {
 		return
 	}
 
-	// Parsing JamMulai dan JamSelesai
-	timeStart, err := time.Parse("15:04", req.JamMulai)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JamMulai format"})
-		return
-	}
-	timeEnd, err := time.Parse("15:04", req.JamSelesai)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JamSelesai format"})
-		return
-	}
-
+	jadwal.DosenID = req.DosenID
 	jadwal.MahasiswaID = req.MahasiswaID
 	jadwal.Nama = req.Nama
 	jadwal.Hari = req.Hari
-	jadwal.JamMulai = timeStart
-	jadwal.JamSelesai = timeEnd
+	jadwal.JamMulai = req.JamMulai.Time
+	jadwal.JamSelesai = req.JamSelesai.Time
+	jadwal.UpdatedAt = time.Now()
 
 	// Validasi hari dan waktu
 	if err := utils.ValidateJadwal(&jadwal); err != nil {
