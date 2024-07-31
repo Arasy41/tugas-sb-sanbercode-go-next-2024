@@ -683,7 +683,7 @@ paths:
       summary: Update an existing mahasiswa
       tags:
       - mahasiswas
-  /matakuliahs:
+  /api/matakuliahs:
     get:
       description: Get a list of all matakuliahs
       produces:
@@ -729,7 +729,7 @@ paths:
       summary: Create a new matakuliah
       tags:
       - matakuliahs
-  /matakuliahs/{id}:
+  /api/matakuliahs/{id}:
     delete:
       description: Delete a matakuliah by ID
       parameters:

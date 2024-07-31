@@ -810,7 +810,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/matakuliahs": {
+        "/api/matakuliahs": {
             "get": {
                 "description": "Get a list of all matakuliahs",
                 "produces": [
@@ -879,7 +879,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/matakuliahs/{id}": {
+        "/api/matakuliahs/{id}": {
             "get": {
                 "description": "Get a single matakuliah by ID",
                 "produces": [
