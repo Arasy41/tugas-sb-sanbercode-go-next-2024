@@ -15,7 +15,7 @@ import (
 // @Tags dosen
 // @Produce json
 // @Success 200 {array} models.Dosen
-// @Router /dosen [get]
+// @Router /api/dosens [get]
 func GetAllDosen(ctx *gin.Context) {
 	var dosen []models.Dosen
 
@@ -36,7 +36,7 @@ func GetAllDosen(ctx *gin.Context) {
 // @Success 201 {object} models.Dosen
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /dosen [post]
+// @Router /api/dosens [post]
 func CreateDosen(ctx *gin.Context) {
 	var dosen models.Dosen
 	if err := ctx.ShouldBindJSON(&dosen); err != nil {
@@ -64,7 +64,7 @@ func CreateDosen(ctx *gin.Context) {
 // @Failure 400 {object} map[string]interface{}
 // @Failure 404 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /dosen/{id} [put]
+// @Router /api/dosens/{id} [put]
 func UpdateDosen(ctx *gin.Context) {
 	var dosen models.Dosen
 	idStr := ctx.Param("id")
@@ -97,7 +97,7 @@ func UpdateDosen(ctx *gin.Context) {
 // @Success 200 {object} map[string]interface{}
 // @Failure 404 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /dosen/{id} [delete]
+// @Router /api/dosens/{id} [delete]
 func DeleteDosen(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 	id, _ := strconv.Atoi(idStr)

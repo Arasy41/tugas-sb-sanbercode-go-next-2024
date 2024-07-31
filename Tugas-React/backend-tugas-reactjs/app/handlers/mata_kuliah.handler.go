@@ -15,7 +15,7 @@ import (
 // @Tags matakuliahs
 // @Produce json
 // @Success 200 {array} models.MataKuliah
-// @Router /matakuliahs [get]
+// @Router /api/matakuliahs [get]
 func GetAllMataKuliah(ctx *gin.Context) {
 	var matakuliahs []models.MataKuliah
 
@@ -34,7 +34,7 @@ func GetAllMataKuliah(ctx *gin.Context) {
 // @Param id path int true "MataKuliah ID"
 // @Success 200 {object} models.MataKuliah
 // @Failure 404 {object} map[string]interface{}
-// @Router /matakuliahs/{id} [get]
+// @Router /api/matakuliahs/{id} [get]
 func GetMataKuliahByID(ctx *gin.Context) {
 	var matakuliah models.MataKuliah
 	id := ctx.Param("id")
@@ -57,7 +57,7 @@ func GetMataKuliahByID(ctx *gin.Context) {
 // @Success 201 {object} models.MataKuliah
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /matakuliahs [post]
+// @Router /api/matakuliahs [post]
 func CreateMataKuliah(ctx *gin.Context) {
 	var matakuliah models.MataKuliah
 	if err := ctx.ShouldBindJSON(&matakuliah); err != nil {
@@ -85,7 +85,7 @@ func CreateMataKuliah(ctx *gin.Context) {
 // @Failure 400 {object} map[string]interface{}
 // @Failure 404 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /matakuliahs/{id} [put]
+// @Router /api/matakuliahs/{id} [put]
 func UpdateMataKuliah(ctx *gin.Context) {
 	var matakuliahRequest models.MataKuliah
 	var matakuliah models.MataKuliah
@@ -122,7 +122,7 @@ func UpdateMataKuliah(ctx *gin.Context) {
 // @Success 200 {object} map[string]interface{}
 // @Failure 404 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /matakuliahs/{id} [delete]
+// @Router /api/matakuliahs/{id} [delete]
 func DeleteMataKuliah(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 

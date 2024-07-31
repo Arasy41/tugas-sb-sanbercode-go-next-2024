@@ -30,7 +30,7 @@ func InitRouter(db *gorm.DB, r *gin.Engine) {
 		c.Set("db", db)
 	})
 
-	bookRoute := r.Group("/books")
+	bookRoute := r.Group("/api/books")
 	bookRoute.GET("/:id", handlers.GetBookByID)
 	bookRoute.GET("", handlers.GetAllBooks)
 	bookRoute.POST("", handlers.CreateBook)

@@ -146,6 +146,263 @@ info:
   title: Kuliahs API
   version: "1.0"
 paths:
+  /api/books:
+    get:
+      description: Get a list of all books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Book'
+            type: array
+      summary: Get all books
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      description: Create a new book with the input payload
+      parameters:
+      - description: Book Request
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.Book'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new book
+      tags:
+      - books
+  /api/books/{id}:
+    delete:
+      description: Delete a book by ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a book
+      tags:
+      - books
+    get:
+      description: Get a single book by ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Book'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get book by ID
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      description: Update a book by ID with the input payload
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Book Request
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.BookRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update an existing book
+      tags:
+      - books
+  /api/dosens:
+    get:
+      description: Get a list of all dosen
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Dosen'
+            type: array
+      summary: Get all dosen
+      tags:
+      - dosen
+    post:
+      consumes:
+      - application/json
+      description: Create a new dosen with the input payload
+      parameters:
+      - description: Dosen Request
+        in: body
+        name: dosen
+        required: true
+        schema:
+          $ref: '#/definitions/models.Dosen'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Dosen'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new dosen
+      tags:
+      - dosen
+  /api/dosens/{id}:
+    delete:
+      description: Delete a dosen by ID
+      parameters:
+      - description: Dosen ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a dosen
+      tags:
+      - dosen
+    put:
+      consumes:
+      - application/json
+      description: Update a dosen by ID with the input payload
+      parameters:
+      - description: Dosen ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Dosen Request
+        in: body
+        name: dosen
+        required: true
+        schema:
+          $ref: '#/definitions/models.Dosen'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Dosen'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update an existing dosen
+      tags:
+      - dosen
   /api/jadwals:
     get:
       description: Get a list of all jadwals
@@ -286,264 +543,7 @@ paths:
       summary: Update an existing jadwal
       tags:
       - jadwals
-  /books:
-    get:
-      description: Get a list of all books
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/models.Book'
-            type: array
-      summary: Get all books
-      tags:
-      - books
-    post:
-      consumes:
-      - application/json
-      description: Create a new book with the input payload
-      parameters:
-      - description: Book Request
-        in: body
-        name: book
-        required: true
-        schema:
-          $ref: '#/definitions/models.Book'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/models.Book'
-        "400":
-          description: Bad Request
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            additionalProperties: true
-            type: object
-      summary: Create a new book
-      tags:
-      - books
-  /books/{id}:
-    delete:
-      description: Delete a book by ID
-      parameters:
-      - description: Book ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties: true
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            additionalProperties: true
-            type: object
-      summary: Delete a book
-      tags:
-      - books
-    get:
-      description: Get a single book by ID
-      parameters:
-      - description: Book ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Book'
-        "404":
-          description: Not Found
-          schema:
-            additionalProperties: true
-            type: object
-      summary: Get book by ID
-      tags:
-      - books
-    put:
-      consumes:
-      - application/json
-      description: Update a book by ID with the input payload
-      parameters:
-      - description: Book ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: Book Request
-        in: body
-        name: book
-        required: true
-        schema:
-          $ref: '#/definitions/models.BookRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Book'
-        "400":
-          description: Bad Request
-          schema:
-            additionalProperties: true
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            additionalProperties: true
-            type: object
-      summary: Update an existing book
-      tags:
-      - books
-  /dosen:
-    get:
-      description: Get a list of all dosen
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/models.Dosen'
-            type: array
-      summary: Get all dosen
-      tags:
-      - dosen
-    post:
-      consumes:
-      - application/json
-      description: Create a new dosen with the input payload
-      parameters:
-      - description: Dosen Request
-        in: body
-        name: dosen
-        required: true
-        schema:
-          $ref: '#/definitions/models.Dosen'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/models.Dosen'
-        "400":
-          description: Bad Request
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            additionalProperties: true
-            type: object
-      summary: Create a new dosen
-      tags:
-      - dosen
-  /dosen/{id}:
-    delete:
-      description: Delete a dosen by ID
-      parameters:
-      - description: Dosen ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties: true
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            additionalProperties: true
-            type: object
-      summary: Delete a dosen
-      tags:
-      - dosen
-    put:
-      consumes:
-      - application/json
-      description: Update a dosen by ID with the input payload
-      parameters:
-      - description: Dosen ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: Dosen Request
-        in: body
-        name: dosen
-        required: true
-        schema:
-          $ref: '#/definitions/models.Dosen'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Dosen'
-        "400":
-          description: Bad Request
-          schema:
-            additionalProperties: true
-            type: object
-        "404":
-          description: Not Found
-          schema:
-            additionalProperties: true
-            type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            additionalProperties: true
-            type: object
-      summary: Update an existing dosen
-      tags:
-      - dosen
-  /mahasiswas:
+  /api/mahasiswas:
     get:
       description: Get a list of all mahasiswas
       produces:
@@ -589,7 +589,7 @@ paths:
       summary: Create a new mahasiswa
       tags:
       - mahasiswas
-  /mahasiswas/{id}:
+  /api/mahasiswas/{id}:
     delete:
       description: Delete a mahasiswa by ID
       parameters:

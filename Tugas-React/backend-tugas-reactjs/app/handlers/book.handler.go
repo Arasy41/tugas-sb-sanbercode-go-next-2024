@@ -16,7 +16,7 @@ import (
 // @Tags books
 // @Produce json
 // @Success 200 {array} models.Book
-// @Router /books [get]
+// @Router /api/books [get]
 func GetAllBooks(ctx *gin.Context) {
 	var books []models.Book
 
@@ -35,7 +35,7 @@ func GetAllBooks(ctx *gin.Context) {
 // @Param id path int true "Book ID"
 // @Success 200 {object} models.Book
 // @Failure 404 {object} map[string]interface{}
-// @Router /books/{id} [get]
+// @Router /api/books/{id} [get]
 func GetBookByID(ctx *gin.Context) {
 	var book models.Book
 	id := ctx.Param("id")
@@ -58,7 +58,7 @@ func GetBookByID(ctx *gin.Context) {
 // @Success 201 {object} models.Book
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /books [post]
+// @Router /api/books [post]
 func CreateBook(ctx *gin.Context) {
 	var book models.Book
 	if err := ctx.ShouldBindJSON(&book); err != nil {
@@ -93,7 +93,7 @@ func CreateBook(ctx *gin.Context) {
 // @Failure 400 {object} map[string]interface{}
 // @Failure 404 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /books/{id} [put]
+// @Router /api/books/{id} [put]
 func UpdateBook(ctx *gin.Context) {
 	var bookRequest models.BookRequest
 	var book models.Book
@@ -141,7 +141,7 @@ func UpdateBook(ctx *gin.Context) {
 // @Success 200 {object} map[string]interface{}
 // @Failure 404 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /books/{id} [delete]
+// @Router /api/books/{id} [delete]
 func DeleteBook(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 

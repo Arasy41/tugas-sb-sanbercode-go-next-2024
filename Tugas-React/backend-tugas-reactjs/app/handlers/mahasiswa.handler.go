@@ -15,7 +15,7 @@ import (
 // @Tags mahasiswas
 // @Produce json
 // @Success 200 {array} models.Mahasiswa
-// @Router /mahasiswas [get]
+// @Router /api/mahasiswas [get]
 func GetAllMahasiswa(ctx *gin.Context) {
 	var mahasiswas []models.Mahasiswa
 
@@ -34,7 +34,7 @@ func GetAllMahasiswa(ctx *gin.Context) {
 // @Param id path int true "Mahasiswa ID"
 // @Success 200 {object} models.Mahasiswa
 // @Failure 404 {object} map[string]interface{}
-// @Router /mahasiswas/{id} [get]
+// @Router /api/mahasiswas/{id} [get]
 func GetMahasiswaByID(ctx *gin.Context) {
 	var mahasiswa models.Mahasiswa
 	id := ctx.Param("id")
@@ -57,7 +57,7 @@ func GetMahasiswaByID(ctx *gin.Context) {
 // @Success 201 {object} models.Mahasiswa
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /mahasiswas [post]
+// @Router /api/mahasiswas [post]
 func CreateMahasiswa(ctx *gin.Context) {
 	var mahasiswa models.Mahasiswa
 	if err := ctx.ShouldBindJSON(&mahasiswa); err != nil {
@@ -85,7 +85,7 @@ func CreateMahasiswa(ctx *gin.Context) {
 // @Failure 400 {object} map[string]interface{}
 // @Failure 404 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /mahasiswas/{id} [put]
+// @Router /api/mahasiswas/{id} [put]
 func UpdateMahasiswa(ctx *gin.Context) {
 	var mahasiswaRequest models.Mahasiswa
 	var mahasiswa models.Mahasiswa
@@ -122,7 +122,7 @@ func UpdateMahasiswa(ctx *gin.Context) {
 // @Success 200 {object} map[string]interface{}
 // @Failure 404 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /mahasiswas/{id} [delete]
+// @Router /api/mahasiswas/{id} [delete]
 func DeleteMahasiswa(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 
