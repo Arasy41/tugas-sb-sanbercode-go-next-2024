@@ -70,14 +70,18 @@ func ValidateJadwal(schedule *models.JadwalKuliah) error {
 		return fmt.Errorf("Jam selesai tidak boleh mendahului jam mulai")
 	}
 
-	// Validasi dosen dan mahasiswa
-	var count int64
-	config.DB.Model(&models.JadwalKuliah{}).
-		Where("dosen_id = ? AND mahasiswa_id = ?", schedule.DosenID, schedule.MahasiswaID).
-		Count(&count)
-	if count > 0 {
-		return fmt.Errorf("Dosen dan mahasiswa sudah memiliki jadwal yang sama, sudah ada data dosen id : %d dan mahasiswa id : %d", schedule.DosenID, schedule.MahasiswaID)
+	return nil
+}
+
+func ValidateJadwalDosenMahasiswa(jadwal *models.JadwalKuliah) error {
+	var existingJadwal models.JadwalKuliah
+
+	// Check if there is an existing jadwal with the same DosenID and MahasiswaID
+	if err := config.DB.Where("dosen_id = ? AND mahasiswa_id = ?", jadwal.DosenID, jadwal.MahasiswaID).First(&existingJadwal).Error; err == nil {
+		// Record found, return an error
+		return errors.New("jadwal with the same dosen and mahasiswa already exists")
 	}
 
+	// If no existing record found, validation passes
 	return nil
 }

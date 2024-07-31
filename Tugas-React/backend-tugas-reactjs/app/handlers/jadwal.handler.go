@@ -84,17 +84,40 @@ func CreateJadwal(ctx *gin.Context) {
 		return
 	}
 
+	// Konversi JamMulai dan JamSelesai
+	jamMulai := req.JamMulai.Format("15:04")
+	jamSelesai := req.JamSelesai.Format("15:04")
+
+	// Parsing JamMulai dan JamSelesai
+	timeStart, err := time.Parse("15:04", jamMulai)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JamMulai format"})
+		return
+	}
+
+	timeEnd, err := time.Parse("15:04", jamSelesai)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JamSelesai format"})
+		return
+	}
+
 	jadwal := models.JadwalKuliah{
 		DosenID:     req.DosenID,
 		MahasiswaID: req.MahasiswaID,
 		Hari:        req.Hari,
-		JamMulai:    req.JamMulai.Time,
-		JamSelesai:  req.JamSelesai.Time,
+		JamMulai:    timeStart,
+		JamSelesai:  timeEnd,
 		CreatedAt:   time.Now(),
 	}
 
-	// Validasi hari dan waktu
+	// Validasi jadwal
 	if err := utils.ValidateJadwal(&jadwal); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Validasi Dosen dan Mahasiswa
+	if err := utils.ValidateJadwalDosenMahasiswa(&jadwal); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -136,15 +159,37 @@ func UpdateJadwal(ctx *gin.Context) {
 		return
 	}
 
-	jadwal.DosenID = req.DosenID
+	// Konversi JamMulai dan JamSelesai
+	jamMulai := req.JamMulai.Format("15:04")
+	jamSelesai := req.JamSelesai.Format("15:04")
+
+	// Parsing JamMulai dan JamSelesai
+	timeStart, err := time.Parse("15:04", jamMulai)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JamMulai format"})
+		return
+	}
+
+	timeEnd, err := time.Parse("15:04", jamSelesai)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JamSelesai format"})
+		return
+	}
+
 	jadwal.MahasiswaID = req.MahasiswaID
 	jadwal.Hari = req.Hari
-	jadwal.JamMulai = req.JamMulai.Time
-	jadwal.JamSelesai = req.JamSelesai.Time
+	jadwal.JamMulai = timeStart
+	jadwal.JamSelesai = timeEnd
 	jadwal.UpdatedAt = time.Now()
 
-	// Validasi hari dan waktu
+	// Validasi jadwal
 	if err := utils.ValidateJadwal(&jadwal); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Validasi Dosen dan Mahasiswa
+	if err := utils.ValidateJadwalDosenMahasiswa(&jadwal); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
