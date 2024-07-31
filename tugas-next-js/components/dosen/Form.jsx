@@ -14,8 +14,9 @@ const DosenForm = ({ id }) => {
   useEffect(() => {
     const fetchMatakuliah = async () => {
       try {
-        const res = await axios.get(`${baseUrl}/api/matakuliah`)
+        const res = await axios.get(`${baseUrl}/api/matakuliahs`)
         setMatakuliahList(res.data.data)
+        console.log(res.data.data);
       } catch (err) {
         console.log(err)
       }
@@ -98,7 +99,7 @@ const DosenForm = ({ id }) => {
           >
             <option value="">Select Mata Kuliah</option>
             {matakuliahList.map((mk) => (
-              <option key={mk.id} value={mk.id}>{mk.nama}</option>
+              <option key={mk.ID} value={mk.ID}>{mk.nama}</option>
             ))}
           </select>
           <button
