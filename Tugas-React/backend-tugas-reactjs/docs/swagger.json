@@ -596,6 +596,62 @@
                 }
             }
         },
+        "/api/login": {
+            "post": {
+                "description": "Authenticate user and get a JWT token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "User login",
+                "parameters": [
+                    {
+                        "description": "Login Data",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
         "/api/mahasiswas": {
             "get": {
                 "description": "Get a list of all mahasiswas",
@@ -1009,6 +1065,262 @@
                     }
                 }
             }
+        },
+        "/api/nilai": {
+            "get": {
+                "description": "Get a list of all nilai",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "nilai"
+                ],
+                "summary": "Get all nilai",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.NilaiList"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new nilai with the input payload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "nilai"
+                ],
+                "summary": "Create a new nilai",
+                "parameters": [
+                    {
+                        "description": "Nilai Request",
+                        "name": "nilai",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.NilaiRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Nilai"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/nilai/{id}": {
+            "get": {
+                "description": "Get a single nilai by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "nilai"
+                ],
+                "summary": "Get nilai by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Nilai ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Nilai"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a nilai by ID with the input payload",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "nilai"
+                ],
+                "summary": "Update an existing nilai",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Nilai ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Nilai Request",
+                        "name": "nilai",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.NilaiRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Nilai"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a nilai by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "nilai"
+                ],
+                "summary": "Delete a nilai",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Nilai ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "description": "Create a new user account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Register a new user",
+                "parameters": [
+                    {
+                        "description": "User Data",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1124,9 +1436,6 @@
         },
         "models.JadwalKuliah": {
             "type": "object",
-            "required": [
-                "nama"
-            ],
             "properties": {
                 "created_at": {
                     "type": "string"
@@ -1155,9 +1464,6 @@
                 "mahasiswa_id": {
                     "type": "integer"
                 },
-                "nama": {
-                    "type": "string"
-                },
                 "updated_at": {
                     "type": "string"
                 }
@@ -1165,9 +1471,6 @@
         },
         "models.JadwalKuliahRequest": {
             "type": "object",
-            "required": [
-                "nama"
-            ],
             "properties": {
                 "dosen_id": {
                     "type": "integer"
@@ -1183,9 +1486,6 @@
                 },
                 "mahasiswa_id": {
                     "type": "integer"
-                },
-                "nama": {
-                    "type": "string"
                 }
             }
         },
@@ -1219,10 +1519,22 @@
                 "mahasiswa_id": {
                     "type": "integer"
                 },
-                "nama": {
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.LoginRequest": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
                     "type": "string"
                 },
-                "updated_at": {
+                "username": {
                     "type": "string"
                 }
             }
@@ -1289,10 +1601,142 @@
                 }
             }
         },
+        "models.Nilai": {
+            "type": "object",
+            "required": [
+                "indeks",
+                "skor"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "indeks": {
+                    "type": "string"
+                },
+                "mahasiswa": {
+                    "$ref": "#/definitions/models.Mahasiswa"
+                },
+                "mahasiswa_id": {
+                    "type": "integer"
+                },
+                "mata_kuliah": {
+                    "$ref": "#/definitions/models.MataKuliah"
+                },
+                "matakuliah_id": {
+                    "type": "integer"
+                },
+                "skor": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/models.User"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.NilaiList": {
+            "type": "object",
+            "required": [
+                "indeks",
+                "skor"
+            ],
+            "properties": {
+                "indeks": {
+                    "type": "string"
+                },
+                "mahasiswa_name": {
+                    "type": "string"
+                },
+                "mata_kuliah": {
+                    "type": "string"
+                },
+                "skor": {
+                    "type": "integer"
+                },
+                "user": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.NilaiRequest": {
+            "type": "object",
+            "required": [
+                "indeks",
+                "skor"
+            ],
+            "properties": {
+                "indeks": {
+                    "type": "string"
+                },
+                "mahasiswa_id": {
+                    "type": "integer"
+                },
+                "matakuliah_id": {
+                    "type": "integer"
+                },
+                "skor": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.TimeOnly": {
             "type": "object",
             "properties": {
                 "time.Time": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.User": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.UserRequest": {
+            "type": "object",
+            "required": [
+                "email",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }

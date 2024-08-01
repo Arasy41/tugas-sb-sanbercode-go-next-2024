@@ -72,9 +72,12 @@ func InitRouter(db *gorm.DB, r *gin.Engine) {
 	nilaiRoute := r.Group("/api/nilai")
 	nilaiRoute.GET("/:id", handlers.GetNilaiByID)
 	nilaiRoute.GET("", handlers.GetAllNilai)
-	nilaiRoute.POST("", handlers.CreateNilai, middlewares.JWTAuthMiddleware())
-	nilaiRoute.PUT("/:id", handlers.UpdateNilai, middlewares.JWTAuthMiddleware())
-	nilaiRoute.DELETE("/:id", handlers.DeleteNilai, middlewares.JWTAuthMiddleware())
+	authRoutes := r.Group("/api", middlewares.JWTAuthMiddleware())
+	{
+		authRoutes.POST("/nilai", handlers.CreateNilai)
+		authRoutes.PUT("/nilai/:id", handlers.UpdateNilai)
+		authRoutes.DELETE("/nilai/:id", handlers.DeleteNilai)
+	}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

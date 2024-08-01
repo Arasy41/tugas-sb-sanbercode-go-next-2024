@@ -93,7 +93,7 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	token, err := jwt.GenerateToken(user.ID)
+	token, err := jwt.GenerateToken(uint(user.ID))
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

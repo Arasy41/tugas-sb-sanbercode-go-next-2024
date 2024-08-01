@@ -23,3 +23,11 @@ type NilaiRequest struct {
 	MataKuliahID int    `json:"matakuliah_id"`
 	UserID       int    `json:"user_id"`
 }
+
+type NilaiList struct {
+	Indeks        string `json:"indeks" validate:"required"`
+	Skor          int    `json:"skor" validate:"required"`
+	MahasiswaName string `json:"mahasiswa_name"`
+	MataKuliah    string `json:"mata_kuliah"`
+	User          string `json:"user"`
+}

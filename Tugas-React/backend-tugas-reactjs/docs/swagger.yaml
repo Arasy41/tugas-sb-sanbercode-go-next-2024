@@ -94,12 +94,8 @@ definitions:
         $ref: '#/definitions/models.Mahasiswa'
       mahasiswa_id:
         type: integer
-      nama:
-        type: string
       updated_at:
         type: string
-    required:
-    - nama
     type: object
   models.JadwalKuliahRequest:
     properties:
@@ -113,10 +109,6 @@ definitions:
         $ref: '#/definitions/models.TimeOnly'
       mahasiswa_id:
         type: integer
-      nama:
-        type: string
-    required:
-    - nama
     type: object
   models.JadwalKuliahResponse:
     properties:
@@ -138,10 +130,18 @@ definitions:
         type: string
       mahasiswa_id:
         type: integer
-      nama:
-        type: string
       updated_at:
         type: string
+    type: object
+  models.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
     type: object
   models.Mahasiswa:
     properties:
@@ -183,10 +183,98 @@ definitions:
     required:
     - nama
     type: object
+  models.Nilai:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      indeks:
+        type: string
+      mahasiswa:
+        $ref: '#/definitions/models.Mahasiswa'
+      mahasiswa_id:
+        type: integer
+      mata_kuliah:
+        $ref: '#/definitions/models.MataKuliah'
+      matakuliah_id:
+        type: integer
+      skor:
+        type: integer
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/models.User'
+      user_id:
+        type: integer
+    required:
+    - indeks
+    - skor
+    type: object
+  models.NilaiList:
+    properties:
+      indeks:
+        type: string
+      mahasiswa_name:
+        type: string
+      mata_kuliah:
+        type: string
+      skor:
+        type: integer
+      user:
+        type: string
+    required:
+    - indeks
+    - skor
+    type: object
+  models.NilaiRequest:
+    properties:
+      indeks:
+        type: string
+      mahasiswa_id:
+        type: integer
+      matakuliah_id:
+        type: integer
+      skor:
+        type: integer
+      user_id:
+        type: integer
+    required:
+    - indeks
+    - skor
+    type: object
   models.TimeOnly:
     properties:
       time.Time:
         type: string
+    type: object
+  models.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  models.UserRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
     type: object
 host: go-vercel-app-arasys-projects.vercel.app
 info:
@@ -592,6 +680,44 @@ paths:
       summary: Update an existing jadwal
       tags:
       - jadwals
+  /api/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user and get a JWT token
+      parameters:
+      - description: Login Data
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/models.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: User login
+      tags:
+      - users
   /api/mahasiswas:
     get:
       description: Get a list of all mahasiswas
@@ -872,4 +998,177 @@ paths:
       summary: Update an existing matakuliah
       tags:
       - matakuliahs
+  /api/nilai:
+    get:
+      description: Get a list of all nilai
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.NilaiList'
+            type: array
+      summary: Get all nilai
+      tags:
+      - nilai
+    post:
+      consumes:
+      - application/json
+      description: Create a new nilai with the input payload
+      parameters:
+      - description: Nilai Request
+        in: body
+        name: nilai
+        required: true
+        schema:
+          $ref: '#/definitions/models.NilaiRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Nilai'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new nilai
+      tags:
+      - nilai
+  /api/nilai/{id}:
+    delete:
+      description: Delete a nilai by ID
+      parameters:
+      - description: Nilai ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a nilai
+      tags:
+      - nilai
+    get:
+      description: Get a single nilai by ID
+      parameters:
+      - description: Nilai ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Nilai'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get nilai by ID
+      tags:
+      - nilai
+    put:
+      consumes:
+      - application/json
+      description: Update a nilai by ID with the input payload
+      parameters:
+      - description: Nilai ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Nilai Request
+        in: body
+        name: nilai
+        required: true
+        schema:
+          $ref: '#/definitions/models.NilaiRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Nilai'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update an existing nilai
+      tags:
+      - nilai
+  /api/register:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user account
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Register a new user
+      tags:
+      - users
 swagger: "2.0"

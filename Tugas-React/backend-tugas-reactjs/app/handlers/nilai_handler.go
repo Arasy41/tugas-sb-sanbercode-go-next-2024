@@ -4,6 +4,7 @@ import (
 	"go-vercel-app/app/config"
 	"go-vercel-app/app/models"
 	"go-vercel-app/app/utils"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -16,16 +17,27 @@ import (
 // @Description Get a list of all nilai
 // @Tags nilai
 // @Produce json
-// @Success 200 {array} models.Nilai
+// @Success 200 {array} models.NilaiList
 // @Router /api/nilai [get]
 func GetAllNilai(ctx *gin.Context) {
 	var nilai []models.Nilai
 
-	if err := config.DB.Find(&nilai).Error; err != nil {
+	if err := config.DB.Preload("Mahasiswa").Preload("MataKuliah").Preload("User").Find(&nilai).Error; err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"data": nilai})
+
+	var listNilai []models.NilaiList
+	for _, res := range nilai {
+		listNilai = append(listNilai, models.NilaiList{
+			Indeks:        res.Indeks,
+			Skor:          res.Skor,
+			MahasiswaName: res.Mahasiswa.Nama,
+			MataKuliah:    res.MataKuliah.Nama,
+			User:          res.User.Username,
+		})
+	}
+	ctx.JSON(http.StatusOK, gin.H{"data": listNilai})
 }
 
 // GetNilaiByID godoc
@@ -75,6 +87,7 @@ func CreateNilai(ctx *gin.Context) {
 
 	userIdInt, ok := userId.(int)
 	if !ok {
+		log.Fatal("user id :", userId, "and", userIdInt)
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to parse user ID"})
 		return
 	}
