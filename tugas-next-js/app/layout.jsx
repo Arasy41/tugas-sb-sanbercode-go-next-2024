@@ -1,6 +1,8 @@
 import MainLayout from "@/components/MainLayout";
 import "./globals.css";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import useThemeStore from "@/stores/theme";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export const metadata = {
   title: "My Next App",
@@ -8,11 +10,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
-    <ProtectedRoute>
-      <MainLayout>
-        {children}
-      </MainLayout>
-    </ProtectedRoute>
+    <ThemeToggle>
+      <ProtectedRoute>
+        <MainLayout>
+          {children}
+        </MainLayout>
+      </ProtectedRoute>
+    </ThemeToggle>
   );
 }

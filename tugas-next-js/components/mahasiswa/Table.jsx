@@ -40,7 +40,7 @@ const MahasiswaTable = ({ mahasiswas }) => {
   };
 
   return (
-    <div className=" w-9/12 mx-auto mt-[50px]">
+    <div className=" w-9/12 mx-auto mt-36">
       <h1 className="text-[20px] text-center font-bold mb-[50px]">Mahasiswa List</h1>
       <div className="flex justify-end">
         <Link href={`/mahasiswa/create`} 

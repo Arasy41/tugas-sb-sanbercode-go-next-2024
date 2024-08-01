@@ -3,7 +3,7 @@ import { baseUrl } from "@/utils/constants"
 
 
 const getNilai = async () => {
-  let result = await fetch(`${baseUrl}/nilai`, {cache: "no-store"})
+  let result = await fetch(`${baseUrl}/api/nilai`, {cache: "no-store"})
   let data = await result.json()
 
   return data
