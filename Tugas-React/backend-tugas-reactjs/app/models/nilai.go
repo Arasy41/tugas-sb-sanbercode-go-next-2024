@@ -25,6 +25,7 @@ type NilaiRequest struct {
 }
 
 type NilaiList struct {
+	ID            int    `json:"id"`
 	Indeks        string `json:"indeks" validate:"required"`
 	Skor          int    `json:"skor" validate:"required"`
 	MahasiswaName string `json:"mahasiswa_name"`

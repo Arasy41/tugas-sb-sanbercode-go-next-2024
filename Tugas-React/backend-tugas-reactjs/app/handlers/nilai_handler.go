@@ -30,6 +30,7 @@ func GetAllNilai(ctx *gin.Context) {
 	var listNilai []models.NilaiList
 	for _, res := range nilai {
 		listNilai = append(listNilai, models.NilaiList{
+			ID:            res.ID,
 			Indeks:        res.Indeks,
 			Skor:          res.Skor,
 			MahasiswaName: res.Mahasiswa.Nama,

@@ -1,5 +1,6 @@
 import MainLayout from "@/components/MainLayout";
 import "./globals.css";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export const metadata = {
   title: "My Next App",
@@ -8,8 +9,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <MainLayout>
-      {children}
-    </MainLayout>
+    <ProtectedRoute>
+      <MainLayout>
+        {children}
+      </MainLayout>
+    </ProtectedRoute>
   );
 }
